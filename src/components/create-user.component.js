@@ -56,6 +56,8 @@ export default class CreateUser extends Component {
     // window.location = '/'; // take user back to homepage on submit
     axios.post('http://localhost:5000/users/add/', newUser)
         .then(res => console.log(res.data));
+    
+        console.log("axios post")
   }
 
   render() {
@@ -71,7 +73,9 @@ export default class CreateUser extends Component {
               className="form-control"
               value={this.state.email}
               onChange={this.onChangeEmail}
-            />
+              />
+          </div>
+          <div className="form-group">
             <label>Name: </label>
             <input
               type="text"
@@ -79,7 +83,9 @@ export default class CreateUser extends Component {
               className="form-control"
               value={this.state.name}
               onChange={this.onChangeName}
-            />
+              />
+          </div>
+          <div className="form-group">
             <label>Phone Number: </label>
             <input
               type="text"
@@ -87,14 +93,14 @@ export default class CreateUser extends Component {
               className="form-control"
               value={this.state.phone}
               onChange={this.onChangePhone}
-            />
+              />
           </div>
           <div className="form-group">
             <input
               type="submit"
               value="Create User"
               className="btn btn-primary"
-            />
+              />
           </div>
         </form>
       </div>
