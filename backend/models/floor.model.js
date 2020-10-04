@@ -10,7 +10,7 @@ const floorSchema = new Schema({
         type: String
     },
     desk_list: {
-        type: String
+        type: Array
     },
     capacity: {
         type: Number
