@@ -18,19 +18,12 @@ export default class NavigationBar extends Component {
                     <Nav.Link href="/sanitation">Sanitation</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>
                 </Nav>
+                <Nav className="justify-content-end">
+                <Nav.Link href="/user">Login</Nav.Link>
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
         </div>
-      // <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-      //   <Link to="/" className="navbar-brand">ExcerTracker</Link>
-      //   <div className="collpase navbar-collapse">
-      //   <ul className="navbar-nav mr-auto">
-      //     <li className="navbar-item">
-      //     <Link to="/user" className="nav-link">Create User</Link>
-      //     </li>
-      //   </ul>
-      //   </div>
-      // </nav>
     );
   }
 }
