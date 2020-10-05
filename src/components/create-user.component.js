@@ -52,11 +52,10 @@ export default class CreateUser extends Component {
       phone: this.state.phone,
     };
 
-    console.log(newUser);
+     console.log(newUser);
     // window.location = '/'; // take user back to homepage on submit
     axios.post('http://localhost:5000/users/add/', newUser)
         .then(res => console.log(res.data));
-    
         console.log("axios post")
   }
 
