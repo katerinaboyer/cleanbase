@@ -4,13 +4,15 @@ const Schema = mongoose.Schema;
 
 const roomSchema = new Schema({
     floor_id: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'Floor',
+        required: true
     },
     capacity: {
         type: Number
     },
     desk_list: {
-        type: Array
+        type: [Schema.Types.ObjectId]
     },
     room_type:{
         type: String

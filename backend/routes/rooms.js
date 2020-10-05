@@ -8,18 +8,16 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const building_id = req.body.building_id;
-  const desk_list = req.body.desk_list;
-  const capacity = req.body.capacity;
   const floor_id = req.body.floor_id;
+  const capacity = req.body.capacity;
+  const desk_list = req.body.desk_list;
   const room_type = req.body.room_type;
 
   const newRoom = new Room({
-      building_id,
-      desk_list,
-      capacity,
-      floor_id,
-      room_type
+    floor_id,
+    capacity,
+    desk_list,
+    room_type
   });
 
   newRoom.save()
