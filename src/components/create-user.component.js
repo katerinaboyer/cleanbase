@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -11,36 +11,28 @@ export default class CreateUser extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      email: "",
-      name: "",
-      phone: ""
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-        email: '',
-        name: '',
-        phone: ''
-    });
+      email: '',
+      name: '',
+      phone: ''
+    }
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value,
-    });
+      email: e.target.value
+    })
   }
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value,
-    });
+      name: e.target.value
+    })
   }
 
   onChangePhone(e) {
     this.setState({
-      phone: e.target.value,
-    });
+      phone: e.target.value
+    })
   }
 
   onSubmit(e) {
@@ -49,14 +41,17 @@ export default class CreateUser extends Component {
     const newUser = {
       email: this.state.email,
       name: this.state.name,
-      phone: this.state.phone,
-    };
+      phone: this.state.phone
+    }
 
-     console.log(newUser);
-    // window.location = '/'; // take user back to homepage on submit
-    axios.post('http://localhost:5000/users/add/', newUser)
-        .then(res => console.log(res.data));
-        console.log("axios post")
+    console.log(newUser);
+
+    axios.post('http://localhost:5000/users/add', newUser)
+      .then(res => console.log(res.data));
+
+    // this.setState({
+    //   email: ''
+    // })
   }
 
   render() {
@@ -64,45 +59,38 @@ export default class CreateUser extends Component {
       <div>
         <h3>Create New User</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          <div className="form-group"> 
             <label>Email: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.email}
-              onChange={this.onChangeEmail}
-              />
+            <input  type="text"
+                required
+                className="form-control"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                />
           </div>
-          <div className="form-group">
+          <div className="form-group"> 
             <label>Name: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-              />
+            <input  type="text"
+                required
+                className="form-control"
+                value={this.state.name}
+                onChange={this.onChangeName}
+                />
+          </div>
+          <div className="form-group"> 
+            <label>Phone: </label>
+            <input  type="text"
+                required
+                className="form-control"
+                value={this.state.phone}
+                onChange={this.onChangePhone}
+                />
           </div>
           <div className="form-group">
-            <label>Phone Number: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.phone}
-              onChange={this.onChangePhone}
-              />
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Create User"
-              className="btn btn-primary"
-              />
+            <input type="submit" value="Create User" className="btn btn-primary" />
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
