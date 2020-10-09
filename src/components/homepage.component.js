@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { Link } from 'react-router';
 import   NavigationBar  from './navbar.component.js';
+import IllnessReport from './illness-report.component';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -11,7 +10,8 @@ export default class HomePage extends Component {
     render() {
         return (
             <div>
-                <NavigationBar />
+                <p>this is the homepage</p>
+                <IllnessReport />
             </div>
         )
     }

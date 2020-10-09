@@ -21,7 +21,7 @@ export default class CurrentSchedule extends Component {
     
     render() {
         return(
-            <div>
+            <div style={{position: "absolute", right: "20px", left: "800px"}}>
                 <p>upcoming schedule</p>
                 <ListGroup>
                 {
