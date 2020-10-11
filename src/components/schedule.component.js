@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import CurrentSchedule from './current-schedule.component';
+import { UserContext } from '../App';
 
 
 export default class Schedule extends Component {
-    render() {
-        return(
-            <div>
-                <p>this is the schedule</p>
-                <CurrentSchedule />
-            </div>
-        );
-    }
+  render() {
+    return(
+      <UserContext.Consumer>
+        {({user, isAuth, setUser}) => {
+          return (
+            <>
+              <p>this is the schedule</p>
+              <CurrentSchedule />
+            </>
+          )
+        }}
+      </UserContext.Consumer>
+    );
+  }
 }

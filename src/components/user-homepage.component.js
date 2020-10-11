@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router';
-import   NavigationBar  from './navbar.component.js';
+import { UserContext } from '../App';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -10,9 +10,13 @@ export default class HomePage extends Component {
 
     render() {
         return (
-            <div>
-                <NavigationBar />
-            </div>
+            <UserContext.Consumer>
+              {({user, isAuth, setUser}) => (
+                <div>
+                  This is the user homepage.
+                </div>
+              )}
+            </UserContext.Consumer>
         )
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -8,12 +9,14 @@ export default class CreateUser extends Component {
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       email: "",
       name: "",
-      phone: ""
+      phone: "",
+      password: "",
     };
   }
 
@@ -21,7 +24,8 @@ export default class CreateUser extends Component {
     this.setState({
         email: '',
         name: '',
-        phone: ''
+        phone: '',
+        password: '',
     });
   }
 
@@ -43,6 +47,12 @@ export default class CreateUser extends Component {
     });
   }
 
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -50,12 +60,12 @@ export default class CreateUser extends Component {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
+      password: bcrypt.hashSync(this.state.password, 10),
     };
 
-     console.log(newUser);
     // window.location = '/'; // take user back to homepage on submit
     axios.post('http://localhost:5000/users/add/', newUser)
-         .then(res => console.log(res.data));
+      .then(res => console.log(res.data));
   }
 
   render() {
@@ -87,6 +97,14 @@ export default class CreateUser extends Component {
               className="form-control"
               value={this.state.phone}
               onChange={this.onChangePhone}
+            />
+            <label>Password: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              value={this.state.password}
+              onChange={this.onChangePassword}
             />
           </div>
           <div className="form-group">
