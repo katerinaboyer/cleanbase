@@ -13,23 +13,55 @@ export default class CurrentSchedule extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            schedule: [{'date': "Wednesday 9/12", 'reservationSpace': 25, 'floorNumber': 15,'start': 12, end: 2}, {'date': "Monday 9/15", 'reservationSpace': 65, 'floorNumber': 8,'start': 1, end: 4}, {'date': "Friday 9/30", 'reservationSpace': 5, 'floorNumber': 15,'start': 12, end: 7}, {'date': "Thursday 9/24", 'reservationSpace': 51, 'floorNumber': 5,'start': 4, end: 3}]
-        })
+        // this.setState({
+        //     schedule: [{'date': "Wednesday 9/12", 'reservationSpace': 25, 'floorNumber': 15,'start': 12, end: 2}, {'date': "Monday 9/15", 'reservationSpace': 65, 'floorNumber': 8,'start': 1, end: 4}, {'date': "Friday 9/30", 'reservationSpace': 5, 'floorNumber': 15,'start': 12, end: 7}, {'date': "Thursday 9/24", 'reservationSpace': 51, 'floorNumber': 5,'start': 4, end: 3}]
+        // })
+        this.fetchReservations();
     }
-    
+
+    fetchReservations = () => {
+        const requestBody = {
+            query: `
+                query {
+                    reservations {
+                        _id
+                        createdAt
+                        reservation {
+                            _id
+                            title
+                            room_number
+                            desk_number
+                            start_time
+                            end_time
+                        }
+                    }
+                }
+            `
+        }
+    };
     
     render() {
-        return(
-            <div>
-                <p>upcoming schedule</p>
-                <ListGroup>
-                {
-                    this.state.schedule.map(info => 
-                    <ListGroup.Item style={{width: "45%"}}> <ul><li>{info.date}</li><li>{info.reservationSpace}</li><li>{info.floorNumber}</li><li>{info.start} - {info.end}</li></ul></ListGroup.Item> )
-                }
-                 </ListGroup>
-            </div>
-        );
+        return (
+            <React.Fragment>
+                <ul>
+                    {this.state.reservations.map(booking => (
+                        <li key ={booking._id}>
+                            {booking.event.title} -{' '}
+                        </li>
+                    ))}
+                </ul>
+            </React.Fragment>
+        )
+        // return(
+        //     <div>
+        //         <p>upcoming schedule</p>
+        //         <ListGroup>
+        //         {
+        //             this.state.schedule.map(info => 
+        //             <ListGroup.Item style={{width: "45%"}}> <ul><li>{info.date}</li><li>{info.reservationSpace}</li><li>{info.floorNumber}</li><li>{info.start} - {info.end}</li></ul></ListGroup.Item> )
+        //         }
+        //          </ListGroup>
+        //     </div>
+        // );
     }
 }

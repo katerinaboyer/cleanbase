@@ -4,16 +4,19 @@ const Schema = mongoose.Schema;
 
 const buildingSchema = new Schema({
     building_admin: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    num_floors: {
+        type: Number,
+        required: true
     },
     capacity: {
         type: Number
     },
-    num_floors: {
-        type: Number
-    },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     workers: {
         type: Array
