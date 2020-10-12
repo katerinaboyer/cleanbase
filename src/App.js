@@ -9,6 +9,7 @@ import About from './components/about.component';
 import CreateBuilding from "./components/create-building.component";
 import CreateDesk from "./components/create-desk.component"
 import CreateReservation from "./components/create-reservation.component";
+import CreateAccount from "./components/create-account.component";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/user" component={CreateUser} />
         <Route path="/reservation" component={CreateReservation} />
         <Route path="/building" component={CreateBuilding} />
+        <Route path="/account" component={CreateAccount} />
         <Route path="/desk" component={CreateDesk} />
         <Route path="/schedule" component={Schedule} />
         <Route path="/sanitation" component={Sanitation} />

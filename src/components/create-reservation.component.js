@@ -136,6 +136,7 @@ export default class CreateReservation extends Component {
               />
             </div>
           </div>
+          
           <div className="form-group">
             <input type="submit" value="Create Reservation" className="btn btn-primary" />
           </div>
