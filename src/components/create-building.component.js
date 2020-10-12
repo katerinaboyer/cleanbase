@@ -6,16 +6,16 @@ export default class CreateBuilding extends Component {
     super(props);
 
     this.onChangeBuildingAdmin = this.onChangeBuildingAdmin.bind(this);
+    this.onChangeNumFloors = this.onChangeNumFloors.bind(this);
     this.onChangeCapacity = this.onChangeCapacity.bind(this);
-    this.onChangeAddress = this.onChangeAddress.bind(this)
+    this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       building_admin: '',
+      num_floors: '',
       capacity: '',
-      floor_list: '',
       address: '',
-      workers: '',
       users: []
     }
   }
@@ -25,7 +25,8 @@ export default class CreateBuilding extends Component {
         .then(response => {
             if (response.data.length > 0) {
                 this.setState({
-                    users: response.data.map(user => user.name),
+                    users: response.data.map(user => user._id),
+                    building_admin: response.data[0]._id
                 })
             }
         })
@@ -38,6 +39,12 @@ export default class CreateBuilding extends Component {
     this.setState({
       building_admin: e.target.value
     })
+  }
+
+  onChangeNumFloors(e) {
+      this.setState({
+          num_floors: e.target.value
+      })
   }
 
   onChangeCapacity(e) {
@@ -57,6 +64,7 @@ export default class CreateBuilding extends Component {
 
     const newBuilding = {
         building_admin: this.state.building_admin,
+        num_floors: this.state.num_floors,
         capacity: this.state.capacity,
         address: this.state.address
     }
@@ -80,7 +88,7 @@ export default class CreateBuilding extends Component {
               value={this.state.building_admin}
               onChange={this.onChangeBuildingAdmin}>
               {
-                this.state.users.map(function(user) {
+                this.state.users.map((user) => {
                   return <option 
                     key={user}
                     value={user}>{user}
@@ -90,8 +98,17 @@ export default class CreateBuilding extends Component {
           </select>
         </div>
           <div className="form-group"> 
+            <label>Number of Floors: </label>
+            <input  type="number"
+                required
+                className="form-control"
+                value={this.state.num_floors}
+                onChange={this.onChangeNumFloors}
+                />
+          </div>
+          <div className="form-group"> 
             <label>Capacity: </label>
-            <input  type="text"
+            <input  type="number"
                 required
                 className="form-control"
                 value={this.state.capacity}

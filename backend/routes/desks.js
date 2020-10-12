@@ -8,11 +8,13 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+  const desk_number = req.body.desk_number;
   const room_id = req.body.room_id;
   const is_available = req.body.is_available;
   const is_clean = req.body.is_clean;
 
   const newDesk = new Desk({
+      desk_number,
       room_id,
       is_available,
       is_clean

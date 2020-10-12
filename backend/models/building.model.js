@@ -7,13 +7,12 @@ const buildingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    num_floors: {
+        type: Number,
+        required: true
+    },
     capacity: {
         type: Number
-    },
-    floor_list: {
-        type : [Schema.Types.ObjectId],
-        ref: 'Floor',
-        required: true
     },
     address: {
         type: String,

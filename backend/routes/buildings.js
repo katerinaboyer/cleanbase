@@ -9,15 +9,15 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
   const building_admin = req.body.building_admin;
+  const num_floors = req.body.num_floors;
   const capacity = req.body.capacity;
-  const floor_list = req.body.num_floors;
   const address = req.body.address;
   const workers = req.body.workers;
 
   const newBuilding = new Building({
       building_admin,
+      num_floors,
       capacity,
-      floor_list,
       address,
       workers
   });

@@ -6,6 +6,9 @@ import HomePage from './components/user-homepage.component';
 import Schedule from './components/schedule.component';
 import Sanitation from './components/sanitation.component';
 import About from './components/about.component';
+import CreateBuilding from "./components/create-building.component";
+import CreateDesk from "./components/create-desk.component"
+import CreateReservation from "./components/create-reservation.component";
 
 
 function App() {
@@ -15,6 +18,9 @@ function App() {
         <br />
         <Route path="/" component={HomePage} />
         <Route path="/user" component={CreateUser} />
+        <Route path="/reservation" component={CreateReservation} />
+        <Route path="/building" component={CreateBuilding} />
+        <Route path="/desk" component={CreateDesk} />
         <Route path="/schedule" component={Schedule} />
         <Route path="/sanitation" component={Sanitation} />
         <Route path="/about" component={About} />

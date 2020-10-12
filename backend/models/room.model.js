@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const roomSchema = new Schema({
+    room_number: {
+        type: String,
+        required: true
+    },
     floor_id: {
         type: Schema.Types.ObjectId,
         ref: 'Floor',
@@ -12,7 +16,8 @@ const roomSchema = new Schema({
         type: Number
     },
     desk_list: {
-        type: [Schema.Types.ObjectId]
+        type: [Schema.Types.ObjectId],
+        ref: 'Desk'
     },
     room_type:{
         type: String

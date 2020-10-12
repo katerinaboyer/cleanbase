@@ -6,27 +6,27 @@ const reservationSchema = new Schema({
     title: {
         type: String,
     },
-    description: {
-        type: String
-    },
-    room_number: {
-        type: Schema.Types.ObjectId,
-        ref: 'Room',
-    },
-    desk_number: {
-        type: Schema.Types.ObjectId,
-        ref: 'Desk'
-    },
+    // room_number: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Room',
+    // },
+    // desk_number: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Desk'
+    // },
     start_time: {
-        type: Date,
+        type: String,
     },
     end_time: {
+        type: String,
+    },
+    date: {
         type: Date,
     },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    // user: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User'
+    // }
 }, {
   timestamps: true,
 });
