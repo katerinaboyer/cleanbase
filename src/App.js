@@ -10,6 +10,7 @@ import CreateBuilding from "./components/create-building.component";
 import CreateDesk from "./components/create-desk.component"
 import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
+import BuildingAdminDash from "./components/building-admin-homepage.component";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/schedule" component={Schedule} />
         <Route path="/sanitation" component={Sanitation} />
         <Route path="/about" component={About} />
+        <Route path="/building-admin" component={BuildingAdminDash} />
       </div>
     </Router>
   );
