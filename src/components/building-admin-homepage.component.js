@@ -12,6 +12,14 @@ export default class BuildingAdminDash extends Component {
         return (
             <div>
                 <NavigationBar />
+                <ul>
+                    <li>
+                        Hello
+                    </li>
+                    <li>
+                        Hello2
+                    </li>
+                </ul>
             </div>
         )
     }
