@@ -6,7 +6,7 @@ export default class IllnessReport extends Component {
     render() {
         return (
         <div>
-            <h2>Illness Report:</h2> 
+            <h3>Illness Report:</h3> 
             <p>Covid Cases:  27%</p> 
             <Card style={{ width: '20rem', height: '10rem' }}>
                <Card.Title>GRAPH PLACEHOLDER</Card.Title>
