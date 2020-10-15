@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router';
 import   NavigationBar  from './navbar.component.js';
-//import styles from "src/styles.js"
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -11,7 +10,7 @@ export default class HomePage extends Component {
 
     render() {
         return (
-            <div style={{backgroundColor: "#434343"}}>
+            <div style={{backgroundColor: "#141b41"}}>
                 <NavigationBar />
             </div>
         )

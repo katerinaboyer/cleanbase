@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router';
 import   NavigationBar  from './navbar.component.js';
+import './../styles.css';
 
 export default class BuildingAdminDash extends Component {
     constructor(props) {
         super(props);
 
+        var today = new Date(),
+            date = today.getFullYear() + "-" + (today.getMonth()) + "-" + today.getDate();
+
         this.state = {
             building_admin: '',
             num_floors: '',
             capacity: '',
-            address: '',
-            users: []
+            address: 'aaaaaaaa',
+            users: [],
+            date: date
           }
+    
     }
 
 
@@ -32,17 +38,31 @@ export default class BuildingAdminDash extends Component {
               console.log(error);
           })
     }
+   checkIn = () =>{
+    this.setState({address: "hello"});
+   };
 
     render() {
         return (
-            <div style= {{width:"100px"}}>
-                <ul style = {{color:"white",position:"absolute", right:"350px", top:"100px"}}>
-                    {this.state.users.map(user => 
-                        <li key={user} value={user}>
-                            {user.email}
-                        </li>
-                    )}
-                </ul>
+            <div>
+                <div>
+                    <p style= {{color:"white"}}>
+                        {this.state.address}
+                    </p>
+                </div>
+
+                <div style= {{position:"absolute", right:"350px", }}>
+                    {this.state.users.map(user =>
+                        <button className="button">
+                            <strong>{user.email}</strong>
+                            <br/><br/>
+                            {this.state.date}
+                            <button className="button-secondary" onClick={this.checkIn}>
+                                Check In
+                            </button>
+                        </button>)}
+                    
+                </div>
             </div>
         )
     }

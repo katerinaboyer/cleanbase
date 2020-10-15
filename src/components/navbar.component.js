@@ -9,7 +9,7 @@ export default class NavigationBar extends Component {
     return (
       <div>
       <Navbar>
-            <Navbar.Brand href="#home">CleanBase</Navbar.Brand>
+            <Navbar.Brand style={{color: "white"}} href="#home">CleanBase</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

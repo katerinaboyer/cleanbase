@@ -12,7 +12,6 @@ import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
 import BuildingAdminDash from "./components/building-admin-homepage.component";
 
-import {styles} from "./styles";
 
 
 function App() {
