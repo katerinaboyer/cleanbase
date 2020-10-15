@@ -22,7 +22,7 @@ export default class BuildingAdminDash extends Component {
           .then(response => {
               if (response.data.length > 0) {
                   this.setState({
-                      users: response.data.map(user => user._id),
+                      users: response.data.map(user => user),
                       building_admin: response.data[0]._id
                       //get office managers and then create list with their company names and their floor numbers
                   })
@@ -35,11 +35,11 @@ export default class BuildingAdminDash extends Component {
 
     render() {
         return (
-            <div>
-                <ul>
+            <div style= {{width:"100px"}}>
+                <ul style = {{color:"white",position:"absolute", right:"350px", top:"100px"}}>
                     {this.state.users.map(user => 
-                        <li key={user.email}>
-                            {user._id}
+                        <li key={user} value={user}>
+                            {user.email}
                         </li>
                     )}
                 </ul>

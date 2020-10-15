@@ -13,13 +13,13 @@ export default class NavigationBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/schedule">Schedule</Nav.Link>
-                    <Nav.Link href="/sanitation">Sanitation</Nav.Link>
-                    <Nav.Link href="/about">About</Nav.Link>
+                    <Nav.Link style={{color: "white"}} href="/">Home</Nav.Link>
+                    <Nav.Link style={{color: "white"}} href="/schedule">Schedule</Nav.Link>
+                    <Nav.Link style={{color: "white"}} href="/sanitation">Sanitation</Nav.Link>
+                    <Nav.Link style={{color: "white"}} href="/about">About</Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end">
-                <Nav.Link href="/user">Login</Nav.Link>
+                <Nav.Link style={{color: "white"}} href="/user">Login</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
