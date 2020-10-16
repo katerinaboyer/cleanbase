@@ -77,7 +77,7 @@ export default class CreateBuilding extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{color:"white"}}>
         <h3>Create New Building</h3>
         <form onSubmit={this.onSubmit}>
         <div className="form-group"> 

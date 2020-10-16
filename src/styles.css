@@ -24,4 +24,25 @@
     min-width: 150px;
     transition-duration: 0.4s;
     border-radius: 10px;
+    background: #ee6c4d;
+}
+
+.text {
+    color: white;
+    padding-top: 100px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    background-color: red;
+    flex: 1;
+}
+
+.right {
+    background-color: yellow;
+    flex: 1;
 }
