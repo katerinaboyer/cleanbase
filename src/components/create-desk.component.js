@@ -21,7 +21,7 @@ export default class CreateDesk extends Component {
           .then(response => {
               if (response.data.length > 0) {
                   this.setState({
-                      rooms: response.data.map(room => room._id),
+                      rooms: response.data.map(room => room),
                   })
               }
           })
@@ -71,8 +71,8 @@ export default class CreateDesk extends Component {
                   {
                     this.state.rooms.map(function(room) {
                       return <option 
-                        key={room}
-                        value={room}>{room}
+                        key={room._id}
+                        value={room._id}>{room.room_number}
                         </option>;
                     })
                   }

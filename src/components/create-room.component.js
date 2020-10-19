@@ -26,8 +26,8 @@ export default class CreateRoom extends Component {
       .then((response) => {
         if (response.data.length > 0) {
           this.setState({
-            floors: response.data.map((floor) => floor._id),
-            floor_id: response.data[0]._id,
+            floors: response.data.map((floor) => floor),
+            floor_id: response.data[0],
           });
         }
       })
@@ -103,8 +103,8 @@ export default class CreateRoom extends Component {
             >
               {this.state.floors.map((floor) => {
                 return (
-                  <option key={floor} value={floor}>
-                    {floor}
+                  <option key={floor._id} value={floor._id}>
+                    {floor.floor_number}
                   </option>
                 );
               })}
