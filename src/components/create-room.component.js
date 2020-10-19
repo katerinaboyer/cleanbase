@@ -12,7 +12,7 @@ export default class CreateRoom extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      room_number:"",
+      room_number: "",
       floor_id: "",
       capacity: "",
       room_type: "",
@@ -43,9 +43,9 @@ export default class CreateRoom extends Component {
   }
 
   onChangeFloorId(e) {
-    this.setState({
-      floor_id: e.target.value,
-    });
+      this.setState({
+          floor_id: e.target.value
+      });
   }
 
   onChangeCapacity(e) {
@@ -65,9 +65,9 @@ export default class CreateRoom extends Component {
 
     const newRoom = {
       room_number: this.state.room_number,
-      floor_id: this.setState.floor_id,
-      capacity: this.setState.capacity,
-      room_type: this.setState.room_type
+      floor_id: this.state.floor_id,
+      capacity: this.state.capacity,
+      room_type: this.state.room_type,
     };
 
     console.log(newRoom);
@@ -82,7 +82,7 @@ export default class CreateRoom extends Component {
       <div>
         <h3>Create New Room</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+        <div className="form-group">
             <label>Room Number: </label>
             <input
               type="text"
@@ -110,19 +110,20 @@ export default class CreateRoom extends Component {
               })}
             </select>
           </div>
-          <div className="form-group"> 
+          <div className="form-group">
             <label>Capacity: </label>
-            <input  
-                type="number"
-                required
-                className="form-control"
-                value={this.state.capacity}
-                onChange={this.onChangeCapacity}
-                />
+            <input
+              type="number"
+              required
+              className="form-control"
+              value={this.state.capacity}
+              onChange={this.onChangeCapacity}
+            />
           </div>
           <div className="form-group">
             <label>Room Type: </label>
-            <select 
+            <select
+              ref="roomTypeInput"
               required
               className="form-control"
               value={this.state.room_type}
