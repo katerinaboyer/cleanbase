@@ -103,7 +103,7 @@ export default class CreateUser extends Component {
                 <option value="employee">Employee</option>
                 <option value="office_manager">Office Manager</option>
                 <option value="building_admin">Building Admin</option>
-                <option value="custodial">Custodial Staff</option>
+                <option value="sanitation">Sanitation Staff</option>
               </select>
           </div>
 
