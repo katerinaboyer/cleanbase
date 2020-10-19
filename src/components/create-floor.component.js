@@ -24,8 +24,8 @@ export default class CreateFloor extends Component {
       .then((response) => {
         if (response.data.length > 0) {
           this.setState({
-            buildings: response.data.map((building) => building._id),
-            building_id: response.data[0]._id,
+            buildings: response.data.map((building) => building),
+            building_id: response.data[0],
           });
         }
       })
@@ -86,7 +86,7 @@ export default class CreateFloor extends Component {
           <div className="form-group">
             <label>Building Id: </label>
             <select
-              ref="userInput"
+              ref="buildingInput"
               required
               className="form-control"
               value={this.state.building_id}
@@ -94,8 +94,8 @@ export default class CreateFloor extends Component {
             >
               {this.state.buildings.map((building) => {
                 return (
-                  <option key={building} value={building}>
-                    {building}
+                  <option key={building._id} value={building._id}>
+                    {building.address}
                   </option>
                 );
               })}
