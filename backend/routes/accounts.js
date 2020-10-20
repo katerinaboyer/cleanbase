@@ -10,12 +10,12 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
   const business_name = req.body.business_name;
   const office_manager = req.body.office_manager;
-  const rooms_assigned = req.body.rooms_assigned;
+  const floor_assigned = req.body.floors_assigned;
 
   const newAccount = new Account({
       business_name,
       office_manager,
-      rooms_assigned
+      floor_assigned
   });
 
   newAccount.save()

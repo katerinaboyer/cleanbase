@@ -15,7 +15,7 @@ export default class CreateUser extends Component {
       email: '',
       name: '',
       phone: '',
-      role: ''
+      role: '',
     }
   }
 
@@ -50,7 +50,7 @@ export default class CreateUser extends Component {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
-      role: this.state.role
+      role: this.state.role,
     }
 
     console.log(newUser);

@@ -13,7 +13,7 @@ const accountSchema = new Schema({
   employees: {
       type: [Schema.Types.ObjectId]
   },
-  rooms_assigned: {
+  floor_assigned: {
       type: [Schema.Types.ObjectId]
   }
 }, {
