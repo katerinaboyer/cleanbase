@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Alert } from 'react-alert'
 
 export default class CreateUser extends Component {
   constructor(props) {
