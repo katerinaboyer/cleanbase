@@ -9,8 +9,12 @@ const userSchema = new Schema({
     unique: true,
   },
   name: {
-      type: String,
-      required: true
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true,
   },
   phone: {
     type: String,
@@ -20,7 +24,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-}, {
+},
+{
   timestamps: true,
 });
 

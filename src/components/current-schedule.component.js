@@ -39,7 +39,7 @@ export default class CurrentSchedule extends Component {
             `
         }
     };
-    
+
     render() {
         return (
             <React.Fragment>
@@ -57,7 +57,7 @@ export default class CurrentSchedule extends Component {
         //         <p>upcoming schedule</p>
         //         <ListGroup>
         //         {
-        //             this.state.schedule.map(info => 
+        //             this.state.schedule.map(info =>
         //             <ListGroup.Item style={{width: "45%"}}> <ul><li>{info.date}</li><li>{info.reservationSpace}</li><li>{info.floorNumber}</li><li>{info.start} - {info.end}</li></ul></ListGroup.Item> )
         //         }
         //          </ListGroup>
