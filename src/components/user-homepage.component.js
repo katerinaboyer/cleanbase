@@ -9,14 +9,10 @@ export default class HomePage extends Component {
     }
 
     render() {
-        return (
-            <UserContext.Consumer>
-              {({user, isAuth, setUser}) => (
-                <div>
-                  This is the user homepage.
-                </div>
-              )}
-            </UserContext.Consumer>
-        )
+      return (
+        <div>
+          This is the user homepage.
+        </div>
+      )
     }
 }

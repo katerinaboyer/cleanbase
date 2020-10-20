@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import { connect, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { Link } from 'react-router';
-import { UserContext } from '../App';
+import { storeLogin } from '../store/userReducer';
+import { getUser } from '../store/selectors';
+
 const bcrypt = require('bcryptjs');
 
-export default class SignIn extends Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
 
@@ -16,7 +19,6 @@ export default class SignIn extends Component {
         this.state = {
           email: "",
           password: "",
-          setUser: props.setUser,
         };
     }
 
@@ -38,6 +40,8 @@ export default class SignIn extends Component {
       axios.get('http://localhost:5000/users/',
         { params: {email: this.state.email}
       }).then(res => {
+        console.log('state: ', this.state);
+        console.log('res: ', res.data);
         bcrypt.compare(this.state.password, res.data.password, (err, result) => {
           if (result) { // user is signed in
             const signedInUser = {
@@ -46,7 +50,7 @@ export default class SignIn extends Component {
               phone: res.data.phone,
             }
 
-            this.state.setUser(signedInUser);
+            this.props.storeLogin(signedInUser);
           } else { // user is not signed in
             console.log('invalid sign in');
           }
@@ -55,48 +59,43 @@ export default class SignIn extends Component {
     }
 
     render() {
-        return (
-            <UserContext.Consumer>
-              {(user) => {
-                if (user.name) {
-                  console.log("out: ", user);
-                  return (<Redirect to="/" />)
-                } else {
-                  return (
-                    <div>
-                      <h3>Sign In:</h3>
-                      <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                          <label>Email: </label>
-                          <input
-                            type="text"
-                            required
-                            className="form-control"
-                            value={this.state.email}
-                            onChange={this.onChangeEmail}
-                          />
-                          <label>Password: </label>
-                          <input
-                            type="text"
-                            required
-                            className="form-control"
-                            value={this.state.password}
-                            onChange={this.onChangePassword}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            type="submit"
-                            value="signin user"
-                            className="btn btn-primary"
-                          />
-                        </div>
-                      </form>
-                    </div>
-                  )
-                }
-              }}
-            </UserContext.Consumer>
-        )
+      return (
+        <div>
+          <h3>Sign In:</h3>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label>Email: </label>
+              <input
+                type="text"
+                required
+                className="form-control"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+              />
+              <label>Password: </label>
+              <input
+                type="text"
+                required
+                className="form-control"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="submit"
+                value="signin user"
+                className="btn btn-primary"
+              />
+            </div>
+          </form>
+        </div>
+      )
     }
 }
+
+const mapStateToProps = (state) => {return state};
+
+export default connect(mapStateToProps, {
+  storeLogin
+})(SignIn);
