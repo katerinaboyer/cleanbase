@@ -1,60 +1,59 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateAccount extends Component {
   constructor(props) {
     super(props);
 
     this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
+    this.onChangeFloorAssigned = this.onChangeFloorAssigned.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      business_name: "",
-      rooms_assigned: [],
-      rooms: [],
-    };
+      business_name: '',
+      floor_assigned: '',
+      floors: [],
+    }
   }
 
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/rooms/")
-      .then((response) => {
-        if (response.data.length > 0) {
-          this.setState({
-            rooms: response.data.map((room) => room._id),
-            rooms_assigned: response.data[0]._id,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios.get('http://localhost:5000/floors/')
+        .then(response => {
+            if (response.data.length > 0) {
+                this.setState({
+                    floors: response.data.map(floor => floor),
+                })
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
   }
 
   onChangeBusinessName(e) {
     this.setState({
-      business_name: e.target.value,
-    });
+      business_name: e.target.value
+    })
   }
 
-  onChangeRoomsAssigned(e) {
-      this.setState({
-          rooms_assigned: e.target.value
-      })
+  onChangeFloorAssigned(e) {
+    this.setState({
+      floor_assigned: e.target.value
+    })
   }
 
   onSubmit(e) {
     e.preventDefault();
 
     const newAccount = {
-      business_name: this.state.business_name,
-      rooms_assigned: this.state.rooms_assigned
-    };
+        business_name: this.state.business_name,
+        floor_assigned: this.state.floor_assigned
+    }
 
     console.log(newAccount);
 
-    axios
-      .post("http://localhost:5000/accounts/add", newAccount)
-      .then((res) => console.log(res.data));
+    axios.post('http://localhost:5000/accounts/add', newAccount)
+      .then(res => console.log(res.data));
   }
 
   render() {
@@ -62,44 +61,38 @@ export default class CreateAccount extends Component {
       <div>
         <h3>Create New Account</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+        <div className="form-group"> 
             <label>Business Name: </label>
-            <input
-              type="text"
+            <input  type="text"
+                required
+                className="form-control"
+                value={this.state.business_name}
+                onChange={this.onChangeBusinessName}
+                />
+          </div>
+        <div className="form-group"> 
+          <label>Floor Assigned: </label>
+          <select ref="floorInput"
               required
               className="form-control"
-              value={this.state.business_name}
-              onChange={this.onChangeBusinessName}
-            />
-          </div>
-          <div className="form-group">
-            <label>Rooms Assigned: </label>
-            <select
-              ref="userInput"
-              required
-              className="form-control"
-              value={this.state.rooms_assigned}
-              onChange={this.onChangeRoomsAssigned}
-            >
-              {this.state.rooms.map((room) => {
-                return (
-                  <option key={room} value={room}>
-                    {room}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+              value={this.state.floor_assigned}
+              onChange={this.onChangeFloorAssigned}>
+              {
+                this.state.floors.map((floor) => {
+                  return <option 
+                    key={floor._id}
+                    value={floor._id}>{floor.floor_number}
+                    </option>;
+                })
+              }
+          </select>
+        </div>
 
           <div className="form-group">
-            <input
-              type="submit"
-              value="Create Account"
-              className="btn btn-primary"
-            />
+            <input type="submit" value="Create Account" className="btn btn-primary" />
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
