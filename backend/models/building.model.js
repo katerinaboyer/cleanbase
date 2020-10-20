@@ -2,13 +2,29 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const BuildingSchema = new Schema({
-    building_name: { type: String },
-    address: { type: String, required: true },
-    total_capacity: { type: Number },
-    num_floors: { type: Number },
-    admin: { type: String }
-}, {timestamps: true,});
+const buildingSchema = new Schema({
+    building_admin: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    num_floors: {
+        type: Number,
+        required: true
+    },
+    capacity: {
+        type: Number
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    workers: {
+        type: Array
+    }
+}, {
+  timestamps: true,
+});
 
-const Building = mongoose.model('Building', BuildingSchema);
+const Building = mongoose.model('Building', buildingSchema);
+
 module.exports = Building;

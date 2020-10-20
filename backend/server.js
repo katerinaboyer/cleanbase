@@ -19,8 +19,18 @@ connection.once('open', () => {
 })
 
 const usersRouter = require('./routes/users');
+const buildingsRouter = require('./routes/buildings');
+const floorsRouter = require('./routes/floors');
+const roomsRouter = require('./routes/rooms');
+const desksRouter = require('./routes/desks');
+const reservationsRouter = require('./routes/reservations');
 
 app.use('/users', usersRouter);
+app.use('/buildings', buildingsRouter);
+app.use('/rooms', roomsRouter);
+app.use('/floors', floorsRouter);
+app.use('/desks', desksRouter);
+app.use('/reservations', reservationsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

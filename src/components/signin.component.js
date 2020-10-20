@@ -19,6 +19,7 @@ class SignIn extends Component {
         this.state = {
           email: "",
           password: "",
+          role: "",
         };
     }
 
@@ -40,14 +41,12 @@ class SignIn extends Component {
       axios.get('http://localhost:5000/users/',
         { params: {email: this.state.email}
       }).then(res => {
-        console.log('state: ', this.state);
-        console.log('res: ', res.data);
         bcrypt.compare(this.state.password, res.data.password, (err, result) => {
           if (result) { // user is signed in
             const signedInUser = {
               name: res.data.name,
               email: res.data.email,
-              phone: res.data.phone,
+              role: res.data.role,
             }
 
             this.props.storeLogin(signedInUser);
