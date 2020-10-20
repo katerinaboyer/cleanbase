@@ -1,1 +1,1 @@
-export const getUser = store => store;
+export const getUser = store => store.user;

@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { connect, useSelector } from "react-redux";
 import { storeLogout } from '../store/userReducer';
 import { getUser } from '../store/selectors';
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
+
+  const history = useHistory();
+  const user = useSelector(getUser);
+
+  const logout = () => {
+    props.storeLogout();
+    history.replace('/');
+  }
+
   return (
     <Navbar>
       <Navbar.Brand as={Link} to="/">CleanBase</Navbar.Brand>
@@ -18,7 +27,8 @@ const NavigationBar = () => {
           <Nav.Link href="/about">About</Nav.Link>
         </Nav>
         <Nav className="justify-content-end">
-          <Nav.Link href="/signin">Login</Nav.Link>
+          {(user.name === '') && <Button href="/signin">Login</Button>}
+          {(user.name != '') && <Button onClick={logout}>Logout</Button>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

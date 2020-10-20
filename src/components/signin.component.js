@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Link } from 'react-router';
 import { storeLogin } from '../store/userReducer';
@@ -8,40 +8,27 @@ import { getUser } from '../store/selectors';
 
 const bcrypt = require('bcryptjs');
 
-class SignIn extends Component {
-    constructor(props) {
-        super(props);
+const SignIn = (props) => {
 
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const history = useHistory();
 
-        this.state = {
-          email: "",
-          password: "",
-          role: "",
-        };
+    const onChangeEmail = (e) => {
+      setEmail(e.target.value);
     }
 
-    onChangeEmail(e) {
-      this.setState({
-        email: e.target.value,
-      });
+    const onChangePassword = (e) => {
+      setPassword(e.target.value);
     }
 
-    onChangePassword(e) {
-      this.setState({
-        password: e.target.value,
-      });
-    }
-
-    onSubmit(e) {
+    const onSubmit = (e) => {
       e.preventDefault();
 
       axios.get('http://localhost:5000/users/',
-        { params: {email: this.state.email}
+        { params: {email: email}
       }).then(res => {
-        bcrypt.compare(this.state.password, res.data.password, (err, result) => {
+        bcrypt.compare(password, res.data.password, (err, result) => {
           if (result) { // user is signed in
             const signedInUser = {
               name: res.data.name,
@@ -49,7 +36,8 @@ class SignIn extends Component {
               role: res.data.role,
             }
 
-            this.props.storeLogin(signedInUser);
+            props.storeLogin(signedInUser);
+            history.push('/');
           } else { // user is not signed in
             console.log('invalid sign in');
           }
@@ -57,27 +45,26 @@ class SignIn extends Component {
       });
     }
 
-    render() {
       return (
         <div>
           <h3>Sign In:</h3>
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={onSubmit}>
             <div className="form-group">
               <label>Email: </label>
               <input
                 type="text"
                 required
                 className="form-control"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
+                value={email}
+                onChange={onChangeEmail}
               />
               <label>Password: </label>
               <input
                 type="text"
                 required
                 className="form-control"
-                value={this.state.password}
-                onChange={this.onChangePassword}
+                value={password}
+                onChange={onChangePassword}
               />
             </div>
             <div className="form-group">
@@ -90,7 +77,6 @@ class SignIn extends Component {
           </form>
         </div>
       )
-    }
 }
 
 const mapStateToProps = (state) => {return state};
