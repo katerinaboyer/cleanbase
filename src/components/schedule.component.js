@@ -6,6 +6,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
 import InputGroup from 'react-bootstrap/InputGroup'
+import { Link } from 'react-router-dom';
 
 
 export default class Schedule extends Component {
@@ -74,19 +75,19 @@ export default class Schedule extends Component {
                 <Card style={{borderRadius:"1rem", width: "50%", float: "right", marginRight: "25%", marginBottom: "1%"}}>
                     <Card.Body>
                         This is some text within a card body.
-                        <Button variant="link" style={{float: "right"}}>ADD</Button>
+                        <Link to="/confirm"  style={{float: "right"}}>ADD</Link>
                     </Card.Body>
                 </Card>
                 <Card style={{borderRadius:"1rem", width: "50%", float: "right", marginRight: "25%", marginBottom: "1%"}}>
                     <Card.Body>
                         This is some text within a card body.
-                        <Button variant="link" style={{float: "right"}}>ADD</Button>
+                        <Link to="/confirm"  style={{float: "right"}}>ADD</Link>
                     </Card.Body>
                 </Card>
                 <Card style={{borderRadius:"1rem", width: "50%", float: "right", marginRight: "25%", marginBottom: "1%"}}>
                     <Card.Body>
                         This is some text within a card body.
-                        <Button variant="link" style={{float: "right"}}>ADD</Button>
+                        <Link to="/confirm"  style={{float: "right"}}>ADD</Link>
                     </Card.Body>
                 </Card>
             </div>

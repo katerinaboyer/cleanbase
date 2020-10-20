@@ -3,14 +3,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const floorSchema = new Schema({
+    floor_number: {
+        type: Number,
+        required: true
+    },
     room_list :{
-        type: Array
+        type: [Schema.Types.ObjectId],
+        ref: 'Room',
+        required: true
     },
     building_id: {
         type: String
-    },
-    desk_list: {
-        type: Array
     },
     capacity: {
         type: Number
