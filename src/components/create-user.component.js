@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Alert } from 'react-alert'
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class CreateUser extends Component {
       email: '',
       name: '',
       phone: '',
-      role: '',
+      role: 'employee',
     }
   }
 
@@ -56,7 +57,7 @@ export default class CreateUser extends Component {
     console.log(newUser);
 
     axios.post('http://localhost:5000/users/add', newUser)
-      .then(res => console.log(res.data));
+      .then(res => console.log(res.data))
   }
 
   render() {
@@ -110,6 +111,7 @@ export default class CreateUser extends Component {
           <div className="form-group">
             <input type="submit" value="Create User" className="btn btn-primary" />
           </div>
+
         </form>
       </div>
     )
