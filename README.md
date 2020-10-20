@@ -43,4 +43,5 @@ user/add
 * [react time grid booking](https://www.npmjs.com/package/react-booking-selector)
 * [react notifications](https://www.npmjs.com/package/react-toastify)
 * [react checkbox trww](https://www.npmjs.com/package/react-checkbox-tree) could use this for room/desk selection maybe
+* [react dropzone package for uploading files](https://react-dropzone.js.org/)
 
