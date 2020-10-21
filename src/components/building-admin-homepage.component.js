@@ -35,18 +35,6 @@ export default class BuildingAdminDash extends Component {
               console.log(error);
           })
 
-          axios.get('http://localhost:5000/buildings/')
-          .then(response => {
-              if (response.data.length > 0) {
-                  this.setState({
-                      address: response.data[3]
-                      //get office managers and then create list with their company names and their floor numbers
-                  })
-              }
-          })
-          .catch((error) => {
-              console.log(error);
-          })
     }
 
     render() {

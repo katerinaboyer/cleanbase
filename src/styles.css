@@ -38,11 +38,9 @@
 }
 
 .left {
-    background-color: red;
     flex: 1;
 }
 
 .right {
-    background-color: yellow;
     flex: 1;
 }
