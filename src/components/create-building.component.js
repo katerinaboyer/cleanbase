@@ -21,12 +21,16 @@ export default class CreateBuilding extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:5000/users/')
+      axios.get('http://localhost:5000/users/building_admins?role=building_admin', {
+        params: {
+          role: 'building_admin'
+        }
+      })
         .then(response => {
             if (response.data.length > 0) {
                 this.setState({
-                    users: response.data.map(user => user._id),
-                    building_admin: response.data[0]._id
+                    users: response.data.map(user => user),
+                    building_admin: response.data[0]
                 })
             }
         })
@@ -90,8 +94,8 @@ export default class CreateBuilding extends Component {
               {
                 this.state.users.map((user) => {
                   return <option 
-                    key={user}
-                    value={user}>{user}
+                    key={user._id}
+                    value={user._id}>{user.name}
                     </option>;
                 })
               }

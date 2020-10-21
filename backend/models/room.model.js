@@ -15,13 +15,19 @@ const roomSchema = new Schema({
     capacity: {
         type: Number
     },
-    desk_list: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Desk'
-    },
+    // desk_list: {
+    //     type: [Schema.Types.ObjectId],
+    //     ref: 'Desk'
+    // },
     room_type:{
         type: String
     },
+    is_available: {
+        type: Boolean
+    },
+    is_clean: {
+        type: Boolean
+    }
 }, {
   timestamps: true,
 });
