@@ -1,3 +1,5 @@
+
+
 .button {
     border: none;
     text-align: left;
@@ -43,4 +45,8 @@
 
 .right {
     flex: 1;
+}
+
+.nav-bar {
+    color: white
 }

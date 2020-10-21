@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router';
-import   NavigationBar  from './navbar.component.js';
-//import {View} from 'react-native';
 import './../styles.css';
+import IllnessReport from "./illness-report.component";
 
 export default class BuildingAdminDash extends Component {
     constructor(props) {
@@ -40,12 +39,8 @@ export default class BuildingAdminDash extends Component {
     render() {
         return (
             <div className="wrapper">
-                <div>
-                    <p className="text" style= {{color:"white"}}>
-                        Covid Cases:                Up 27%<br/>
-                        General Illness:            Down 12%
-                    </p>
-                </div>
+                
+                <IllnessReport/>
 
                 <div style= {{position:"absolute", right:"350px", color:"white"}}>
                     {this.state.address}

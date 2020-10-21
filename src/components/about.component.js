@@ -4,7 +4,7 @@ import React, { Component } from "react";
 export default class About extends Component {
     render() {
         return(
-            <p>this is the about</p>
+            <p style={{color:"white"}}>this is the about</p>
         );
     }
 }
