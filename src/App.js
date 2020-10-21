@@ -29,22 +29,6 @@ import ConfirmationPage from "./components/confirmation-page.component";
 function App(props) {
   return (
     <Router>
-      {/* <div className="container">
-        <br />
-        <Route path="/" component={MainPage} />
-        <Route path="/home" component={HomePage} />  
-        <Route path="/user" component={CreateUser} />
-        <Route path="/reservation" component={CreateReservation} />
-        <Route path="/building" component={CreateBuilding} />
-        <Route path="/account" component={CreateAccount} />
-        <Route path="/room" component={CreateRoom} />
-        <Route path="/floor" component={CreateFloor} />
-        <Route path="/desk" component={CreateDesk} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/sanitation" component={Sanitation} />
-        <Route path="/about" component={About} />
-        <Route path="/confirm" component={ConfirmationPage} />
-      </div> */}
       <NavigationBar />
       <Switch>
         <Route exact path="/" component={MainPage} />
