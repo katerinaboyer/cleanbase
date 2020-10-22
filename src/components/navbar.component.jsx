@@ -29,8 +29,8 @@ const NavigationBar = props => {
           <Nav.Link href="/about">About</Nav.Link>
         </Nav>
         <Nav className="justify-content-end">
-          {user.name === "" && <Button style={{backgroundColor:"transparent", border:"none"}} href="/signin">Login</Button>}
-          {user.name != "" && <Button style={{backgroundColor:"transparent", border:"none"}} onClick={logout}>Logout</Button>}
+          {user.name === "" && <Button style={{ border:"none"}} href="/signin">Login</Button>}
+          {user.name != "" && <Button style={{ border:"none"}} onClick={logout}>Logout</Button>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
