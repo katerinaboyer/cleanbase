@@ -20,9 +20,12 @@ export default class BuildingAdminDash extends Component {
 
 
     componentDidMount() {
+        console.log("HI");
         axios.get('http://localhost:5000/users/')
           .then(response => {
+              console.log(response.data.length);
               if (response.data.length > 0) {
+                  console.log("here");
                   this.setState({
                       users: response.data.map(user => user),
                       building_admin: response.data[0]._id
@@ -39,7 +42,7 @@ export default class BuildingAdminDash extends Component {
     render() {
         return (
             <div className="wrapper">
-                
+
                 <IllnessReport/>
 
                 <div style= {{position:"absolute", right:"350px", color:"white"}}>
