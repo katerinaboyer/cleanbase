@@ -26,6 +26,7 @@ import BuildingAdminDash from "./components/building-admin-homepage.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
 import ConfirmationPage from "./components/confirmation-page.component";
+import AccountSettings from "./components/account-settings-page.component";
 
 function App(props) {
   return (
@@ -47,6 +48,7 @@ function App(props) {
         <Route exact path="/about" component={About} />
         <Route path="/confirm" component={ConfirmationPage} />
         <Route path="/building-admin" component={BuildingAdminDash} />
+        <Route path="/account-settings" component={AccountSettings} />
       </Switch>
     </Router>
   );

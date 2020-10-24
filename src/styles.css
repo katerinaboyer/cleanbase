@@ -45,8 +45,16 @@
   flex: 1;
 }
 
-.nav-bar {
-  color: white;
+.nav-bar a{
+  color: white !important;
+}
+
+.nav-bar-items a{
+  padding-left: 30px !important;
+}
+
+.dropdown a{
+  color: #434343 !important;
 }
 
 .calender {
@@ -60,4 +68,12 @@
 
 .end-time {
   margin-left: 5%;
+}
+
+.h3 {
+  color: white;
+}
+
+.formLabels {
+  color: white;
 }
