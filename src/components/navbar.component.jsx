@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Navbar, Nav, Form, Button,NavDropdown } from "react-bootstrap";
+
+import React , {Component} from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { connect, useSelector } from "react-redux";
 import { storeLogout } from "../store/userReducer";
 import { getUser } from "../store/selectors";
@@ -9,6 +10,7 @@ import navlogo, {ReactComponent as NavLogo} from "./../Navbar-Logo.svg";
 
 const NavigationBar = props => {
   const history = useHistory();
+  const location = useLocation();
   const user = useSelector(getUser);
 
   const logout = () => {
@@ -33,12 +35,17 @@ const NavigationBar = props => {
           </Nav>
           <Nav className="justify-content-end" className="nav-bar">
             {user.name != "" && 
-            <NavDropdown title="USER NAME" className="nav-bar">
+            <NavDropdown title={user.name} className="nav-bar">
               <NavDropdown.Item href="/account-settings">Account</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
             </NavDropdown> }
-            {user.name === "" && <Button style={{ border:"none"}} href="/signin">Login</Button>}
+            {(user.name === "" && location.pathname !== "/user") && 
+            <>
+              <Nav.Link href="/user">Sign Up Here</Nav.Link>
+              <Button style={{ border:"none"}} href="/signin">Log in</Button>
+            </>}
+            {(user.name === '' && location.pathname === "/user" && <Button href="/signin" style={{ border:"none"}}>Log in</Button>)}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
