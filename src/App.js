@@ -6,6 +6,7 @@ import { getUser } from './store/selectors';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import CreateUser from './components/create-user.component';
+import LandingPage from './components/landing-page.component';
 import HomePage from './components/user-homepage.component';
 import SignIn from './components/signin.component';
 import Schedule from './components/schedule.component';
@@ -24,7 +25,8 @@ function App(props) {
     <Router>
       <NavigationBar />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/home" component={HomePage} />
         <Route exact path="/user" component={CreateUser} />
         <Route exact path="/signin" component={SignIn} />
         <PrivateRoute path="/reservation" component={CreateReservation} />
