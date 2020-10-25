@@ -1,0 +1,63 @@
+.button {
+  border: none;
+  text-align: left;
+  display: block;
+  margin: 4px 2px;
+  min-width: 450px;
+  padding-top: 5px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+}
+
+.button:hover {
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-secondary {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 2px;
+  min-width: 150px;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+  background: #ee6c4d;
+}
+
+.text {
+  color: white;
+  padding-top: 100px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  flex: 1;
+}
+
+.nav-bar {
+  color: white;
+}
+
+.calender {
+  width: 78%;
+  height: 295px;
+}
+
+.start-time {
+  position: absolute;
+}
+
+.end-time {
+  margin-left: 5%;
+}
