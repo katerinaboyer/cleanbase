@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import CreateUser from './components/create-user.component';
 import LandingPage from './components/landing-page.component';
-import HomePage from './components/user-homepage.component';
+import DashboardIndex from './components/dashboard-index.component';
 import SignIn from './components/signin.component';
 import Schedule from './components/schedule.component';
 import Sanitation from './components/sanitation.component';
@@ -34,7 +34,7 @@ function App(props) {
       <NavigationBar />
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/home" component={HomePage} />
+        <Route exact path="/dashboard" component={DashboardIndex} />
         <Route exact path="/user" component={CreateUser} />
         <Route exact path="/signin" component={SignIn} />
         <PrivateRoute path="/reservation" component={CreateReservation} />
