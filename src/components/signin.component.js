@@ -35,7 +35,7 @@ const SignIn = (props) => {
             }
 
             props.storeLogin(signedInUser);
-            history.push('/home');
+            history.push('/dashboard');
           } else { // user is not signed in
             console.log('invalid sign in');
           }
