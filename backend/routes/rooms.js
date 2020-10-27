@@ -7,6 +7,12 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/not_desk_spaces').get((req, res) => {
+  Room.find( { room_type: { $ne: "desk_space" } } )
+    .then(rooms => res.json(rooms))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const room_number = req.body.room_number;
   const floor_id = req.body.floor_id;
