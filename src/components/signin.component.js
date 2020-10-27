@@ -32,6 +32,7 @@ const SignIn = (props) => {
               name: res.data.name,
               email: res.data.email,
               role: res.data.role,
+              id: res.data._id,
             }
 
             props.storeLogin(signedInUser);
