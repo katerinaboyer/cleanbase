@@ -21,7 +21,7 @@ const LandingPage = (props) => {
       </Container>
     );
   } else {
-    history.push("/home");
+    history.push("/dashboard");
     return (<div></div>);
   }
 }
