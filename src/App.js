@@ -34,21 +34,21 @@ function App(props) {
       <NavigationBar />
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/about" component={About} />
         <Route exact path="/dashboard" component={DashboardIndex} />
         <Route exact path="/user" component={CreateUser} />
         <Route exact path="/signin" component={SignIn} />
+
         <PrivateRoute path="/reservation" component={CreateReservation} />
         <PrivateRoute path="/building" component={CreateBuilding} />
-        <Route exact path="/account" component={CreateAccount} />
+        <PrivateRoute exact path="/account" component={CreateAccount} />
         <PrivateRoute path="/room" component={CreateRoom} />
         <PrivateRoute path="/floor" component={CreateFloor} />
         <PrivateRoute path="/desk" component={CreateDesk} />
         <PrivateRoute path="/schedule" component={Schedule} />
         <PrivateRoute path="/sanitation" component={Sanitation} />
-        <Route exact path="/about" component={About} />
-        <Route path="/confirm" component={ConfirmationPage} />
-        <Route path="/building-admin" component={BuildingAdminDash} />
-        <Route path="/account-settings" component={AccountSettings} />
+        <PrivateRoute path="/confirm" component={ConfirmationPage} />
+        <PrivateRoute path="/account-settings" component={AccountSettings} />
       </Switch>
     </Router>
   );
@@ -57,9 +57,19 @@ function App(props) {
 function PrivateRoute(props) {
   const history = useHistory();
   const user = useSelector(getUser);
-  console.log(user);
+  let accessBool = false;
 
-  if (true) {
+  // If no access array is provide then any logged in user can access the page
+  // If an access array is provide then the users role must be included in the array to access the page
+  // ex) <PrivateRoute path="/admin-only" component={AdminOnly} access={['building_admin']} />
+
+  if (props.access === undefined) {
+    accessBool = true;
+  } else if (props.access.includes(user.role)) {
+    accessBool = true;
+  }
+
+  if (accessBool) {
     return <Route exact path={props.path} component={props.component} />;
   } else {
     console.log("user not authorized");
