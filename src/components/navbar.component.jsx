@@ -6,7 +6,7 @@ import { connect, useSelector } from "react-redux";
 import { storeLogout } from "../store/userReducer";
 import { getUser } from "../store/selectors";
 import './../styles.css';
-import navlogo, {ReactComponent as NavLogo} from "./../Navbar-Logo.svg";
+import navlogo from "./../Navbar-Logo.svg";
 
 const NavbarOptions = props => {
   const user = useSelector(getUser);
@@ -20,7 +20,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
-      break;
     case 'building_admin':
       return (
         <>
@@ -29,7 +28,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
-      break;
     case 'office_manager':
       return (
         <>
@@ -40,7 +38,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
-      break;
     case 'Sanitation':
       return (
         <>
@@ -49,7 +46,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
-      break;
     default:
       return (
         <>
@@ -73,7 +69,7 @@ const NavigationBar = props => {
     <div style={{color:"white"}}>
       <Navbar className="nav-bar">
         <Navbar.Brand as={Link} to="/">
-            <img src={navlogo} width="135px"/>
+            <img src={navlogo} width="135px" alt="CleanBase Navbar logo"/>
             CleanBase
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -81,7 +77,7 @@ const NavigationBar = props => {
           <Nav className="mr-auto" style={{paddingLeft: '40px'}}>
             <NavbarOptions />
           </Nav>
-          <Nav className="justify-content-end" className="nav-bar">
+          <Nav className="justify-content-end">
             {user.name !== "" &&
             <NavDropdown title={user.name} className="nav-bar">
               <NavDropdown.Item href="/account-settings">Account</NavDropdown.Item>
