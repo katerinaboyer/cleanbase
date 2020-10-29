@@ -12,7 +12,7 @@ import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
-
+import CreateSelfIllnessReport from './components/create-selfIllnessReport.component';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
         <Route path="/schedule" component={Schedule} />
         <Route path="/sanitation" component={Sanitation} />
         <Route path="/about" component={About} />
+        <Route path="/selfIllnessReports" component={CreateSelfIllnessReport} />
       </div>
     </Router>
   );
