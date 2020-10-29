@@ -45,9 +45,9 @@ const SignIn = (props) => {
     }
 
       return (
-        <div>
-          <h3>Sign In:</h3>
-          <form onSubmit={onSubmit}>
+        <div style={{color:"white"}}>
+          <h3 style={{paddingLeft:"3rem"}}>Sign In:</h3>
+          <form onSubmit={onSubmit} style={{paddingLeft:"3rem", width:"25%"}}>
             <div className="form-group">
               <label>Email: </label>
               <input
@@ -69,7 +69,7 @@ const SignIn = (props) => {
             <div className="form-group">
               <input
                 type="submit"
-                value="signin user"
+                value="Sign In"
                 className="btn btn-primary"
               />
             </div>

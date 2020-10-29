@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {Form, Button, Col, Row} from 'react-bootstrap';
+
 import "./../styles.css"
 
 
@@ -20,32 +22,60 @@ export default class AccountSettings extends Component {
     render() {
         return(
             <div>
-                <div style={{marginLeft:"10.5rem", display:"block"}} >
+                <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
                     <h3 className="h3">Personal Info:</h3>
-                    <form onSubmit={this.handleSubmit}>
-                        <label className="formLabels">
-                        Name:
-                        <input style={{paddingRight:"10px"}}type="text" value={this.state.value}/>
-                        </label>
-                        <br/>
-                        <label className="formLabels">
-                        Email:
-                        <input style={{paddingRight:"10px"}}type="text" value={this.state.value}/>
-                        </label>
-                        <br/>
-                        <label className="formLabels">
-                        Phone:
-                        <input style={{paddingRight:"10px"}}type="text" value={this.state.value}/>
-                        </label>
-                        <br/>
-                        <input type="submit" value="Submit" />
-                    </form>
-                </div>
-                <div style={{marginLeft:"10.5rem", marginTop:"3.5rem", color:"white"}}>
+                    <Form>
+                        <Form.Group as={Row} controlId="formBasicName">
+                            <Form.Label column sm={3}>Name</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="name" placeholder="Name" />
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} controlId="formHorizontalEmail">
+                            <Form.Label column sm={3}>Email</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="email" placeholder="Enter email" />
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} controlId="formBasicPhone">
+                            <Form.Label column sm={3}>Phone</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="phone" placeholder="123-456-7890" />
+                            </Col>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Update
+                        </Button>
+                    </Form>
+                </div> 
+
+                <div style={{marginLeft:"10.5rem", paddingTop:"150px", display:"block", color:"white", width:"45%"}} >
                     <h3 className="h3">Company Info:</h3>
-                    <p>Company:</p>
-                    <p>Role:</p>
-                </div>
+                    <Form>
+                        <Form.Group as={Row} controlId="formBasicName">
+                            <Form.Label column sm={3}>Company Name</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="name" placeholder="Company Name" readOnly/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} controlId="formHorizontalEmail">
+                            <Form.Label column sm={3}>Address</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="address" placeholder="Company Address" readOnly/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} controlId="formBasicPhone">
+                            <Form.Label column sm={3}>Role</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control type="role" placeholder="employee" readOnly/>
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                </div> 
             </div>
         );
     }

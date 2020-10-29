@@ -21,11 +21,11 @@ export default class CurrentSchedule extends Component {
     
     render() {
         return(
-            <div style={{position: "absolute", width: "50%", left: "1100px"}}>
-                <p>upcoming schedule</p>
+            <div style={{position: "absolute", width: "50%", left: "1100px", paddingTop:"0px"}}>
+                <h3 style={{color:"white"}}>Upcoming Schedule</h3>
                 {
                     this.state.schedule.map(info => 
-                        <ListGroup>
+                        <ListGroup style={{paddingBottom:"10px"}}>
                             <ListGroup.Item style={{width: "45%"}}> <ul style={{listStyle: "none"}}><li>{info.date}</li><li>{`${info.isDesk? 'Desk #' : 'Conference #'}${info.reservationSpace} Floor:${info.floorNumber} ${info.start} - ${info.end}`}</li></ul></ListGroup.Item>
                         </ListGroup>
                      )

@@ -10,7 +10,7 @@ const LandingPage = (props) => {
 
   if (user.name === '') {
     return (
-      <Container>
+      <Container style={{color:"white"}}>
         <Row className="justify-content-md-center my-auto" style={{ padding: '30px' }}>
           <Col xs={12} style={{ textAlign: 'center' }}>
             <h3>Welcome to CleanBase</h3>
