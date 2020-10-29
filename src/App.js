@@ -22,11 +22,12 @@ import CreateBuilding from "./components/create-building.component";
 import CreateDesk from "./components/create-desk.component";
 import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
-import BuildingAdminDash from "./components/building-admin-homepage.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
 import ConfirmationPage from "./components/confirmation-page.component";
 import AccountSettings from "./components/account-settings-page.component";
+import AccountMgmt from "./components/account-management.component";
+import SpaceMgmt from "./components/space-management.component";
 
 function App(props) {
   return (
@@ -49,6 +50,8 @@ function App(props) {
         <PrivateRoute path="/sanitation" component={Sanitation} />
         <PrivateRoute path="/confirm" component={ConfirmationPage} />
         <PrivateRoute path="/account-settings" component={AccountSettings} />
+        <PrivateRoute path="/account-mgmt" component={AccountMgmt}/>
+        <PrivateRoute path="/space-mgmt" component={SpaceMgmt}/>
       </Switch>
     </Router>
   );

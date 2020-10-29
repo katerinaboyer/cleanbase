@@ -18,7 +18,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <Nav.Link href="/schedule">Schedule</Nav.Link>
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
-          <Nav.Link href="/about">About</Nav.Link>
         </>
       );
       break;
@@ -26,9 +25,8 @@ const NavbarOptions = props => {
       return (
         <>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-          <Nav.Link href="/schedule">Schedule</Nav.Link>
+          <Nav.Link href="/account-mgmt">Account Management</Nav.Link>
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
-          <Nav.Link href="/about">About</Nav.Link>
         </>
       );
       break;
@@ -36,9 +34,10 @@ const NavbarOptions = props => {
       return (
         <>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+          <Nav.Link href="/account-mgmt">Account Management</Nav.Link>
+          <Nav.Link href="/space-mgmt">Space Management</Nav.Link>
           <Nav.Link href="/schedule">Schedule</Nav.Link>
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
-          <Nav.Link href="/about">About</Nav.Link>
         </>
       );
       break;
@@ -48,7 +47,6 @@ const NavbarOptions = props => {
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <Nav.Link href="/schedule">Schedule</Nav.Link>
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
-          <Nav.Link href="/about">About</Nav.Link>
         </>
       );
       break;
