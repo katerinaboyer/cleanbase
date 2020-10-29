@@ -1,39 +1,85 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  useHistory
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUser } from "./store/selectors";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import CreateUser from './components/create-user.component';
-import HomePage from './components/user-homepage.component';
+import LandingPage from './components/landing-page.component';
+import DashboardIndex from './components/dashboard-index.component';
+import SignIn from './components/signin.component';
 import Schedule from './components/schedule.component';
 import Sanitation from './components/sanitation.component';
 import About from './components/about.component';
+import NavigationBar  from './components/navbar.component';
 import CreateBuilding from "./components/create-building.component";
-import CreateDesk from "./components/create-desk.component"
+import CreateDesk from "./components/create-desk.component";
 import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
-import CreateSelfIllnessReport from './components/create-selfIllnessReport.component';
+import ConfirmationPage from "./components/confirmation-page.component";
+import AccountSettings from "./components/account-settings-page.component";
+import AccountMgmt from "./components/account-management.component";
+import SpaceMgmt from "./components/space-management.component";
 
-function App() {
+function App(props) {
   return (
     <Router>
-      <div className="container">
-        <br />
-        <Route path="/" component={HomePage} />
-        <Route path="/user" component={CreateUser} />
-        <Route path="/reservation" component={CreateReservation} />
-        <Route path="/building" component={CreateBuilding} />
-        <Route path="/account" component={CreateAccount} />
-        <Route path="/room" component={CreateRoom} />
-        <Route path="/floor" component={CreateFloor} />
-        <Route path="/desk" component={CreateDesk} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/sanitation" component={Sanitation} />
-        <Route path="/about" component={About} />
-        <Route path="/selfIllnessReports" component={CreateSelfIllnessReport} />
-      </div>
+      <NavigationBar />
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/dashboard" component={DashboardIndex} />
+        <Route exact path="/user" component={CreateUser} />
+        <Route exact path="/signin" component={SignIn} />
+
+        <PrivateRoute path="/reservation" component={CreateReservation} />
+        <PrivateRoute path="/building" component={CreateBuilding} />
+        <PrivateRoute exact path="/account" component={CreateAccount} />
+        <PrivateRoute path="/room" component={CreateRoom} />
+        <PrivateRoute path="/floor" component={CreateFloor} />
+        <PrivateRoute path="/desk" component={CreateDesk} />
+        <PrivateRoute path="/schedule" component={Schedule} />
+        <PrivateRoute path="/sanitation" component={Sanitation} />
+        <PrivateRoute path="/confirm" component={ConfirmationPage} />
+        <PrivateRoute path="/account-settings" component={AccountSettings} />
+        <PrivateRoute path="/account-mgmt" component={AccountMgmt}/>
+        <PrivateRoute path="/space-mgmt" component={SpaceMgmt}/>
+        <PrivateRoute path="/selfIllnessReports" component={CreateSelfIllnessReport} />
+      </Switch>
     </Router>
   );
+}
+
+function PrivateRoute(props) {
+  const history = useHistory();
+  const user = useSelector(getUser);
+  let accessBool = false;
+
+  // If no access array is provide then any logged in user can access the page
+  // If an access array is provide then the users role must be included in the array to access the page
+  // ex) <PrivateRoute path="/admin-only" component={AdminOnly} access={['building_admin']} />
+
+  if (props.access === undefined) {
+    accessBool = true;
+  } else if (props.access.includes(user.role)) {
+    accessBool = true;
+  }
+
+  if (accessBool) {
+    return <Route exact path={props.path} component={props.component} />;
+  } else {
+    console.log("user not authorized");
+    history.replace("/");
+    return <div></div>;
+  }
 }
 
 export default App;

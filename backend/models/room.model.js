@@ -22,6 +22,12 @@ const roomSchema = new Schema({
     room_type:{
         type: String
     },
+    is_available: {
+        type: Boolean
+    },
+    is_clean: {
+        type: Boolean
+    }
 }, {
   timestamps: true,
 });

@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
+//import { useHistory } from "react-router-dom";
+const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -8,15 +10,28 @@ export default class CreateUser extends Component {
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+
     this.state = {
-      email: '',
-      name: '',
-      phone: '',
-      role: ''
-    }
+      email: "",
+      name: "",
+      phone: "",
+      password: "",
+      role: "",
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+        email: '',
+        name: '',
+        phone: '',
+        password: '',
+        role: '',
+    });
   }
 
   onChangeEmail(e) {
@@ -43,6 +58,12 @@ export default class CreateUser extends Component {
     })
   }
 
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -50,21 +71,21 @@ export default class CreateUser extends Component {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
-      role: this.state.role
-    }
+      password: bcrypt.hashSync(this.state.password, 10),
+      role: this.state.role,
+    };
 
-    console.log(newUser);
-
-    axios.post('http://localhost:5000/users/add', newUser)
+    // window.location = '/'; // take user back to homepage on submit
+    axios.post('http://localhost:5000/users/add/', newUser)
       .then(res => console.log(res.data));
   }
 
   render() {
     return (
-      <div>
-        <h3>Create New User</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group"> 
+      <div style={{color:"white"}}>
+        <h3 style={{paddingLeft:"3rem"}}>Create Account</h3>
+        <form onSubmit={this.onSubmit} style={{paddingLeft:"3rem", width:"40%"}}>
+          <div className="form-group">
             <label>Email: </label>
             <input  type="text"
                 required
@@ -73,7 +94,7 @@ export default class CreateUser extends Component {
                 onChange={this.onChangeEmail}
                 />
           </div>
-          <div className="form-group"> 
+          <div className="form-group">
             <label>Name: </label>
             <input  type="text"
                 required
@@ -82,7 +103,7 @@ export default class CreateUser extends Component {
                 onChange={this.onChangeName}
                 />
           </div>
-          <div className="form-group"> 
+          <div className="form-group">
             <label>Phone: </label>
             <input  type="text"
                 required
@@ -92,6 +113,16 @@ export default class CreateUser extends Component {
                 />
           </div>
           <div className="form-group">
+            <label>Password: </label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              value={this.state.password}
+              onChange={this.onChangePassword}
+            />
+          </div>
+          <div className="form-group">
             <label>Role: </label>
             <select
               ref="roleInput"
@@ -99,17 +130,19 @@ export default class CreateUser extends Component {
               className="form-control"
               value={this.state.role}
               onChange={this.onChangeRole}
-              >
-                <option value="employee">Employee</option>
-                <option value="office_manager">Office Manager</option>
-                <option value="building_admin">Building Admin</option>
-                <option value="sanitation">Sanitation Staff</option>
-              </select>
+            >
+              <option value="-">-</option>
+              <option value="employee">Employee</option>
+              <option value="office_manager">Office Manager</option>
+              <option value="building_admin">Building Admin</option>
+              <option value="sanitation">Sanitation Staff</option>
+            </select>
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Create User" className="btn btn-primary" />
+            <input type="submit" value="Create Account" className="btn btn-primary"/>
           </div>
+
         </form>
       </div>
     )

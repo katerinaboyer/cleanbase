@@ -21,9 +21,9 @@ export default class CreateBuilding extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:5000/users/', {
+      axios.get('http://localhost:5000/users/building_admins?role=building_admin', {
         params: {
-          'role': 'building_admin'
+          role: 'building_admin'
         }
       })
         .then(response => {
