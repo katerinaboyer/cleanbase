@@ -18,6 +18,7 @@ const NavbarOptions = props => {
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <Nav.Link href="/schedule">Schedule</Nav.Link>
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
+          <Nav.Link href="/selfIllnessReports">Report Illness</Nav.Link>
         </>
       );
     case 'building_admin':
