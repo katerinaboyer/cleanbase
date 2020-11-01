@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
