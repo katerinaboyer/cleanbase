@@ -7,6 +7,7 @@ import TimePicker from "react-time-picker";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { Container, Row, Col } from 'react-bootstrap';
 import "./../styles.css";
 
 export default class Schedule extends Component {
@@ -29,106 +30,116 @@ export default class Schedule extends Component {
     let currentDate = dateformat(this.state.date, "dddd mmmm d");
 
     return (
-      <div>
-        <div
-          style={{
-            position: "relative",
-            top: "200px",
-            width: "25%",
-            marginLeft: "2%"
-          }}
-        >
-          <p>{currentDate}</p>
-          <Calendar
-            onChange={this.onChange}
-            value={this.state.date}
-            className="calender"
-          />
-          <div>
-            <TimePicker
-              onChange={this.onChangeStart}
-              value={this.state.startTime}
-              clockIcon={null}
-              disableClock={true}
-              hourPlaceholder={" "}
-              minutePlaceholder={" "}
+      <Container>
+        <Row>
+          <Col>
+          <div
+            style={{
+              //position: "relative",
+              //top: "200px",
+              //width: "25%",
+              //marginLeft: "2%"
+            }}
+          >
+            <p>{currentDate}</p>
+            <Calendar
+              onChange={this.onChange}
+              value={this.state.date}
+              className="calender"
             />
-            <p style={{ marginLeft: "38%", position: "absolute" }}>to </p>
-            <TimePicker
-              onChange={this.onChangeEnd}
-              value={this.state.endTime}
-              clockIcon={null}
-              disableClock={true}
-              hourPlaceholder={" "}
-              minutePlaceholder={" "}
-              className="end-time"
-              style={{ marginLeft: "8%" }}
-            />
+            <div>
+              <TimePicker
+                onChange={this.onChangeStart}
+                value={this.state.startTime}
+                clockIcon={null}
+                disableClock={true}
+                hourPlaceholder={" "}
+                minutePlaceholder={" "}
+              />
+              <p style={{ marginLeft: "38%", position: "absolute" }}>to </p>
+              <TimePicker
+                onChange={this.onChangeEnd}
+                value={this.state.endTime}
+                clockIcon={null}
+                disableClock={true}
+                hourPlaceholder={" "}
+                minutePlaceholder={" "}
+                className="end-time"
+                style={{ marginLeft: "8%" }}
+              />
+            </div>
+            <InputGroup style={{ marginTop: "3%" }}>
+              <InputGroup.Prepend>
+                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+              </InputGroup.Prepend>
+              <p>Desks</p>
+            </InputGroup>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+              </InputGroup.Prepend>
+              <p>Conference Room</p>
+            </InputGroup>
+            <Button>Filter</Button>
           </div>
-          <InputGroup style={{ marginTop: "3%" }}>
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <p>Desks</p>
-          </InputGroup>
-          <InputGroup>
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <p>Conference Room</p>
-          </InputGroup>
-          <Button>Filter</Button>
-        </div>
-        <CurrentSchedule />
-        <Card
-          style={{
-            borderRadius: "1rem",
-            width: "50%",
-            float: "right",
-            marginRight: "25%",
-            marginBottom: "1%"
-          }}
-        >
-          <Card.Body>
-            This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
-              ADD
-            </Link>
-          </Card.Body>
-        </Card>
-        <Card
-          style={{
-            borderRadius: "1rem",
-            width: "50%",
-            float: "right",
-            marginRight: "25%",
-            marginBottom: "1%"
-          }}
-        >
-          <Card.Body>
-            This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
-              ADD
-            </Link>
-          </Card.Body>
-        </Card>
-        <Card
-          style={{
-            borderRadius: "1rem",
-            width: "50%",
-            float: "right",
-            marginRight: "25%",
-            marginBottom: "1%"
-          }}
-        >
-          <Card.Body>
-            This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
-              ADD
-            </Link>
-          </Card.Body>
-        </Card>
-      </div>
+          </Col>
+          <Col>
+          <CurrentSchedule />
+          </Col>
+        </Row>
+        <Row>
+        <Col>
+          <Card
+            style={{
+              borderRadius: "1rem",
+              width: "50%",
+              float: "right",
+              marginRight: "25%",
+              marginBottom: "1%"
+            }}
+          >
+            <Card.Body>
+              This is some text within a card body.
+              <Link to="/confirm" style={{ float: "right" }}>
+                ADD
+              </Link>
+            </Card.Body>
+          </Card>
+          <Card
+            style={{
+              borderRadius: "1rem",
+              width: "50%",
+              float: "right",
+              marginRight: "25%",
+              marginBottom: "1%"
+            }}
+          >
+            <Card.Body>
+              This is some text within a card body.
+              <Link to="/confirm" style={{ float: "right" }}>
+                ADD
+              </Link>
+            </Card.Body>
+          </Card>
+          <Card
+            style={{
+              borderRadius: "1rem",
+              width: "50%",
+              float: "right",
+              marginRight: "25%",
+              marginBottom: "1%"
+            }}
+          >
+            <Card.Body>
+              This is some text within a card body.
+              <Link to="/confirm" style={{ float: "right" }}>
+                ADD
+              </Link>
+            </Card.Body>
+          </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
