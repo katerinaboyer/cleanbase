@@ -8,6 +8,8 @@ import {
 import { useSelector } from "react-redux";
 import { getUser } from "./store/selectors";
 
+import "./styles.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import CreateUser from './components/create-user.component';
@@ -54,6 +56,7 @@ function App(props) {
         <PrivateRoute path="/space-mgmt" component={SpaceMgmt}/>
       </Switch>
     </Router>
+
   );
 }
 

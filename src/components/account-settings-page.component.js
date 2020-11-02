@@ -45,7 +45,7 @@ export default class AccountSettings extends Component {
                                 <Form.Control type="phone" placeholder="123-456-7890" />
                             </Col>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button className="button-secondary" type="submit">
                             Update
                         </Button>
                     </Form>

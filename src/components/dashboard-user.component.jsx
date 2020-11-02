@@ -8,12 +8,12 @@ const DashboardUser = (props) => {
   return (
     <div>
       <h2 style={{color:"white", paddingLeft:"3rem"}}> User Dashboard </h2>
-      <Container>
+      <Container fluid>
         <Row>
-          <Col>
+          <Col style={{paddingLeft:"8%"}}>
             <IllnessReport/>
           </Col>
-          <Col>
+          <Col style={{paddingRight:"8%"}}>
             <CurrentSchedule/>
           </Col>
         </Row>

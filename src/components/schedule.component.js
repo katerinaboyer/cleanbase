@@ -30,9 +30,9 @@ export default class Schedule extends Component {
     let currentDate = dateformat(this.state.date, "dddd mmmm d");
 
     return (
-      <Container>
+      <Container fluid>
         <Row>
-          <Col>
+          <Col style={{paddingLeft:"75px"}}>
           <div
             style={{
               //position: "relative",
@@ -83,60 +83,27 @@ export default class Schedule extends Component {
             <Button>Filter</Button>
           </div>
           </Col>
-          <Col>
-          <CurrentSchedule />
+          <Col xs={5} style={{paddingTop:"75px"}}>
+          <Card
+            style={{
+              borderRadius: "1rem",
+              width: "90%",
+              float: "right",
+              marginRight: "10%",
+              marginBottom: "1%"
+            }}
+          >
+            <Card.Body>
+              This is some text within a card body.
+              <Link to="/confirm" style={{ float: "right" }}>
+                ADD
+              </Link>
+            </Card.Body>
+          </Card>
+
           </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Card
-            style={{
-              borderRadius: "1rem",
-              width: "50%",
-              float: "right",
-              marginRight: "25%",
-              marginBottom: "1%"
-            }}
-          >
-            <Card.Body>
-              This is some text within a card body.
-              <Link to="/confirm" style={{ float: "right" }}>
-                ADD
-              </Link>
-            </Card.Body>
-          </Card>
-          <Card
-            style={{
-              borderRadius: "1rem",
-              width: "50%",
-              float: "right",
-              marginRight: "25%",
-              marginBottom: "1%"
-            }}
-          >
-            <Card.Body>
-              This is some text within a card body.
-              <Link to="/confirm" style={{ float: "right" }}>
-                ADD
-              </Link>
-            </Card.Body>
-          </Card>
-          <Card
-            style={{
-              borderRadius: "1rem",
-              width: "50%",
-              float: "right",
-              marginRight: "25%",
-              marginBottom: "1%"
-            }}
-          >
-            <Card.Body>
-              This is some text within a card body.
-              <Link to="/confirm" style={{ float: "right" }}>
-                ADD
-              </Link>
-            </Card.Body>
-          </Card>
+          <Col style={{paddingRight:"50px"}}>
+            <CurrentSchedule />
           </Col>
         </Row>
       </Container>

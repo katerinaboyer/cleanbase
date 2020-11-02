@@ -1,3 +1,8 @@
+.background-image {
+  position: relative;
+}
+
+
 .button {
   border: none;
   text-align: left;
@@ -21,10 +26,10 @@
   text-align: center;
   display: block;
   margin: 4px 2px;
-  min-width: 150px;
-  transition-duration: 0.4s;
+  min-width: 125px;
   border-radius: 10px;
   background: #ee6c4d;
+  color: #434343
 }
 
 .text {
@@ -76,4 +81,8 @@
 
 .formLabels {
   color: white;
+}
+
+* p{
+  color:white;
 }
