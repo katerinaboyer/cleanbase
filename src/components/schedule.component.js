@@ -91,7 +91,7 @@ export default class Schedule extends Component {
         >
           <Card.Body>
             This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
+            <Link to="/scheduleConfirmation" style={{ float: "right" }}>
               ADD
             </Link>
           </Card.Body>
@@ -107,7 +107,7 @@ export default class Schedule extends Component {
         >
           <Card.Body>
             This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
+            <Link to="/scheduleConfirmation" style={{ float: "right" }}>
               ADD
             </Link>
           </Card.Body>
@@ -123,7 +123,7 @@ export default class Schedule extends Component {
         >
           <Card.Body>
             This is some text within a card body.
-            <Link to="/confirm" style={{ float: "right" }}>
+            <Link to="/scheduleConfirmation" style={{ float: "right" }}>
               ADD
             </Link>
           </Card.Body>

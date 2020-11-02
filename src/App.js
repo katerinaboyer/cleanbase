@@ -15,7 +15,7 @@ import MainPage from "./components/mainpage.component";
 import HomePage from "./components/homepage.component";
 import SignIn from "./components/signin.component";
 import Schedule from "./components/schedule.component";
-import Sanitation from "./components/sanitation.component";
+import UserSanitation from "./components/user-sanitation.component";
 import About from "./components/about.component";
 import NavigationBar from "./components/navbar.component";
 import CreateBuilding from "./components/create-building.component";
@@ -25,7 +25,9 @@ import CreateAccount from "./components/create-account.component";
 import BuildingAdminDash from "./components/building-admin-homepage.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
-import ConfirmationPage from "./components/confirmation-page.component";
+import ConfirmationPage from "./components/schedule-confirmation.component";
+import SanitationRequest from "./components/sanitation-request.component";
+import SanitationSchedule from "./components/sanitation-schedule.component";
 
 function App(props) {
   return (
@@ -43,10 +45,12 @@ function App(props) {
         <PrivateRoute path="/floor" component={CreateFloor} />
         <PrivateRoute path="/desk" component={CreateDesk} />
         <PrivateRoute path="/schedule" component={Schedule} />
-        <PrivateRoute path="/sanitation" component={Sanitation} />
+        <PrivateRoute path="/sanitation" component={UserSanitation} />
         <Route exact path="/about" component={About} />
-        <Route path="/confirm" component={ConfirmationPage} />
+        <Route path="/scheduleConfirmation" component={ConfirmationPage} />
+        <Route path="/sanitationRequest" component={SanitationRequest} />
         <Route path="/building-admin" component={BuildingAdminDash} />
+        <Route path="/sanitation-schedule" component={SanitationSchedule} />
       </Switch>
     </Router>
   );
