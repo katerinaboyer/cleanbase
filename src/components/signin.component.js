@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Link } from 'react-router';
 import { storeLogin } from '../store/userReducer';
-import { getUser } from '../store/selectors';
 
 const bcrypt = require('bcryptjs');
 
@@ -34,10 +32,11 @@ const SignIn = (props) => {
               name: res.data.name,
               email: res.data.email,
               role: res.data.role,
+              id: res.data._id,
             }
 
             props.storeLogin(signedInUser);
-            history.push('/');
+            history.push('/dashboard');
           } else { // user is not signed in
             console.log('invalid sign in');
           }
@@ -46,9 +45,9 @@ const SignIn = (props) => {
     }
 
       return (
-        <div>
-          <h3>Sign In:</h3>
-          <form onSubmit={onSubmit}>
+        <div style={{color:"white"}}>
+          <h3 style={{paddingLeft:"3rem"}}>Sign In:</h3>
+          <form onSubmit={onSubmit} style={{paddingLeft:"3rem", width:"25%"}}>
             <div className="form-group">
               <label>Email: </label>
               <input
@@ -70,7 +69,7 @@ const SignIn = (props) => {
             <div className="form-group">
               <input
                 type="submit"
-                value="signin user"
+                value="Sign In"
                 className="btn btn-primary"
               />
             </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
@@ -12,6 +13,7 @@ export default class CreateUser extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
 
     this.state = {
       email: "",
@@ -80,9 +82,9 @@ export default class CreateUser extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New User</h3>
-        <form onSubmit={this.onSubmit}>
+      <div style={{color:"white"}}>
+        <h3 style={{paddingLeft:"3rem"}}>Create Account</h3>
+        <form onSubmit={this.onSubmit} style={{paddingLeft:"3rem", width:"40%"}}>
           <div className="form-group">
             <label>Email: </label>
             <input  type="text"
@@ -138,7 +140,7 @@ export default class CreateUser extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Create User" className="btn btn-primary" />
+            <input type="submit" value="Create Account" className="btn btn-primary"/>
           </div>
 
         </form>
