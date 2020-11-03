@@ -52,14 +52,14 @@ const SignIn = (props) => {
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={4}>Email</Form.Label>
                 <Col sm={8}>
-                    <Form.Control type="text" placeholder="" onChange={onChangePassword}/>
+                    <Form.Control type="text" placeholder="" onChange={onChangeEmail}/>
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={4}>Password</Form.Label>
                 <Col sm={8}>
-                    <Form.Control type="text" placeholder="" onChange={onChangeEmail}/>
+                    <Form.Control type="text" placeholder="" onChange={onChangePassword}/>
                 </Col>
             </Form.Group>
 
