@@ -21,6 +21,7 @@ export default class CreateUser extends Component {
       name: "",
       phone: "",
       password: "",
+      passwordMatch: true,
       role: "",
     };
   }
@@ -63,6 +64,14 @@ export default class CreateUser extends Component {
     this.setState({
       password: e.target.value,
     });
+  }
+
+  onChangeCheckPassword(e) {
+    if(this.state.password != e.target.value){
+      this.setState({
+        passwordMatch: false,
+      })
+    }
   }
 
   onSubmit(e) {
@@ -122,6 +131,9 @@ export default class CreateUser extends Component {
                 <Form.Label column sm={3}>Confirm Password</Form.Label>
                 <Col sm={9}>
                     <Form.Control type="name" placeholder=""/>
+                    <Form.Text id="confirmPassword" muted>
+                      {this.state.passwordMatch}
+                    </Form.Text>
                 </Col>
             </Form.Group>
 
