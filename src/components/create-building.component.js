@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 export default class CreateBuilding extends Component {
   constructor(props) {
@@ -81,57 +82,50 @@ export default class CreateBuilding extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Building</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group"> 
-          <label>Building Admin: </label>
-          <select ref="userInput"
-              required
-              className="form-control"
-              value={this.state.building_admin}
-              onChange={this.onChangeBuildingAdmin}>
-              {
-                this.state.users.map((user) => {
-                  return <option 
-                    key={user._id}
-                    value={user._id}>{user.name}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
-          <div className="form-group"> 
-            <label>Number of Floors: </label>
-            <input  type="number"
-                required
-                className="form-control"
-                value={this.state.num_floors}
-                onChange={this.onChangeNumFloors}
-                />
-          </div>
-          <div className="form-group"> 
-            <label>Capacity: </label>
-            <input  type="number"
-                required
-                className="form-control"
-                value={this.state.capacity}
-                onChange={this.onChangeCapacity}
-                />
-          </div>
-          <div className="form-group"> 
-            <label>Address: </label>
-            <input  type="text"
-                required
-                className="form-control"
-                value={this.state.address}
-                onChange={this.onChangeAddress}
-                />
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Create Building" className="btn btn-primary" />
-          </div>
-        </form>
+        <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+          <h3 className="h3">Create Reservation:</h3>
+          <Form onSubmit={this.onSubmit}>
+              <Form.Group as={Row} controlId="formAdmin">
+                  <Form.Label column sm={3}>Building Admin</Form.Label>
+                  <Col sm={9}>
+                      <Form.Control as="select" placeholder="Name" onChange={this.onChangeBuildingAdmin}>
+                                {
+                          this.state.users.map((user) => {
+                            return <option
+                              key={user._id}
+                              value={user._id}>{user.name}
+                              </option>;
+                          })
+                        }
+                      </Form.Control>
+                  </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="formFloorNumbers">
+                  <Form.Label column sm={3}>Number of Floors</Form.Label>
+                  <Col sm={9}>
+                      <Form.Control type="numFloors" onChange={this.onChangeNumFloors}/>
+                  </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="formCapacity">
+                  <Form.Label column sm={3}>Capacity</Form.Label>
+                  <Col sm={9}>
+                    <Form.Control type="capacity" onChange={this.onChangeCapacity} />
+                  </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="formBasicAddress">
+                  <Form.Label column sm={3}>Address</Form.Label>
+                  <Col sm={9}>
+                      <Form.Control type="address" placeholder="123 Aggie Dr." onChange={this.onChangeAddress}/>
+                  </Col>
+              </Form.Group>
+
+              <Button className="button-secondary" type="submit">
+                  Create Building
+              </Button>
+          </Form>
       </div>
     )
   }

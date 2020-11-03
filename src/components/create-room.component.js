@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 export default class CreateRoom extends Component {
   constructor(props) {
@@ -79,71 +80,55 @@ export default class CreateRoom extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Room</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-            <label>Room Number: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.room_number}
-              onChange={this.onChangeRoomNumber}
-            />
-          </div>
-          <div className="form-group">
-            <label>Floor Id: </label>
-            <select
-              ref="floorInput"
-              required
-              className="form-control"
-              value={this.state.floor_id}
-              onChange={this.onChangeFloorId}
-            >
-              {this.state.floors.map((floor) => {
+      <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+        <h3 className="h3">Create New Room:</h3>
+        <Form onSubmit={this.onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Room Number</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="12A" onChange={this.onChangeRoomNumber}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formFloorNumbers">
+                <Form.Label column sm={3}>Floor ID</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeFloorId}>
+                    {this.state.floors.map((floor) => {
                 return (
                   <option key={floor._id} value={floor._id}>
                     {floor.floor_number}
                   </option>
                 );
               })}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Capacity: </label>
-            <input
-              type="number"
-              required
-              className="form-control"
-              value={this.state.capacity}
-              onChange={this.onChangeCapacity}
-            />
-          </div>
-          <div className="form-group">
-            <label>Room Type: </label>
-            <select
-              ref="roomTypeInput"
-              required
-              className="form-control"
-              value={this.state.room_type}
-              onChange={this.onChangeRoomType}
-              >
-                <option value="desk_space">Desk Space</option>
-                <option value="office">Office</option>
-                <option value="conference">Conference</option>
-              </select>
-          </div>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
 
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Create Room"
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Capacity</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="12" onChange={this.onChangeCapacity}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formFloorNumbers">
+                <Form.Label column sm={3}>Floor ID</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeRoomType}>
+                      <option value="desk_space">Desk Space</option>
+                      <option value="office">Office</option>
+                      <option value="conference">Conference</option>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Button className="button-secondary" type="submit">
+                Create Room
+            </Button>
+        </Form>
       </div>
+     
     );
   }
 }

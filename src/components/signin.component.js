@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Link } from 'react-router';
 import { storeLogin } from '../store/userReducer';
-import { getUser } from '../store/selectors';
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 const bcrypt = require('bcryptjs');
 
@@ -34,10 +33,11 @@ const SignIn = (props) => {
               name: res.data.name,
               email: res.data.email,
               role: res.data.role,
+              id: res.data._id,
             }
 
             props.storeLogin(signedInUser);
-            history.push('/');
+            history.push('/dashboard');
           } else { // user is not signed in
             console.log('invalid sign in');
           }
@@ -46,35 +46,27 @@ const SignIn = (props) => {
     }
 
       return (
-        <div>
-          <h3>Sign In:</h3>
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <label>Email: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={email}
-                onChange={onChangeEmail}
-              />
-              <label>Password: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={password}
-                onChange={onChangePassword}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                value="signin user"
-                className="btn btn-primary"
-              />
-            </div>
-          </form>
+        <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"25%"}} >
+        <h3 className="h3">Create Account:</h3>
+        <Form onSubmit={onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={4}>Email</Form.Label>
+                <Col sm={8}>
+                    <Form.Control type="text" placeholder="" onChange={onChangeEmail}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={4}>Password</Form.Label>
+                <Col sm={8}>
+                    <Form.Control type="text" placeholder="" onChange={onChangePassword}/>
+                </Col>
+            </Form.Group>
+
+            <Button className="button-secondary" type="submit">
+                Sign In
+            </Button>
+        </Form>
         </div>
       )
 }

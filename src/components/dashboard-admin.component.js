@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+//import { Link } from 'react-router';
 import './../styles.css';
 import IllnessReport from "./illness-report.component";
 
@@ -20,7 +21,7 @@ export default class BuildingAdminDash extends Component {
 
     componentDidMount() {
         console.log("HI");
-        axios.get('http://localhost:5000/users/')
+        axios.get('http://localhost:5000/acounts/')
           .then(response => {
               console.log(response.data.length);
               if (response.data.length > 0) {

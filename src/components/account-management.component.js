@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
 
-export default class Sanitation extends Component {
+export default class AccountMgmt extends Component {
+
+
     render() {
         return(
             <div style={{color:"white"}}>
-                <h2 style={{paddingLeft:"3rem"}}> Sanitation Page</h2>
+                <h3 style={{color:"white", paddingLeft:"50px"}}>Account Management Page</h3>
             </div>
         );
     }
