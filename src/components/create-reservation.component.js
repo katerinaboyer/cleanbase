@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
+import { getUser } from "../store/selectors";
 
 export default class CreateReservation extends Component {
   constructor(props) {
@@ -13,8 +14,10 @@ export default class CreateReservation extends Component {
     this.onChangeStartTime = this.onChangeStartTime.bind(this);
     this.onChangeEndTime = this.onChangeEndTime.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeAttendees = this.onChangeAttendees.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+    // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
       room_number: "",
@@ -22,8 +25,10 @@ export default class CreateReservation extends Component {
       start_time: "",
       end_time: "",
       date: "",
+      attendees: [],
       rooms: [],
       desks: [],
+      all_users: [],
     };
   }
 
@@ -32,13 +37,15 @@ export default class CreateReservation extends Component {
       .all([
         axios.get("http://localhost:5000/rooms"),
         axios.get("http://localhost:5000/desks"),
+        axios.get("http://localhost:5000/users/all"),
       ])
-      .then(([roomResponse, deskResponse]) => {
+      .then(([roomResponse, deskResponse, userResponse]) => {
         this.setState({
           rooms: roomResponse.data.map((room) => room),
           room_number: roomResponse.data[0],
           desks: deskResponse.data.map((desk) => desk),
           desk_number: deskResponse.data[0],
+          all_users: userResponse.data.map((user) => user)
         });
       });
   }
@@ -79,6 +86,13 @@ export default class CreateReservation extends Component {
     });
   }
 
+  onChangeAttendees(e) {
+    let value = Array.from(e.target.selectedOptions, option => option.value);
+    this.setState({
+      attendees: value
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -89,6 +103,7 @@ export default class CreateReservation extends Component {
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
+      attendees: this.state.attendees,
     };
 
     console.log(newReservation);
@@ -100,7 +115,7 @@ export default class CreateReservation extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: "35px" }}>
         <h3>Create New Reservation</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -175,6 +190,25 @@ export default class CreateReservation extends Component {
                 onChange={this.onChangeDate}
               />
             </div>
+          </div>
+          <div className="form-group">
+            <label>Attendees: </label>
+            <select
+              ref="userInput"
+              required
+              className="form-control"
+              multiple={true}
+              value={this.state.attendees}
+              onChange={this.onChangeAttendees}
+            >
+              {this.state.all_users.map((user) => {
+                return (
+                  <option key={user._id} value={user._id}>
+                    {user.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
 
           <div className="form-group">

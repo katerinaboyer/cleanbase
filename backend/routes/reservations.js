@@ -7,6 +7,10 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// router.route('/').get((req, res) => {
+//   Reservation.find
+// })
+
 router.route('/add').post((req, res) => {
   const title = req.body.title;
   const room_number = req.body.room_number;
@@ -14,7 +18,7 @@ router.route('/add').post((req, res) => {
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
   const date = req.body.date;
-  // const user = req.body.user;
+  const users = req.body.users;
 
   const newReservation = new Reservation({
     title,
@@ -23,7 +27,7 @@ router.route('/add').post((req, res) => {
     start_time,
     end_time,
     date,
-    // user
+    users
   });
 
   newReservation.save()
