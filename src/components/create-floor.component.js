@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 export default class CreateFloor extends Component {
   constructor(props) {
@@ -70,57 +71,42 @@ export default class CreateFloor extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Floor</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-            <label>Floor Number: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.floor_number}
-              onChange={this.onChangeFloorNumber}
-            />
-          </div>
-          <div className="form-group">
-            <label>Building Id: </label>
-            <select
-              ref="buildingInput"
-              required
-              className="form-control"
-              value={this.state.building_id}
-              onChange={this.onChangeBuildingId}
-            >
-              {this.state.buildings.map((building) => {
+      <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+            <h3 className="h3">Create Reservation:</h3>
+            <Form onSubmit={this.onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                    <Form.Label column sm={3}>Floor Number</Form.Label>
+                    <Col sm={9}>
+                        <Form.Control type="name" placeholder="" onChange={this.onChangeFloorNumber}/>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} controlId="formFloorNumbers">
+                    <Form.Label column sm={3}>Building ID</Form.Label>
+                    <Col sm={9}>
+                        <Form.Control as="select" onChange={this.onChangeBuildingId}>
+                        {this.state.buildings.map((building) => {
                 return (
                   <option key={building._id} value={building._id}>
                     {building.address}
                   </option>
                 );
               })}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Capacity: </label>
-            <input
-              type="number"
-              required
-              className="form-control"
-              value={this.state.capacity}
-              onChange={this.onChangeCapacity}
-            />
-          </div>
+                        </Form.Control>
+                    </Col>
+                </Form.Group>
 
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Create Floor"
-              className="btn btn-primary"
-            />
+                <Form.Group as={Row} controlId="formAdmin">
+                    <Form.Label column sm={3}>Capacity</Form.Label>
+                    <Col sm={9}>
+                        <Form.Control type="name" placeholder="" onChange={this.onChangeCapacity}/>
+                    </Col>
+                </Form.Group>
+
+                <Button className="button-secondary" type="submit">
+                    Create Desk
+                </Button>
+            </Form>
           </div>
-        </form>
-      </div>
     );
   }
 }

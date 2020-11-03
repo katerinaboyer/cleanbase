@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 export default class CreateAccount extends Component {
   constructor(props) {
@@ -58,40 +59,36 @@ export default class CreateAccount extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Create New Account</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group"> 
-            <label>Business Name: </label>
-            <input  type="text"
-                required
-                className="form-control"
-                value={this.state.business_name}
-                onChange={this.onChangeBusinessName}
-                />
-          </div>
-        <div className="form-group"> 
-          <label>Floor Assigned: </label>
-          <select ref="floorInput"
-              required
-              className="form-control"
-              value={this.state.floor_assigned}
-              onChange={this.onChangeFloorAssigned}>
-              {
-                this.state.floors.map((floor) => {
-                  return <option 
-                    key={floor._id}
-                    value={floor._id}>{floor.floor_number}
-                    </option>;
-                })
-              }
-          </select>
-        </div>
+      <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+        <h3 className="h3">Create Reservation:</h3>
+        <Form onSubmit={this.onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Business Name</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="Texas A&M" onChange={this.onChangeBusinessName}/>
+                </Col>
+            </Form.Group>
 
-          <div className="form-group">
-            <input type="submit" value="Create Account" className="btn btn-primary" />
-          </div>
-        </form>
+            <Form.Group as={Row} controlId="formFloorNumbers">
+                <Form.Label column sm={3}>Floor Assigned</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeFloorAssigned}>
+                    {
+              this.state.floors.map((floor) => {
+                return <option 
+                  key={floor._id}
+                  value={floor._id}>{floor.floor_number}
+                  </option>;
+              })
+            }  
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Button className="button-secondary" type="submit">
+                Register Business
+            </Button>
+        </Form>
       </div>
     )
   }

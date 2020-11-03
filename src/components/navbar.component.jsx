@@ -67,13 +67,13 @@ const NavigationBar = props => {
 
   return (
     <div style={{color:"white"}}>
-      <Navbar className="nav-bar">
+      <Navbar collapseOnSelect  expand="lg" className="nav-bar">
         <Navbar.Brand as={Link} to="/">
             <img src={navlogo} width="135px" alt="CleanBase Navbar logo"/>
             CleanBase
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="nav-bar-items">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav" className="nav-bar-items">
           <Nav className="mr-auto" style={{paddingLeft: '40px'}}>
             <NavbarOptions />
           </Nav>
