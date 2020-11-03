@@ -23,7 +23,7 @@ const reservationSchema = new Schema({
     date: {
         type: Date,
     },
-    users: {
+    attendees: {
         type: [Schema.Types.ObjectId],
     }
 }, {

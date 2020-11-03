@@ -1,4 +1,5 @@
 const router = require('express').Router();
+var mongoose = require('mongoose');
 let Reservation = require('../models/Reservation.model');
 
 router.route('/').get((req, res) => {
@@ -7,9 +8,11 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// router.route('/').get((req, res) => {
-//   Reservation.find
-// })
+router.route('/userId/:userId').get((req, res) => {
+  Reservation.find({ attendees: req.params.userId })
+    .then(reservations => res.json(reservations))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
 
 router.route('/add').post((req, res) => {
   const title = req.body.title;
@@ -18,7 +21,7 @@ router.route('/add').post((req, res) => {
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
   const date = req.body.date;
-  const users = req.body.users;
+  const attendees = req.body.attendees;
 
   const newReservation = new Reservation({
     title,
@@ -27,7 +30,7 @@ router.route('/add').post((req, res) => {
     start_time,
     end_time,
     date,
-    users
+    attendees
   });
 
   newReservation.save()
