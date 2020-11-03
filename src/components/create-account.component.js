@@ -53,7 +53,7 @@ export default class CreateAccount extends Component {
 
     console.log(newAccount);
 
-    axios.post('http://localhost:5000/accounts/add', newAccount)
+    axios.post('http://localhost:5000/account/add', newAccount)
       .then(res => console.log(res.data));
   }
 
