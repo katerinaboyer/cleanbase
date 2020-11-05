@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+// import { Card, Button, Container, Col, Row } from "react-bootstrap";
 import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
 import Calendar from "react-calendar";
@@ -15,20 +17,35 @@ export default class Schedule extends Component {
     super(props);
 
     this.state = {
+      desks: [],
+      rooms: [],
       date: new Date(),
       startTime: "10:00",
-      endTime: "11:00"
+      endTime: "17:00",
     };
   }
 
-  onChange = date => this.setState({ date });
-  onChangeStart = startTime => this.setState({ startTime });
-  onChangeEnd = endTime => this.setState({ endTime });
+  componentDidMount() {
+    axios
+      .all([
+        axios.get("http://localhost:5000/rooms/not_desk_spaces"),
+        axios.get("http://localhost:5000/desks"),
+      ])
+      .then(([roomResponse, deskResponse]) => {
+        this.setState({
+          rooms: roomResponse.data.map((room) => room),
+          desks: deskResponse.data.map((desk) => desk),
+        });
+      });
+  }
+
+  onChange = (date) => this.setState({ date });
+  onChangeStart = (startTime) => this.setState({ startTime });
+  onChangeEnd = (endTime) => this.setState({ endTime });
 
   render() {
     let dateformat = require("dateformat");
     let currentDate = dateformat(this.state.date, "dddd mmmm d");
-
     return (
       <Container fluid>
         <Row>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {Form, Button, Col, Row} from 'react-bootstrap';
 const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
@@ -20,6 +21,7 @@ export default class CreateUser extends Component {
       name: "",
       phone: "",
       password: "",
+      passwordMatch: true,
       role: "",
     };
   }
@@ -64,6 +66,14 @@ export default class CreateUser extends Component {
     });
   }
 
+  onChangeCheckPassword(e) {
+    if(this.state.password != e.target.value){
+      this.setState({
+        passwordMatch: false,
+      })
+    }
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -82,68 +92,68 @@ export default class CreateUser extends Component {
 
   render() {
     return (
-      <div style={{color:"white"}}>
-        <h3 style={{paddingLeft:"3rem"}}>Create Account</h3>
-        <form onSubmit={this.onSubmit} style={{paddingLeft:"3rem", width:"40%"}}>
-          <div className="form-group">
-            <label>Email: </label>
-            <input  type="text"
-                required
-                className="form-control"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-                />
-          </div>
-          <div className="form-group">
-            <label>Name: </label>
-            <input  type="text"
-                required
-                className="form-control"
-                value={this.state.name}
-                onChange={this.onChangeName}
-                />
-          </div>
-          <div className="form-group">
-            <label>Phone: </label>
-            <input  type="text"
-                required
-                className="form-control"
-                value={this.state.phone}
-                onChange={this.onChangePhone}
-                />
-          </div>
-          <div className="form-group">
-            <label>Password: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-            />
-          </div>
-          <div className="form-group">
-            <label>Role: </label>
-            <select
-              ref="roleInput"
-              required
-              className="form-control"
-              value={this.state.role}
-              onChange={this.onChangeRole}
-            >
-              <option value="-">-</option>
-              <option value="employee">Employee</option>
-              <option value="office_manager">Office Manager</option>
-              <option value="building_admin">Building Admin</option>
-              <option value="sanitation">Sanitation Staff</option>
-            </select>
-          </div>
+      <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+        <h3 className="h3">Create Account:</h3>
+        <Form onSubmit={this.onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Email</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="" onChange={this.onChangeEmail}/>
+                </Col>
+            </Form.Group>
 
-          <div className="form-group">
-            <input type="submit" value="Create Account" className="btn btn-primary"/>
-          </div>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Name</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="" onChange={this.onChangeName}/>
+                </Col>
+            </Form.Group>
 
-        </form>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Phone</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="xxx-xxx-xxxx" onChange={this.onChangePhone}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Password</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="" onChange={this.onChangePassword}/>
+                    <Form.Text id="passwordHelp" muted>
+                      Your password must be 8-20 character long, contain letters and numbers, 
+                      and must not contain spaces, special characters, or emoji.
+                    </Form.Text>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Confirm Password</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder=""/>
+                    <Form.Text id="confirmPassword" muted>
+                      {this.state.passwordMatch}
+                    </Form.Text>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Role</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeRole}>
+                      <option value="-">-</option>
+                      <option value="employee">Employee</option>
+                      <option value="office_manager">Office Manager</option>
+                      <option value="building_admin">Building Admin</option>
+                      <option value="sanitation">Sanitation Staff</option>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Button className="button-secondary" type="submit">
+                Create Account
+            </Button>
+        </Form>
       </div>
     )
   }

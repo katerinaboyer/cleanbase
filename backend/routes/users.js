@@ -7,8 +7,22 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/building_admins').get((req, res) => {
+// get users by their ObjectId
+router.route('/id/:id').get((req, res) => {
+  User.findById(req.params.id)
+  .then(user => res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/all').get((req, res) => {
   User.find(req.query)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all building admin users 
+router.route('/building_admins').get((req, res) => {
+  User.find({ role: {$eq: "building_admin" } })
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
 });

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 export default class CreateDesk extends Component {
     constructor(props) {
@@ -58,17 +59,14 @@ export default class CreateDesk extends Component {
 
     render() {
         return (
-          <div>
-            <h3>Create New Desk</h3>
-            <form onSubmit={this.onSubmit}>
-            <div className="form-group"> 
-              <label>Room Id: </label>
-              <select ref="roomInput"
-                  required
-                  className="form-control"
-                  value={this.state.room_id}
-                  onChange={this.onChangeRoomId}>
-                  {
+          <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
+            <h3 className="h3">Create Reservation:</h3>
+            <Form onSubmit={this.onSubmit}>
+                <Form.Group as={Row} controlId="formFloorNumbers">
+                    <Form.Label column sm={3}>Room ID</Form.Label>
+                    <Col sm={9}>
+                        <Form.Control as="select" onChange={this.onChangeRoomId}>
+                        {
                     this.state.rooms.map(function(room) {
                       return <option 
                         key={room._id}
@@ -76,21 +74,21 @@ export default class CreateDesk extends Component {
                         </option>;
                     })
                   }
-              </select>
-            </div>
-              <div className="form-group"> 
-                <label>Desk Number: </label>
-                <input  type="text"
-                    required
-                    className="form-control"
-                    value={this.state.desk_number}
-                    onChange={this.onChangeDeskNumber}
-                    />
-              </div>
-              <div className="form-group">
-                <input type="submit" value="Create Desk" className="btn btn-primary" />
-              </div>
-            </form>
+                        </Form.Control>
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formAdmin">
+                    <Form.Label column sm={3}>Desk Number</Form.Label>
+                    <Col sm={9}>
+                        <Form.Control type="name" placeholder="" onChange={this.onChangeDeskNumber}/>
+                    </Col>
+                </Form.Group>
+
+                <Button className="button-secondary" type="submit">
+                    Create Desk
+                </Button>
+            </Form>
           </div>
         )
       }
