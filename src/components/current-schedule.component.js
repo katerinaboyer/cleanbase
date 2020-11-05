@@ -26,7 +26,12 @@ export default class CurrentSchedule extends Component {
                 {
                     this.state.schedule.map(info =>
                         <ListGroup style={{paddingBottom:"10px"}}>
-                            <ListGroup.Item style={{}}> <ul style={{listStyle: "none"}}><li>{info.date}</li><li>{`${info.isDesk? 'Desk #' : 'Conference #'}${info.reservationSpace} Floor:${info.floorNumber} ${info.start} - ${info.end}`}</li></ul></ListGroup.Item>
+                            <ListGroup.Item style={{}}> 
+                                <ul style={{listStyle: "none"}}>
+                                    <li>{info.date}</li>
+                                    <li>{`${info.isDesk? 'Desk #' : 'Conference #'}${info.reservationSpace} Floor:${info.floorNumber} ${info.start} - ${info.end}`}</li>
+                                </ul>
+                            </ListGroup.Item>
                         </ListGroup>
                      )
                 }
