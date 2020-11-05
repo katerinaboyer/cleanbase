@@ -14,8 +14,10 @@ export default class CreateReservation extends Component {
     this.onChangeStartTime = this.onChangeStartTime.bind(this);
     this.onChangeEndTime = this.onChangeEndTime.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeAttendees = this.onChangeAttendees.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+    // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
       room_number: "",
@@ -23,8 +25,10 @@ export default class CreateReservation extends Component {
       start_time: "",
       end_time: "",
       date: "",
+      attendees: [],
       rooms: [],
       desks: [],
+      all_users: [],
     };
   }
 
@@ -33,13 +37,15 @@ export default class CreateReservation extends Component {
       .all([
         axios.get("http://localhost:5000/rooms"),
         axios.get("http://localhost:5000/desks"),
+        axios.get("http://localhost:5000/users/all"),
       ])
-      .then(([roomResponse, deskResponse]) => {
+      .then(([roomResponse, deskResponse, userResponse]) => {
         this.setState({
           rooms: roomResponse.data.map((room) => room),
           room_number: roomResponse.data[0],
           desks: deskResponse.data.map((desk) => desk),
           desk_number: deskResponse.data[0],
+          all_users: userResponse.data.map((user) => user)
         });
       });
   }
@@ -80,6 +86,13 @@ export default class CreateReservation extends Component {
     });
   }
 
+  onChangeAttendees(e) {
+    let value = Array.from(e.target.selectedOptions, option => option.value);
+    this.setState({
+      attendees: value
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
     console.log("HEHEHEHEHE");
@@ -90,6 +103,7 @@ export default class CreateReservation extends Component {
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
+      attendees: this.state.attendees,
     };
 
     console.log(newReservation);
@@ -161,6 +175,41 @@ export default class CreateReservation extends Component {
                       <Form.Control type="time" placeholder="9:30 AM" onChange={this.onChangeEndTime}/>
                   </Col>
               </Form.Group>
+
+              <Form.Group as={Row} controlId="formBasicAttendees">
+                <Form.Label column sm={3}>Attendees</Form.Label>
+                <Col sm={9}>
+                <Form.Control as="select" multiple onChange={this.onChangeAttendees}>
+                      {this.state.all_users.map((user) => {
+                        return (
+                          <option key={user._id} value={user._id}>
+                            {user.name}
+                          </option>
+                        );
+                      })}
+                    </Form.Control> 
+                </Col>
+              </Form.Group>
+
+              {/* <div className="form-group">
+            <label>Attendees: </label>
+            <select
+              ref="userInput"
+              required
+              className="form-control"
+              multiple={true}
+              value={this.state.attendees}
+              onChange={this.onChangeAttendees}
+            >
+              {this.state.all_users.map((user) => {
+                return (
+                  <option key={user._id} value={user._id}>
+                    {user.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div> */}
 
               <Button className="button-secondary" type="submit">
                   Create Reservation
