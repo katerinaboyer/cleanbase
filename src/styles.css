@@ -1,3 +1,7 @@
+.background-image {
+  position: relative;
+}
+
 .button {
   border: none;
   text-align: left;
@@ -21,10 +25,10 @@
   text-align: center;
   display: block;
   margin: 4px 2px;
-  min-width: 150px;
-  transition-duration: 0.4s;
+  min-width: 125px;
   border-radius: 10px;
   background: #ee6c4d;
+  color: #434343;
 }
 
 .text {
@@ -45,15 +49,15 @@
   flex: 1;
 }
 
-.nav-bar a{
+.nav-bar a {
   color: white !important;
 }
 
-.nav-bar-items a{
+.nav-bar-items a {
   padding-left: 30px !important;
 }
 
-.dropdown a{
+.dropdown a {
   color: #434343 !important;
 }
 
@@ -70,10 +74,17 @@
   margin-left: 5%;
 }
 
+.card-body {
+  margin-bottom: 2%;
+}
 .h3 {
   color: white;
 }
 
 .formLabels {
+  color: white;
+}
+
+* p {
   color: white;
 }

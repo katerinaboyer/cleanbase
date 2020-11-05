@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { useHistory } from 'react-router-dom';
 
-import BuildingAdminDash from './building-admin-homepage.component';
+import BuildingAdminDash from './dashboard-admin.component';
 import DashboardManager from './dashboard-manager.component';
 import DashboardUser from './dashboard-user.component';
 import DashboardSanitation from './dashboard-sanitation.component';

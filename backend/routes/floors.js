@@ -7,6 +7,12 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').get((req, res) => {
+  Floor.findById(req.params.id)
+  .catch(err => res.status(400).json('Error: ' + err));
+  res.send(floor_number)
+})
+
 router.route('/add').post((req, res) => {
   const floor_number = req.body.floor_number;
   const room_list = req.body.room_list;

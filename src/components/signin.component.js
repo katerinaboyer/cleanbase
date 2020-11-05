@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { storeLogin } from '../store/userReducer';
+import {Form, Button, Col, Row} from 'react-bootstrap';
 
 const bcrypt = require('bcryptjs');
 
@@ -45,35 +46,27 @@ const SignIn = (props) => {
     }
 
       return (
-        <div style={{color:"white"}}>
-          <h3 style={{paddingLeft:"3rem"}}>Sign In:</h3>
-          <form onSubmit={onSubmit} style={{paddingLeft:"3rem", width:"25%"}}>
-            <div className="form-group">
-              <label>Email: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={email}
-                onChange={onChangeEmail}
-              />
-              <label>Password: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={password}
-                onChange={onChangePassword}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Sign In"
-                className="btn btn-primary"
-              />
-            </div>
-          </form>
+        <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"25%"}} >
+        <h3 className="h3">Create Account:</h3>
+        <Form onSubmit={onSubmit}>
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={4}>Email</Form.Label>
+                <Col sm={8}>
+                    <Form.Control type="text" placeholder="" onChange={onChangeEmail}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={4}>Password</Form.Label>
+                <Col sm={8}>
+                    <Form.Control type="text" placeholder="" onChange={onChangePassword}/>
+                </Col>
+            </Form.Group>
+
+            <Button className="button-secondary" type="submit">
+                Sign In
+            </Button>
+        </Form>
         </div>
       )
 }

@@ -23,10 +23,9 @@ const reservationSchema = new Schema({
     date: {
         type: Date,
     },
-    // user: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User'
-    // }
+    attendees: {
+        type: [Schema.Types.ObjectId],
+    }
 }, {
   timestamps: true,
 });

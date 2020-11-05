@@ -8,23 +8,27 @@ import {
 import { useSelector } from "react-redux";
 import { getUser } from "./store/selectors";
 
+import "./styles.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import CreateUser from './components/create-user.component';
-import LandingPage from './components/landing-page.component';
-import DashboardIndex from './components/dashboard-index.component';
-import SignIn from './components/signin.component';
-import Schedule from './components/schedule.component';
-import Sanitation from './components/sanitation.component';
-import About from './components/about.component';
-import NavigationBar  from './components/navbar.component';
+import AdminSanitation from "./components/admin-sanitation.component";
+import CreateUser from "./components/create-user.component";
+import LandingPage from "./components/landing-page.component";
+import DashboardIndex from "./components/dashboard-index.component";
+import SignIn from "./components/signin.component";
+import Schedule from "./components/schedule.component";
+import About from "./components/about.component";
+import NavigationBar from "./components/navbar.component";
 import CreateBuilding from "./components/create-building.component";
 import CreateDesk from "./components/create-desk.component";
 import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
-import ConfirmationPage from "./components/confirmation-page.component";
+import ConfirmationPage from "./components/schedule-confirmation.component";
+import SanitationRequest from "./components/sanitation-request.component";
+import SanitationSchedule from "./components/sanitation-schedule.component";
 import AccountSettings from "./components/account-settings-page.component";
 import AccountMgmt from "./components/account-management.component";
 import SpaceMgmt from "./components/space-management.component";
@@ -47,11 +51,17 @@ function App(props) {
         <PrivateRoute path="/floor" component={CreateFloor} />
         <PrivateRoute path="/desk" component={CreateDesk} />
         <PrivateRoute path="/schedule" component={Schedule} />
-        <PrivateRoute path="/sanitation" component={Sanitation} />
-        <PrivateRoute path="/confirm" component={ConfirmationPage} />
+        <Route exact path="/about" component={About} />
+        <PrivateRoute
+          path="/scheduleConfirmation"
+          component={ConfirmationPage}
+        />
+        <Route path="/sanitationRequest" component={SanitationRequest} />
+        <Route path="/sanitation-schedule" component={SanitationSchedule} />
+        <PrivateRoute path="/sanitation" component={AdminSanitation} />
         <PrivateRoute path="/account-settings" component={AccountSettings} />
-        <PrivateRoute path="/account-mgmt" component={AccountMgmt}/>
-        <PrivateRoute path="/space-mgmt" component={SpaceMgmt}/>
+        <PrivateRoute path="/account-mgmt" component={AccountMgmt} />
+        <PrivateRoute path="/space-mgmt" component={SpaceMgmt} />
         <PrivateRoute path="/selfIllnessReports" component={CreateSelfIllnessReport} />
       </Switch>
     </Router>
