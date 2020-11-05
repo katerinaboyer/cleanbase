@@ -12,15 +12,12 @@ import "./styles.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import MainPage from "./components/mainpage.component";
-import HomePage from "./components/homepage.component";
-import UserSanitation from "./components/user-sanitation.component";
+import AdminSanitation from "./components/admin-sanitation.component";
 import CreateUser from "./components/create-user.component";
 import LandingPage from "./components/landing-page.component";
 import DashboardIndex from "./components/dashboard-index.component";
 import SignIn from "./components/signin.component";
 import Schedule from "./components/schedule.component";
-import Sanitation from "./components/sanitation.component";
 import About from "./components/about.component";
 import NavigationBar from "./components/navbar.component";
 import CreateBuilding from "./components/create-building.component";
@@ -60,9 +57,8 @@ function App(props) {
           component={ConfirmationPage}
         />
         <Route path="/sanitationRequest" component={SanitationRequest} />
-        {/* <Route path="/building-admin" component={BuildingAdminDash} /> */}
         <Route path="/sanitation-schedule" component={SanitationSchedule} />
-        <PrivateRoute path="/sanitation" component={Sanitation} />
+        <PrivateRoute path="/sanitation" component={AdminSanitation} />
         <PrivateRoute path="/account-settings" component={AccountSettings} />
         <PrivateRoute path="/account-mgmt" component={AccountMgmt} />
         <PrivateRoute path="/space-mgmt" component={SpaceMgmt} />
