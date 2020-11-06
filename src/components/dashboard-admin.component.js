@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
 import IllnessReport from "./illness-report.component";
 import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
+import {connect} from "react-redux";
 
 
-export default class BuildingAdminDash extends Component {
+class Account extends Component {
     constructor(props) {
         super(props);
 
@@ -15,11 +16,6 @@ export default class BuildingAdminDash extends Component {
             accounts: []
           }
     
-    }
-
-    addAccount(e){
-        let history = useHistory();
-        history.push("/account");    
     }
 
 
@@ -42,6 +38,32 @@ export default class BuildingAdminDash extends Component {
     render() {
         return (
         <div>
+            {
+            this.state.accounts.map(info =>
+                <ListGroup style={{paddingBottom:"10px"}}>
+                    <ListGroup.Item style={{}}> 
+                        <ul style={{listStyle: "none"}}>
+                            <li>{info.business_name}</li>
+                        </ul>
+                    </ListGroup.Item>
+                </ListGroup>
+                )
+            }
+        </div>
+        )
+    }
+}
+
+const BuildingAdminDash = (props) => {
+
+    const history = useHistory();
+
+    const addAccount = (e) =>{
+        history.push("/account");
+    }
+
+    return (
+        <div>
             <h2 style={{color:"white", paddingLeft:"3rem"}}> Building Admin Dashboard </h2>
             <Container fluid>
                 <Row>
@@ -59,23 +81,18 @@ export default class BuildingAdminDash extends Component {
                             </Form.Row>
                         </div>
                     </Form>
-                    <button className="button-secondary" onClick={this.addAccount}>ADD</button>
-                    {
-                    this.state.accounts.map(info =>
-                        <ListGroup style={{paddingBottom:"10px"}}>
-                            <ListGroup.Item style={{}}> 
-                                <ul style={{listStyle: "none"}}>
-                                    <li>{info.business_name}</li>
-                                </ul>
-                            </ListGroup.Item>
-                        </ListGroup>
-                     )
-                }
+                    <button className="button-secondary" onClick={addAccount}>ADD</button>
+                    <Account/>
 
                 </Col>
                 </Row>
             </Container>
         </div>
         )
-    }
 }
+
+const mapStateToProps = (state) => {return state};
+
+export default connect(mapStateToProps)(BuildingAdminDash);
+
+
