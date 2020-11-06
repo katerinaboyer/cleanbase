@@ -60,7 +60,7 @@ export default class CreateAccount extends Component {
   render() {
     return (
       <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-        <h3 className="h3">Create Reservation:</h3>
+        <h3 className="h3">Create Buisness:</h3>
         <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={3}>Business Name</Form.Label>
