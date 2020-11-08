@@ -15,6 +15,14 @@
   border-radius: 10px;
 }
 
+.button-edit {
+  border: none;
+  text-align: left;
+  margin: 4px 2px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
 .button:hover {
   background: #ee6c4d;
   color: #434343;

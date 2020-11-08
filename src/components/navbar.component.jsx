@@ -36,7 +36,7 @@ const NavbarOptions = props => {
           <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
-    case "Sanitation":
+    case "sanitation":
       return (
         <>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>

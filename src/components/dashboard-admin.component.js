@@ -38,15 +38,16 @@ class Account extends Component {
 
     render() {
         return (
-        <div style={{backgroundColor:"yellow"}}>
+        <div style={{}}>
             {
             this.state.accounts.map(info =>
-                <div style={{scrollPaddingBottom:"200px"}}>
+                <div style={{paddingBottom:"10px"}}>
                     <Card style={{ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0 }}>
-                        <Card.Body>
-                            <Card.Title>Floor: 1</Card.Title>
-                            <Card.Text style={{color:"#434343"}}>{info.business_name}</Card.Text>
-                        </Card.Body>
+                            <Row>
+                                <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floor 1</Card.Title>
+                                <Card.Text style={{color:"#434343", padding:"30px 0px 20px 25%"}}>{info.business_name}</Card.Text>
+                                <button className="button-edit" style={{padding:"0px 0px 0px 0px"}}>Go somewhere</button>
+                            </Row>
                     </Card>
                 </div>
                 )
