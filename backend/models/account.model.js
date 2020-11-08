@@ -8,7 +8,7 @@ const accountSchema = new Schema({
       required: true
   },
   office_manager: {
-      type: Schema.Types.ObjectId
+      type: [Schema.Types.ObjectId]
   },
   employees: {
       type: [Schema.Types.ObjectId]

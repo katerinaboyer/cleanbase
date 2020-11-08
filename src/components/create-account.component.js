@@ -74,13 +74,14 @@ export default class CreateAccount extends Component {
                 <Col sm={9}>
                     <Form.Control as="select" onChange={this.onChangeFloorAssigned}>
                     {
-              this.state.floors.map((floor) => {
-                return <option 
-                  key={floor._id}
-                  value={floor._id}>{floor.floor_number}
-                  </option>;
-              })
-            }  
+                      this.state.floors.map((floor) => {
+                        return (
+                        <option key={floor._id} value={floor._id}>
+                          {floor.floor_number}
+                        </option>
+                        )
+                      })
+                    }  
                     </Form.Control>
                 </Col>
             </Form.Group>
