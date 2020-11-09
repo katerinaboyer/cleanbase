@@ -18,9 +18,11 @@
 .button-edit {
   border: none;
   text-align: left;
-  margin: 4px 2px;
-  border-radius: 10px;
+  margin: 20px 10px 20px max(40%, 30%);
   background-color: transparent;
+  color: #ee6c4d;
+  font-weight: bold;
+  font-size: 115%;
 }
 
 .button:hover {
@@ -38,6 +40,20 @@
   background: #ee6c4d;
   color: #434343;
 }
+
+.button-add {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  min-width: 80px;
+  border-radius: 14px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
 
 .text {
   color: white;

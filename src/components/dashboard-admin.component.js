@@ -1,93 +1,89 @@
-import React, { useState, Component } from "react";
+import React, {useState, Component, useEffect } from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
 import IllnessReport from "./illness-report.component";
-import { Container, Row, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect} from "react-redux";
 
 
-class Account extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            accounts: []
-          }
-    
-    }
-
-
-    componentDidMount() {
-        axios.get('http://localhost:5000/accounts/')
-          .then(response => {
-              console.log(response.data.length);
-              console.log(response.data);
-              if (response.data.length > 0) {
-                  this.setState({
-                      accounts: response.data.map(account => account)
-                  })
-              }
-          })
-          .catch((error) => {
-              console.log(error);
-          })
-
-    }
-
-    render() {
-        return (
-        <div style={{}}>
-            {
-            this.state.accounts.map(info =>
-                <div style={{paddingBottom:"10px"}}>
-                    <Card style={{ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0 }}>
-                            <Row>
-                                <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floor 1</Card.Title>
-                                <Card.Text style={{color:"#434343", padding:"30px 0px 20px 25%"}}>{info.business_name}</Card.Text>
-                                <button className="button-edit" style={{padding:"0px 0px 0px 0px"}}>Go somewhere</button>
-                            </Row>
-                    </Card>
-                </div>
-                )
-            }
-        </div>
-        )
-    }
-}
-
 const BuildingAdminDash = (props) => {
+
+    const [accounts, setAccounts] = useState([]);
 
     const history = useHistory();
 
     const addAccount = (e) =>{
         history.push("/account");
     }
+    const address = "hi";
+
+    const test= (info) =>{
+        console.log(info);
+
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+            axios.get('http://localhost:5000/accounts/')
+            .then(response => {
+                //console.log(response.data.length);
+                //console.log(response.data);
+                if (response.data.length > 0) {
+                    setAccounts(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+        fetchData();
+    },[]);
 
     return (
         <div>
             <h2 style={{color:"white", paddingLeft:"3rem"}}> Building Admin Dashboard </h2>
             <Container fluid>
                 <Row>
-                <Col style={{paddingLeft:"8%"}}>
-                    <IllnessReport/>
-                </Col>
-                <Col style={{paddingRight:"8%"}}>
-                    <h3>Accounts:</h3>
-                    <Form>
-                        <div key={'inline-checkbox'} className="mb-3" style={{color: "white"}}>
-                            <Form.Row>
-                                <Form.Label style={{paddingRight: "25px", paddingTop:"4px", paddingLeft:"5px"}}>Filter by:</Form.Label>
-                                <Form.Check inline label="Floors" type="checkbox" id="floorFilterAdminDash"/>
-                                <Form.Check inline label="Companies" type="checkbox" id="companyFilterAdminDash" style={{paddingRight:"100px"}}/>
-                            </Form.Row>
+                    <Col style={{paddingLeft:"8%"}}>
+                        <IllnessReport/>
+                    </Col>
+                    <Col style={{paddingRight:"8%"}}>
+                        <h3>Accounts for: {address}</h3>
+                        <Row>
+                        <Form>
+                            <div key={'inline-checkbox'} className="mb-3" style={{color: "white", paddingLeft:"20px"}}>
+                                <Form.Row>
+                                    <Form.Label style={{paddingRight: "25px", paddingTop:"4px", paddingLeft:"5px"}}>Filter by:</Form.Label>
+                                    <Form.Check inline label="Floors" type="checkbox" id="floorFilterAdminDash"/>
+                                    <Form.Check inline label="Companies" type="checkbox" id="companyFilterAdminDash" style={{paddingRight:"100px"}}/>
+                                </Form.Row>
+                            </div>
+                        </Form>
+                        <button className="button-add" onClick={addAccount}>ADD</button>
+                        </Row>
+                        <div style={{}}>
+                            { accounts.map(info =>
+                                <div style={{paddingBottom:"10px"}}>
+                                    <Card style={{borderRadius:"15px"}}>
+                                            <Row>
+                                                <Col sm={3}>
+                                                    <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floor 1</Card.Title>
+                                                </Col>
+                                                <Col style={{textAlign: "center"}}>
+                                                    <Card.Text style={{color:"#434343", padding:"25px 0px 20px 0%"}}>{info.business_name}</Card.Text>
+                                                </Col>
+                                                <Col sm={3} style={{}}>
+                                                    <button className="button-edit" onClick={() => test(info)}>Edit</button>
+                                                </Col>
+                                            </Row>
+                                    </Card>
+                                </div>
+                                )
+                            }
                         </div>
-                    </Form>
-                    <button className="button-secondary" onClick={addAccount}>ADD</button>
-                    <Account/>
-
-                </Col>
+                    </Col>
                 </Row>
             </Container>
         </div>
