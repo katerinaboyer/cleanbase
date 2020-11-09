@@ -14,7 +14,7 @@ router.route('/id/:id').get((req, res) => {
     //res.send(floor_number)
 });
 
-router.route('/update/:id').patch((req, res) => {
+router.route('/update/:id').post((req, res) => {
   var updateObject = req.body;
   console.log(req.body)
   Floor.findByIdAndUpdate(req.params.id, {updateObject})
