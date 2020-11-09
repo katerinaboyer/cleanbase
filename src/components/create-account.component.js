@@ -7,13 +7,16 @@ export default class CreateAccount extends Component {
     super(props);
 
     this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
-    this.onChangeFloorAssigned = this.onChangeFloorAssigned.bind(this);
+    this.onChangeFloorsAssigned = this.onChangeFloorsAssigned.bind(this);
+    this.onChangeOfficeManager = this.onChangeOfficeManager.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       business_name: '',
-      floor_assigned: '',
+      office_manager: '',
+      floors_assigned: '',
       floors: [],
+      office_managers: []
     }
   }
 
@@ -37,9 +40,16 @@ export default class CreateAccount extends Component {
     })
   }
 
-  onChangeFloorAssigned(e) {
+  onChangeFloorsAssigned(e) {
+    let value = Array.from(e.target.selectedOptions, option => option.value);
     this.setState({
-      floor_assigned: e.target.value
+      floors_assigned: value
+    })
+  }
+
+  onChangeOfficeManager(e) {
+    this.setState({
+      office_manager: e.target.value
     })
   }
 
@@ -48,8 +58,9 @@ export default class CreateAccount extends Component {
 
     const newAccount = {
         business_name: this.state.business_name,
-        floor_assigned: this.state.floor_assigned
-    }
+        floors_assigned: this.state.floors_assigned,
+        office_manager: this.state.office_manager
+    };
 
     console.log(newAccount);
 
@@ -60,7 +71,7 @@ export default class CreateAccount extends Component {
   render() {
     return (
       <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-        <h3 className="h3">Create Buisness:</h3>
+        <h3 className="h3">Create Business Account:</h3>
         <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={3} style={{fontSize:"120%"}}>Business Name</Form.Label>
@@ -70,9 +81,9 @@ export default class CreateAccount extends Component {
             </Form.Group>
 
             <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3} style={{fontSize:"120%"}}>Floor Assigned</Form.Label>
+                <Form.Label column sm={3} style={{fontSize:"120%"}}>Floors Assigned</Form.Label>
                 <Col sm={9}>
-                    <Form.Control as="select" onChange={this.onChangeFloorAssigned}>
+                    <Form.Control as="select" multiple onChange={this.onChangeFloorsAssigned}>
                     {
                       this.state.floors.map((floor) => {
                         return (
