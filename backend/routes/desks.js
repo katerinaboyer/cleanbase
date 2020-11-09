@@ -13,7 +13,7 @@ router.route('/id/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').patch((req, res) => {
+router.route('/update/:id').post((req, res) => {
   var updateObject = req.body;
   console.log(req.body)
   Desk.findByIdAndUpdate(req.params.id, {updateObject})
