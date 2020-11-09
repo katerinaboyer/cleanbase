@@ -20,6 +20,12 @@ router.route('/all').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/role/:role').get((req, res) => {
+  User.find({ role: {$eq: req.params.role } })
+  .then(user => res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // get all building admin users 
 router.route('/building_admins').get((req, res) => {
   User.find({ role: {$eq: "building_admin" } })
