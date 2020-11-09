@@ -11,13 +11,21 @@ router.route('/room_type/:room_type').get((req, res) => {
   Room.find({ room_type: { $eq: req.params.room_type }})
   .then(rooms => res.json(rooms))
   .catch(err => res.status(400).json('Error: ' + err));
-})
+});
 
 router.route('/id/:id').get((req, res) => {
   Room.findById(req.params.id)
     .then(rooms => res.json(rooms))
     .catch(err => res.status(400).json('Error: ' + err));
-})
+});
+
+router.route('/update/:id').patch((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Room.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(room => res.json(room))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add').post((req, res) => {
   const room_number = req.body.room_number;

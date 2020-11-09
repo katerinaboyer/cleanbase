@@ -12,7 +12,15 @@ router.route('/id/:id').get((req, res) => {
     .then(floors => res.json(floors))
     .catch(err => res.status(400).json('Error: ' + err));
     //res.send(floor_number)
-})
+});
+
+router.route('/update/:id').patch((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Floor.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(floor => res.json(floor))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add').post((req, res) => {
   const floor_number = req.body.floor_number;
