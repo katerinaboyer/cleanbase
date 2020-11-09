@@ -4,7 +4,7 @@ import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import TimePicker from "react-bootstrap-time-picker";
+//import TimePicker from "react-bootstrap-time-picker";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
