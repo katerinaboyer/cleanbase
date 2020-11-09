@@ -7,10 +7,11 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
+router.route('/id/:id').get((req, res) => {
   Floor.findById(req.params.id)
-  .catch(err => res.status(400).json('Error: ' + err));
-  res.send(floor_number)
+    .then(floors => res.json(floors))
+    .catch(err => res.status(400).json('Error: ' + err));
+    //res.send(floor_number)
 })
 
 router.route('/add').post((req, res) => {

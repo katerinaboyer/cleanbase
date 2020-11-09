@@ -7,11 +7,17 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/not_desk_spaces').get((req, res) => {
-  Room.find( { room_type: { $ne: "desk_space" } } )
+router.route('/room_type/:room_type').get((req, res) => {
+  Room.find({ room_type: { $eq: req.params.room_type }})
+  .then(rooms => res.json(rooms))
+  .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/id/:id').get((req, res) => {
+  Room.findById(req.params.id)
     .then(rooms => res.json(rooms))
     .catch(err => res.status(400).json('Error: ' + err));
-});
+})
 
 router.route('/add').post((req, res) => {
   const room_number = req.body.room_number;

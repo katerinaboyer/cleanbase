@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const buildingSchema = new Schema({
     building_admin: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
     },
     num_floors: {
         type: Number,
