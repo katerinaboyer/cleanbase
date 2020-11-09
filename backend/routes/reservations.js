@@ -12,7 +12,15 @@ router.route('/userId/:userId').get((req, res) => {
   Reservation.find({ attendees: req.params.userId })
     .then(reservations => res.json(reservations))
     .catch(err => res.status(400).json('Error: ' + err));
-})
+});
+
+router.route('/update/:id').post((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Reservation.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(reservation => res.json(reservation))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add').post((req, res) => {
   const title = req.body.title;
