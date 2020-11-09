@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import {Form, Button, Col, Row} from 'react-bootstrap';
+//import { useHistory } from "react-router-dom";
+import {Form, Col, Row} from 'react-bootstrap';
 const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
@@ -67,7 +67,7 @@ export default class CreateUser extends Component {
   }
 
   onChangeCheckPassword(e) {
-    if(this.state.password != e.target.value){
+    if(this.state.password !== e.target.value){
       this.setState({
         passwordMatch: false,
       })
@@ -120,7 +120,7 @@ export default class CreateUser extends Component {
                 <Form.Label column sm={3}>Password</Form.Label>
                 <Col sm={9}>
                     <Form.Control type="name" placeholder="" onChange={this.onChangePassword}/>
-                    <Form.Text id="passwordHelp" muted>
+                    <Form.Text id="passwordHelp" style={{color:"white"}}>
                       Your password must be 8-20 character long, contain letters and numbers, 
                       and must not contain spaces, special characters, or emoji.
                     </Form.Text>
@@ -150,9 +150,9 @@ export default class CreateUser extends Component {
                 </Col>
             </Form.Group>
 
-            <Button className="button-secondary" type="submit">
+            <button className="button-submit" type="submit">
                 Create Account
-            </Button>
+            </button>
         </Form>
       </div>
     )

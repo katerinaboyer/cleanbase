@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 import "./../styles.css"
 
@@ -45,9 +45,9 @@ export default class AccountSettings extends Component {
                                 <Form.Control type="phone" placeholder="123-456-7890" />
                             </Col>
                         </Form.Group>
-                        <Button className="button-secondary" type="submit">
+                        <button className="button-submit" type="submit">
                             Update
-                        </Button>
+                        </button>
                     </Form>
                 </div> 
 

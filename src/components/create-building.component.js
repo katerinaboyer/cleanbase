@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateBuilding extends Component {
   constructor(props) {
@@ -118,13 +118,13 @@ export default class CreateBuilding extends Component {
               <Form.Group as={Row} controlId="formBasicAddress">
                   <Form.Label column sm={3}>Address</Form.Label>
                   <Col sm={9}>
-                      <Form.Control type="address" placeholder="123 Aggie Dr." onChange={this.onChangeAddress}/>
+                      <Form.Control type="address" placeholder="EX: 123 Aggie Dr." onChange={this.onChangeAddress}/>
                   </Col>
               </Form.Group>
 
-              <Button className="button-secondary" type="submit">
+              <button className="button-submit" type="submit">
                   Create Building
-              </Button>
+              </button>
           </Form>
       </div>
     )

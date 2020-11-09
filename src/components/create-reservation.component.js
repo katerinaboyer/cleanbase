@@ -269,12 +269,11 @@ class FillReservation extends Component {
               })}
             </select>
           </div> */}
-
-          <Button className="button-secondary" type="submit">
-            Create Reservation
-          </Button>
-        </Form>
-      </div>
+              <button className="button-submit" type="submit">
+                  Create Reservation
+              </button>
+          </Form>
+      </div> 
     );
   }
 }

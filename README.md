@@ -36,3 +36,12 @@ user/add
 * [MERN Stack Tutorial](https://codingthesmartway.com/the-mern-stack-tutorial-building-a-react-crud-application-from-start-to-finish-part-2/)
 * [LinkedIn Learning MERN Essentials](https://www.linkedin.com/learning/mern-essential-training/learn-all-about-mern?u=74650722)
 * [Authentication with Redux](https://levelup.gitconnected.com/i-built-a-m-e-r-n-codebase-in-an-hour-742acd71ed7e)
+
+* [similar application github in same dev stack](https://github.com/julia-/room-booking-system)
+
+## React Packages:
+* [react time grid booking](https://www.npmjs.com/package/react-booking-selector)
+* [react notifications](https://www.npmjs.com/package/react-toastify)
+* [react checkbox trww](https://www.npmjs.com/package/react-checkbox-tree) could use this for room/desk selection maybe
+* [react dropzone package for uploading files](https://react-dropzone.js.org/)
+
