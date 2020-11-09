@@ -13,6 +13,14 @@ router.route('/id/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/update/:id').patch((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Desk.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(desk => res.json(desk))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const desk_number = req.body.desk_number;
   const room_id = req.body.room_id;
