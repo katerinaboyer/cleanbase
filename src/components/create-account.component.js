@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateAccount extends Component {
   constructor(props) {
@@ -63,14 +63,14 @@ export default class CreateAccount extends Component {
         <h3 className="h3">Create Buisness:</h3>
         <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
-                <Form.Label column sm={3}>Business Name</Form.Label>
+                <Form.Label column sm={3} style={{fontSize:"120%"}}>Business Name</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type="name" placeholder="Texas A&M" onChange={this.onChangeBusinessName}/>
+                    <Form.Control type="name" placeholder="Business Name" onChange={this.onChangeBusinessName}/>
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor Assigned</Form.Label>
+                <Form.Label column sm={3} style={{fontSize:"120%"}}>Floor Assigned</Form.Label>
                 <Col sm={9}>
                     <Form.Control as="select" onChange={this.onChangeFloorAssigned}>
                     {
@@ -86,9 +86,9 @@ export default class CreateAccount extends Component {
                 </Col>
             </Form.Group>
 
-            <Button className="button-secondary" type="submit">
-                Register Business
-            </Button>
+            <button className="button-submit" type="submit">
+                Create Business
+            </button>
         </Form>
       </div>
     )

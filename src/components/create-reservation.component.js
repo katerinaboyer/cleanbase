@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateReservation extends Component {
   constructor(props) {
@@ -211,9 +211,9 @@ export default class CreateReservation extends Component {
             </select>
           </div> */}
 
-              <Button className="button-secondary" type="submit">
+              <button className="button-submit" type="submit">
                   Create Reservation
-              </Button>
+              </button>
           </Form>
       </div> 
     );
