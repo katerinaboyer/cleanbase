@@ -15,6 +15,16 @@
   border-radius: 10px;
 }
 
+.button-edit {
+  border: none;
+  text-align: left;
+  margin: 20px 10px 20px max(40%, 30%);
+  background-color: transparent;
+  color: #ee6c4d;
+  font-weight: bold;
+  font-size: 115%;
+}
+
 .button:hover {
   background: #ee6c4d;
   color: #434343;
@@ -30,6 +40,72 @@
   background: #ee6c4d;
   color: #434343;
 }
+
+.button-submit {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 15px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #ee6c4d;
+  color: #434343;
+  padding: 7px 20px
+}
+
+.button-add {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  min-width: 80px;
+  border-radius: 14px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-remove {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 7px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #434343;
+  color: white;
+  padding: 7px 20px
+}
+
+.button-checkin {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 40%;
+  min-width: 80px;
+  border-radius: 10px;
+  padding: 3px 25px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-createreservation {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
+  margin-bottom: 15px;
+  margin-left: 0%;
+  min-width: 80px;
+  border-radius: 14px;
+  padding: 5px 18px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
 
 .text {
   color: white;
@@ -87,4 +163,13 @@
 
 * p {
   color: white;
+}
+
+* h3, h4{
+  color: white;
+}
+
+.space-mgmt {
+  height: 4rem;
+  margin-bottom: 2%;
 }

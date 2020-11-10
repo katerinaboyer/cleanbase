@@ -7,15 +7,23 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/update/:id').post((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Account.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(account => res.json(account))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const business_name = req.body.business_name;
   const office_manager = req.body.office_manager;
-  const floor_assigned = req.body.floors_assigned;
+  const floors_assigned = req.body.floors_assigned;
 
   const newAccount = new Account({
       business_name,
       office_manager,
-      floor_assigned
+      floors_assigned
   });
 
   newAccount.save()

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateRoom extends Component {
   constructor(props) {
@@ -123,9 +123,9 @@ export default class CreateRoom extends Component {
                 </Col>
             </Form.Group>
 
-            <Button className="button-secondary" type="submit">
+            <button className="button-submit" type="submit">
                 Create Room
-            </Button>
+            </button>
         </Form>
       </div>
      

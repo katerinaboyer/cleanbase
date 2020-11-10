@@ -6,14 +6,19 @@ const reservationSchema = new Schema({
     title: {
         type: String,
     },
+    // room: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Room',
+    // },
     room_number: {
-        type: Schema.Types.ObjectId,
-        ref: 'Room',
+        type: String
     },
     desk_number: {
-        type: Schema.Types.ObjectId,
-        ref: 'Desk'
+        type: String
     },
+    // desk: {
+    //     type: String
+    // },
     start_time: {
         type: String,
     },

@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateAccount extends Component {
   constructor(props) {
     super(props);
 
     this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
-    this.onChangeFloorAssigned = this.onChangeFloorAssigned.bind(this);
+    this.onChangeFloorsAssigned = this.onChangeFloorsAssigned.bind(this);
+    this.onChangeOfficeManager = this.onChangeOfficeManager.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       business_name: '',
-      floor_assigned: '',
+      office_manager: '',
+      floors_assigned: '',
       floors: [],
+      office_managers: []
     }
   }
 
@@ -37,9 +40,17 @@ export default class CreateAccount extends Component {
     })
   }
 
-  onChangeFloorAssigned(e) {
+  onChangeFloorsAssigned(e) {
+    let value = Array.from(e.target.selectedOptions, option => option.value);
+    console.log(value);
     this.setState({
-      floor_assigned: e.target.value
+      floors_assigned: value
+    })
+  }
+
+  onChangeOfficeManager(e) {
+    this.setState({
+      office_manager: e.target.value
     })
   }
 
@@ -48,46 +59,48 @@ export default class CreateAccount extends Component {
 
     const newAccount = {
         business_name: this.state.business_name,
-        floor_assigned: this.state.floor_assigned
-    }
+        floors_assigned: this.state.floors_assigned,
+        office_manager: this.state.office_manager
+    };
 
     console.log(newAccount);
 
-    axios.post('http://localhost:5000/account/add', newAccount)
+    axios.post('http://localhost:5000/accounts/add', newAccount)
       .then(res => console.log(res.data));
   }
 
   render() {
     return (
       <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-        <h3 className="h3">Create Reservation:</h3>
+        <h3 className="h3">Create Business Account:</h3>
         <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
-                <Form.Label column sm={3}>Business Name</Form.Label>
+                <Form.Label column sm={3} style={{fontSize:"120%"}}>Business Name</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type="name" placeholder="Texas A&M" onChange={this.onChangeBusinessName}/>
+                    <Form.Control type="name" placeholder="Business Name" onChange={this.onChangeBusinessName}/>
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor Assigned</Form.Label>
+                <Form.Label column sm={3} style={{fontSize:"120%"}}>Floors Assigned</Form.Label>
                 <Col sm={9}>
-                    <Form.Control as="select" onChange={this.onChangeFloorAssigned}>
+                    <Form.Control as="select" multiple onChange={this.onChangeFloorsAssigned}>
                     {
-              this.state.floors.map((floor) => {
-                return <option 
-                  key={floor._id}
-                  value={floor._id}>{floor.floor_number}
-                  </option>;
-              })
-            }  
+                      this.state.floors.map((floor) => {
+                        return (
+                        <option key={floor._id} value={floor._id}>
+                          {floor.floor_number}
+                        </option>
+                        )
+                      })
+                    }  
                     </Form.Control>
                 </Col>
             </Form.Group>
 
-            <Button className="button-secondary" type="submit">
-                Register Business
-            </Button>
+            <button className="button-submit" type="submit">
+                Create Business
+            </button>
         </Form>
       </div>
     )

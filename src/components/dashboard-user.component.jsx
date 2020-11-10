@@ -10,10 +10,11 @@ const DashboardUser = (props) => {
       <h2 style={{color:"white", paddingLeft:"3rem"}}> User Dashboard </h2>
       <Container fluid>
         <Row>
-          <Col style={{paddingLeft:"8%"}}>
+          <Col sm={4} style={{paddingLeft:"8%", backgroundColor:""}}>
             <IllnessReport/>
           </Col>
-          <Col style={{paddingRight:"8%"}}>
+          <Col></Col>
+          <Col sm={5} style={{paddingRight:"7%", backgroundColor:""}}>
             <CurrentSchedule/>
           </Col>
         </Row>
