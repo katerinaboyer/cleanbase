@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import * as emailjs from "emailjs-com";
 import DatePicker from "react-datepicker";
+import { connect, useSelector } from "react-redux";
+import { getUser } from "../store/selectors";
 
+const CreateReport = (props) => {
+  const user = useSelector(getUser);
+  return <CreateSelfIllnessReport currUser={user} />;
+};
 
-export default class CreateSelfIllnessReport extends Component {
+class CreateSelfIllnessReport extends Component {
   constructor(props) {
     super(props);
 
@@ -15,13 +21,37 @@ export default class CreateSelfIllnessReport extends Component {
     this.onChangeReport = this.onChangeReport.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+
     this.state = {
-      email: '',
-      name: '',
+      email: props.currUser.email,
+      name: props.currUser.name,
+      userID: props.currUser.id,
       phone: '',
       date: '',
-      report: ''
-    }
+      report: '',
+      emails: [],
+      attendIds:[],
+    };
+  }
+
+  componentDidMount() {
+
+    console.log(this.state.userID);
+    axios
+      .all([
+        axios.get('http://localhost:5000/reservations/userId/' + this.state.userID)
+      ])
+      .then(([resResponse]) => {
+        console.log(resResponse.data[0].attendees);
+        this.setState({
+          attendIds: resResponse.data[0].attendees
+        });
+        console.log("Ids[] " + this.state.attendIds);
+      });
+
+      
+
+
   }
 
   
@@ -166,3 +196,9 @@ export default class CreateSelfIllnessReport extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(CreateReport);

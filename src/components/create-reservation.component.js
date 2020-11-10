@@ -17,6 +17,7 @@ class FillReservation extends Component {
     super(props);
     console.log(props);
     const currUserId = props.currUser._id;
+    const currUserEmail = props.currUser._email;
     console.log(currUserId);
 
     this.onChangeTitle = this.onChangeTitle.bind(this);

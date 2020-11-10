@@ -33,9 +33,9 @@ export default class IllnessReport extends Component {
         return (
         <div style={{marginLeft: "2%", marginTop: "3%", color:"white", position:"relative"}}>
             <h3>Illness Report:</h3> 
-            <p>Reported Illnesses:  {this.state.count.toString()} </p> 
+            <p>Reported Illnesses: 5 </p> 
             <Card style={{ width: '20rem', height: '10rem'}}>
-               <Card.Title style={{color:"#434343"}}>{this.state.count.toString()}</Card.Title>
+               <Card.Title style={{color:"#434343"}}>{5}</Card.Title>
             </Card>
 
         </div>
