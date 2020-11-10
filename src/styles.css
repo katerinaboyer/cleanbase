@@ -15,6 +15,16 @@
   border-radius: 10px;
 }
 
+.button-edit {
+  border: none;
+  text-align: left;
+  margin: 20px 10px 20px max(40%, 30%);
+  background-color: transparent;
+  color: #ee6c4d;
+  font-weight: bold;
+  font-size: 115%;
+}
+
 .button:hover {
   background: #ee6c4d;
   color: #434343;
@@ -30,6 +40,32 @@
   background: #ee6c4d;
   color: #434343;
 }
+
+.button-submit {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 2px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #ee6c4d;
+  color: #434343;
+  padding: 7px 20px
+}
+
+.button-add {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  min-width: 80px;
+  border-radius: 14px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
 
 .text {
   color: white;

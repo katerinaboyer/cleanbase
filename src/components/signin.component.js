@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { storeLogin } from '../store/userReducer';
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 const bcrypt = require('bcryptjs');
 
@@ -33,7 +33,7 @@ const SignIn = (props) => {
               name: res.data.name,
               email: res.data.email,
               role: res.data.role,
-              id: res.data._id,
+              _id: res.data._id,
             }
 
             props.storeLogin(signedInUser);
@@ -47,7 +47,7 @@ const SignIn = (props) => {
 
       return (
         <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"25%"}} >
-        <h3 className="h3">Create Account:</h3>
+        <h3 className="h3">Log In:</h3>
         <Form onSubmit={onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={4}>Email</Form.Label>
@@ -63,9 +63,9 @@ const SignIn = (props) => {
                 </Col>
             </Form.Group>
 
-            <Button className="button-secondary" type="submit">
+            <button className="button-submit" type="submit">
                 Sign In
-            </Button>
+            </button>
         </Form>
         </div>
       )

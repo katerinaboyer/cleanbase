@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Form, Button, Col, Row} from 'react-bootstrap';
+import {Form, Col, Row} from 'react-bootstrap';
 
 export default class CreateDesk extends Component {
     constructor(props) {
@@ -85,9 +85,9 @@ export default class CreateDesk extends Component {
                     </Col>
                 </Form.Group>
 
-                <Button className="button-secondary" type="submit">
+                <button className="button-submit" type="submit">
                     Create Desk
-                </Button>
+                </button>
             </Form>
           </div>
         )

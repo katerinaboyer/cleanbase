@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import { storeLogout } from "../store/userReducer";
 import { getUser } from "../store/selectors";
@@ -62,6 +62,10 @@ const NavigationBar = props => {
     history.replace("/");
   };
 
+  const logIn = () => {
+    history.push("/signin");
+  }
+
   return (
     <div style={{ color: "white" }}>
       <Navbar collapseOnSelect expand="lg" className="nav-bar">
@@ -87,15 +91,15 @@ const NavigationBar = props => {
             {user.name === "" && location.pathname !== "/user" && (
               <>
                 <Nav.Link href="/user">Sign Up Here</Nav.Link>
-                <Button style={{ border: "none" }} href="/signin">
+                <button className="button-submit" onClick={logIn}>
                   Log in
-                </Button>
+                </button>
               </>
             )}
             {user.name === "" && location.pathname === "/user" && (
-              <Button href="/signin" style={{ border: "none" }}>
+              <button onClick={logIn} className="button-submit">
                 Log in
-              </Button>
+              </button>
             )}
           </Nav>
         </Navbar.Collapse>
