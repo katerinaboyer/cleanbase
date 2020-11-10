@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
-<<<<<<< HEAD
-import {Form, Col, Row} from 'react-bootstrap';
-import {format} from "date-fns";
-=======
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import { getUser } from "../store/selectors";
->>>>>>> dev
 
 const CreateReservation = (props) => {
   const user = useSelector(getUser);

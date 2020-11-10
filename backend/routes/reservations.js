@@ -44,7 +44,7 @@ router.route('/add').post((req, res) => {
     date,
     attendees
   });
-
+  
   newReservation.save()
     .then(() => res.json('Reservation added!'))
     .catch(err => res.status(400).json('Error: ' + err));

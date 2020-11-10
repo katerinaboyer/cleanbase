@@ -61,10 +61,11 @@ const CurrentSchedule = (props) => {
                             <Card style={{borderRadius:"15px"}}>
                                     <Row>
                                         <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>
+                                        <p style={{color:"#434343", padding:"10px 0px 0px 10px"}}>{info.title}</p>
                                     </Row>
                                     <Row>
                                         <Card.Text style={{color:"#434343", padding:"0px 0px 10px 100px"}}>
-                                            {}
+                                            {"Room: " + info.room_number + " Desk: " + info.desk_number}
                                         </Card.Text>
                                     </Row>
                                     {formatDate(info.date) === currDate && 
