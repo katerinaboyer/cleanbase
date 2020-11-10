@@ -32,7 +32,9 @@ class FillReservation extends Component {
     // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
+      room: "",
       room_number: "",
+      desk: "",
       desk_number: "",
       start_time: "",
       end_time: "",
@@ -72,7 +74,7 @@ class FillReservation extends Component {
 
   onChangeRoomNumber(e) {
     this.setState({
-      room_number: e.target.value
+      room_number: e.target.value,
     });
   }
 
@@ -113,9 +115,9 @@ class FillReservation extends Component {
     const newReservation = {
       title: this.state.title,
       room_number: this.state.room_number,
-      // room: this.state.room,
+      room: this.state.room,
       desk_number: this.state.desk_number,
-      // desk: this.state.desk,
+      desk: this.state.desk,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
