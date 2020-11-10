@@ -3,6 +3,7 @@ import axios from "axios";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import {Form, Col, Row} from 'react-bootstrap';
+import {format} from "date-fns";
 
 export default class CreateReservation extends Component {
   constructor(props) {
@@ -81,6 +82,7 @@ export default class CreateReservation extends Component {
   }
 
   onChangeDate(e) {
+
     this.setState({
       date: e.target.value,
     });
@@ -95,7 +97,6 @@ export default class CreateReservation extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("HEHEHEHEHE");
     const newReservation = {
       title: this.state.title,
       room_number: this.state.room_number,
