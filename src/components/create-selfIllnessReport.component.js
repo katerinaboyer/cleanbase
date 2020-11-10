@@ -85,6 +85,22 @@ export default class CreateSelfIllnessReport extends Component {
       }
     );
 
+    axios
+      .all([
+        axios.get("http://localhost:5000/rooms"),
+        axios.get("http://localhost:5000/desks"),
+        axios.get("http://localhost:5000/users/all"),
+      ])
+      .then(([roomResponse, deskResponse, userResponse]) => {
+        this.setState({
+          rooms: roomResponse.data.map((room) => room),
+          room_number: roomResponse.data[0],
+          desks: deskResponse.data.map((desk) => desk),
+          desk_number: deskResponse.data[0],
+          all_users: userResponse.data.map((user) => user)
+        });
+      });
+
     axios.post('http://localhost:5000/selfIllnessReport/add', newselfIllnessReport)
       .then(res => console.log(res.data));
     this.props.history.push('/')
@@ -124,12 +140,12 @@ export default class CreateSelfIllnessReport extends Component {
           </div>
           <div className="form-group">
             <label>Date: </label>
-            <div>
-              <DatePicker
-                selected={this.state.date}
+            <input  type="date"
+                required
+                className="form-control"
+                value={this.state.date}
                 onChange={this.onChangeDate}
-              />
-            </div>
+                />
           </div>
           <div className="form-group"> 
             <label>Report: </label>

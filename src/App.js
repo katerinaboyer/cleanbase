@@ -32,6 +32,7 @@ import SanitationSchedule from "./components/sanitation-schedule.component";
 import AccountSettings from "./components/account-settings-page.component";
 import AccountMgmt from "./components/account-management.component";
 import SpaceMgmt from "./components/space-management.component";
+import CreateSelfIllnessReport from "./components/create-selfIllnessReport.component";
 
 function App(props) {
   return (

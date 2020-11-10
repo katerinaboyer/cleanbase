@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { count } = require('../models/selfIllnessReport.model');
 let selfIllnessReport = require('../models/selfIllnessReport.model');
 
 router.route('/').get((req, res) => {
@@ -6,6 +7,14 @@ router.route('/').get((req, res) => {
     .then(selfIllnessReports => res.json(selfIllnessReports))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/count').get((req, res) => {
+  selfIllnessReport.countDocuments()
+    .then(count => res.json(count))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
 
 router.route('/add').post((req, res) => {
   const email = req.body.email;

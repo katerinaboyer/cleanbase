@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import * as emailjs from "emailjs-com";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import {Form, Button, Col, Row} from 'react-bootstrap';
@@ -105,6 +106,24 @@ export default class CreateReservation extends Component {
       date: this.state.date,
       attendees: this.state.attendees,
     };
+
+    var data = {
+      title: this.state.title,
+      to_email: "turtlesandpie@gmail.com",
+      room_number: this.state.room_number,
+      start_time: this.state.start_time,
+      end_time: this.state.end_time,
+      date: this.state.date
+    };
+    //emails a nice confirmation to the user
+    emailjs.send("service_lsurk9p", "template_evr3ddw", data, "user_YLt0CRcKLOhVbiTOfPMjp").then(
+      function (response) {
+        console.log(response.status, response.text);
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
 
     console.log(newReservation);
 
