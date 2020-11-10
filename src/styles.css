@@ -45,7 +45,7 @@
   border: none;
   text-align: center;
   display: block;
-  margin: 4px 2px;
+  margin: 4px 15px;
   min-width: 125px;
   border-radius: 10px;
   background: #ee6c4d;
@@ -64,6 +64,18 @@
   border-radius: 14px;
   background: #ee6c4d;
   color: #434343;
+}
+
+.button-remove {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 7px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #434343;
+  color: white;
+  padding: 7px 20px
 }
 
 .button-checkin {

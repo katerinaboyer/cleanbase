@@ -21,6 +21,7 @@ const BuildingAdminDash = (props) => {
 
     const test= (info) =>{
         console.log(info);
+        history.push("/edit-baccount")
 
     }
 
