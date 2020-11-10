@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 //import { useHistory } from "react-router-dom";
 import {Form, Col, Row} from 'react-bootstrap';
+import { ToastMessage } from './toast.component';
 const bcrypt = require('bcryptjs');
 
 export default class CreateUser extends Component {
@@ -121,7 +122,7 @@ export default class CreateUser extends Component {
                 <Col sm={9}>
                     <Form.Control type="name" placeholder="" onChange={this.onChangePassword}/>
                     <Form.Text id="passwordHelp" style={{color:"white"}}>
-                      Your password must be 8-20 character long, contain letters and numbers, 
+                      Your password must be 8-20 character long, contain letters and numbers,
                       and must not contain spaces, special characters, or emoji.
                     </Form.Text>
                 </Col>
