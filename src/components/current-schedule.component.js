@@ -27,6 +27,30 @@ const CurrentSchedule = (props) => {
         return  date.substring(5,7) + '/' + date.substring(8,10);
     }
 
+    const formatTime = (time) => {
+
+        time = time.split(':'); // convert to array
+
+        // fetch
+        var hours = Number(time[0]);
+        var minutes = Number(time[1]);
+        // calculate
+        var timeValue;
+
+        if (hours > 0 && hours <= 12) {
+        timeValue= "" + hours;
+        } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+        } else if (hours == 0) {
+        timeValue= "12";
+        }
+        
+        timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+        timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+        return timeValue;
+    }
+
     useEffect(() => {
         async function fetchData() {
             axios.get('http://localhost:5000/reservations/userId/' + user._id)
@@ -60,12 +84,22 @@ const CurrentSchedule = (props) => {
                         <div style={{paddingBottom:"10px"}}>
                             <Card style={{borderRadius:"15px"}}>
                                     <Row>
-                                        <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>
-                                        <p style={{color:"#434343", padding:"10px 0px 0px 10px"}}>{info.title}</p>
+                                        {info.title.length > 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date) + " - " + info.title}</h5>}
+                                        {info.title.length == 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>}
+                                    </Row>
+                                    <Row>
+                                        <Card.Text style={{color:"#434343", padding:"0px 0px 5px 100px"}}>
+                                            {"Room: " + info.room_number}
+                                        </Card.Text>
                                     </Row>
                                     <Row>
                                         <Card.Text style={{color:"#434343", padding:"0px 0px 10px 100px"}}>
-                                            {"Room: " + info.room_number + " Desk: " + info.desk_number}
+                                            {"Desk: " + info.desk_number}
+                                        </Card.Text>
+                                    </Row>
+                                    <Row>
+                                        <Card.Text style={{color:"#434343", padding:"0px 0px 10px 100px"}}>
+                                            {formatTime(info.start_time) + "-" + formatTime(info.end_time)}
                                         </Card.Text>
                                     </Row>
                                     {formatDate(info.date) === currDate && 

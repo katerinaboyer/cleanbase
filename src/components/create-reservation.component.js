@@ -271,9 +271,9 @@ class FillReservation extends Component {
             </select>
           </div> */}
 
-          <Button className="button-secondary" type="submit">
+          <button className="button-submit" type="submit" onClick={this.onSubmit}>
             Create Reservation
-          </Button>
+          </button>
         </Form>
       </div>
     );
