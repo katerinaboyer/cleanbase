@@ -50,18 +50,9 @@ const BuildingAdminDash = (props) => {
                         <IllnessReport/>
                     </Col>
                     <Col style={{paddingRight:"8%"}}>
-                        <h3>Accounts for: {address}</h3>
-                        <Row>
-                        <Form>
-                            <div key={'inline-checkbox'} className="mb-3" style={{color: "white", paddingLeft:"20px"}}>
-                                <Form.Row>
-                                    <Form.Label style={{paddingRight: "25px", paddingTop:"4px", paddingLeft:"5px"}}>Filter by:</Form.Label>
-                                    <Form.Check inline label="Floors" type="checkbox" id="floorFilterAdminDash"/>
-                                    <Form.Check inline label="Companies" type="checkbox" id="companyFilterAdminDash" style={{paddingRight:"100px"}}/>
-                                </Form.Row>
-                            </div>
-                        </Form>
-                        <button className="button-add" onClick={addAccount}>ADD</button>
+                        <Row style={{paddingLeft:"4%"}}>
+                            <h3>Accounts for: {address}</h3>
+                            <button className="button-add" style={{marginLeft:"56%"}} onClick={addAccount}>ADD</button>
                         </Row>
                         <div style={{}}>
                             { accounts.map(info =>
