@@ -42,6 +42,7 @@ export default class CreateAccount extends Component {
 
   onChangeFloorsAssigned(e) {
     let value = Array.from(e.target.selectedOptions, option => option.value);
+    console.log(value);
     this.setState({
       floors_assigned: value
     })

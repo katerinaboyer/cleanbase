@@ -25,6 +25,13 @@ const BuildingAdminDash = (props) => {
 
     }
 
+    const getFloorNumbers = (floors) => {
+        const floorNum = [1,2,3];
+        const floorText = floorNum[0] + " - " + floorNum[floorNum.length-1];
+        
+        return floorText;
+    }
+
     useEffect(() => {
         async function fetchData() {
             axios.get('http://localhost:5000/accounts/')
@@ -61,7 +68,7 @@ const BuildingAdminDash = (props) => {
                                     <Card style={{borderRadius:"15px"}}>
                                             <Row>
                                                 <Col sm={3}>
-                                                    <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floor 1</Card.Title>
+                                                    <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floors {getFloorNumbers(info.floor_assigned)}</Card.Title>
                                                 </Col>
                                                 <Col style={{textAlign: "center"}}>
                                                     <Card.Text style={{color:"#434343", padding:"25px 0px 20px 0%"}}>{info.business_name}</Card.Text>
