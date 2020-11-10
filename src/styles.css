@@ -125,6 +125,11 @@
   color: white;
 }
 
-* h3{
+* h3 {
   color: white;
+}
+
+.space-mgmt {
+  height: 4rem;
+  margin-bottom: 2%;
 }

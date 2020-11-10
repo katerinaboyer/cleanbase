@@ -32,6 +32,7 @@ import SanitationSchedule from "./components/sanitation-schedule.component";
 import AccountSettings from "./components/account-settings-page.component";
 import AccountMgmt from "./components/account-management.component";
 import SpaceMgmt from "./components/space-management.component";
+import AddEmployee from "./components/add-employee.component";
 
 function App(props) {
   return (
@@ -62,6 +63,7 @@ function App(props) {
         <PrivateRoute path="/account-settings" component={AccountSettings} />
         <PrivateRoute path="/account-mgmt" component={AccountMgmt} />
         <PrivateRoute path="/space-mgmt" component={SpaceMgmt} />
+        <PrivateRoute path="/addEmployee" component={AddEmployee} />
       </Switch>
     </Router>
   );
