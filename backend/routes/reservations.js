@@ -24,9 +24,9 @@ router.route('/update/:id').post((req, res) => {
 
 router.route('/add').post((req, res) => {
   const title = req.body.title;
-  const room_id = req.body.room_id;
+  // const room_id = req.body.room_id;
   const room_number = req.body.room_number;
-  const desk_id = req.body.desk_id
+  // const desk_id = req.body.desk_id
   const desk_number = req.body.desk_number;
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
@@ -35,9 +35,9 @@ router.route('/add').post((req, res) => {
 
   const newReservation = new Reservation({
     title,
-    room_id,
+    // room_id,
     room_number,
-    desk_id,
+    // desk_id,
     desk_number,
     start_time,
     end_time,

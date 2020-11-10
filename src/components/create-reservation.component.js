@@ -30,8 +30,8 @@ class FillReservation extends Component {
     // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
-      room: "",
-      desk: "",
+      room_number: "",
+      desk_number: "",
       start_time: "",
       end_time: "",
       date: "",
@@ -54,9 +54,9 @@ class FillReservation extends Component {
       .then(([roomResponse, deskResponse, userResponse]) => {
         this.setState({
           rooms: roomResponse.data.map((room) => room),
-          room: roomResponse.data[0],
+          // room: roomResponse.data[0],
           desks: deskResponse.data.map((desk) => desk),
-          desk: deskResponse.data[0],
+          // desk: deskResponse.data[0],
           all_users: userResponse.data.map((user) => user),
         });
       });
@@ -70,7 +70,7 @@ class FillReservation extends Component {
 
   onChangeRoomNumber(e) {
     this.setState({
-      room_number: e.target.value,
+      room_number: e.target.value
     });
   }
 
@@ -110,10 +110,10 @@ class FillReservation extends Component {
     e.preventDefault();
     const newReservation = {
       title: this.state.title,
-      room_number: this.state.room.room_number,
-      room: this.state.room,
-      desk_number: this.state.desk.desk_number,
-      desk: this.state.desk,
+      room_number: this.state.room_number,
+      // room: this.state.room,
+      desk_number: this.state.desk_number,
+      // desk: this.state.desk,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
@@ -163,8 +163,8 @@ class FillReservation extends Component {
                 onChange={this.onChangeRoomNumber}>
                 {this.state.rooms.map((room) => {
                   return (
-                    <option key={room._id} value={room._id}>
-                      {room.room_number}
+                    <option key={room._id} value={room.room_number} data={room.room_number}>
+                    {room.room_number}
                     </option>
                   );
                 })}
@@ -182,7 +182,7 @@ class FillReservation extends Component {
                 onChange={this.onChangeDeskNumber}>
                 {this.state.desks.map((desk) => {
                   return (
-                    <option key={desk._id} value={desk._id}>
+                    <option key={desk._id} value={desk.desk_number}>
                       {desk.desk_number}
                     </option>
                   );
@@ -270,11 +270,12 @@ class FillReservation extends Component {
               })}
             </select>
           </div> */}
-              <button className="button-submit" type="submit">
-                  Create Reservation
-              </button>
-          </Form>
-      </div> 
+
+          <Button className="button-secondary" type="submit">
+            Create Reservation
+          </Button>
+        </Form>
+      </div>
     );
   }
 }
