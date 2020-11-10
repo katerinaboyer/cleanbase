@@ -156,3 +156,8 @@
 * h3, h4{
   color: white;
 }
+
+.space-mgmt {
+  height: 4rem;
+  margin-bottom: 2%;
+}
