@@ -25,7 +25,7 @@ export default class CreateAccount extends Component {
     axios
       .all([
         axios.get("http://localhost:5000/floors"),
-        axios.get("http://localhost:5000/users/all"),
+        axios.get("http://localhost:5000/users/role/office_manager"),
       ])
       .then(([floorResponse, userResponse]) => {
         this.setState({
