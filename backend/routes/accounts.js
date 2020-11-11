@@ -19,11 +19,13 @@ router.route('/add').post((req, res) => {
   const business_name = req.body.business_name;
   const office_manager = req.body.office_manager;
   const floors_assigned = req.body.floors_assigned;
+  const employees = req.body.employees;
 
   const newAccount = new Account({
       business_name,
       office_manager,
-      floors_assigned
+      floors_assigned,
+      employees
   });
 
   newAccount.save()
