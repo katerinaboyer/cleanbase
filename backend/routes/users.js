@@ -40,7 +40,7 @@ router.route('/building_admins').get((req, res) => {
 });
 
 router.route('/update/:id').post((req, res) => {
-  User.findByIdAndUpdate(req.params._id, req.body)
+  User.findByIdAndUpdate(req.params.id, req.body)
   .then(user => res.json(user))
   .catch(err => res.status(400).json('Error: ' + err));
 });
