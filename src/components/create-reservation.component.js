@@ -5,11 +5,12 @@ import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
-import { getUser } from "../store/selectors";
+import { getUser, getReservation } from "../store/selectors";
 
 const CreateReservation = (props) => {
   const user = useSelector(getUser);
-  return <FillReservation currUser={user} />;
+  const reservation = useSelector(getReservation);
+  return <FillReservation currUser={user} reservation={reservation} />;
 };
 
 class FillReservation extends Component {

@@ -6,6 +6,7 @@ import IllnessReport from "./illness-report.component";
 import { Container, Row, Col, Form, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect} from "react-redux";
+import { setAccountId } from "../store/businessAccountReducer";
 
 
 const BuildingAdminDash = (props) => {
@@ -28,7 +29,7 @@ const BuildingAdminDash = (props) => {
     const getFloorNumbers = (floors) => {
         const floorNum = [1,2,3];
         const floorText = floorNum[0] + " - " + floorNum[floorNum.length-1];
-        
+
         return floorText;
     }
 
@@ -91,6 +92,6 @@ const BuildingAdminDash = (props) => {
 
 const mapStateToProps = (state) => {return state};
 
-export default connect(mapStateToProps)(BuildingAdminDash);
-
-
+export default connect(mapStateToProps, {
+  setAccountId
+})(BuildingAdminDash);
