@@ -8,7 +8,6 @@ const DashboardManager = (props) => {
   return (
   <div>
     <div>
-      <h2 style={{color:"white", paddingLeft:"3rem"}}> Office Manager Dashboard </h2>
       <Container fluid>
         <Row>
           <Col style={{paddingLeft:"8%"}}>

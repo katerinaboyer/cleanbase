@@ -5,11 +5,12 @@ import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
-import { getUser } from "../store/selectors";
+import { getUser, getReservation } from "../store/selectors";
 
 const CreateReservation = (props) => {
   const user = useSelector(getUser);
-  return <FillReservation currUser={user} />;
+  const reservation = useSelector(getReservation);
+  return <FillReservation currUser={user} reservation={reservation} />;
 };
 
 class FillReservation extends Component {
@@ -97,7 +98,6 @@ class FillReservation extends Component {
   }
 
   onChangeDate(e) {
-
     this.setState({
       date: e.target.value,
     });
@@ -124,28 +124,49 @@ class FillReservation extends Component {
       attendees: this.state.attendees,
     };
 
+    const cleaningReservation = {
+      title: "Cleaning",
+      room_number: this.state.room_number,
+      room: this.state.room,
+      desk_number: this.state.desk_number,
+      desk: this.state.desk,
+      start_time: this.state.end_time,
+      date: this.state.date,
+    };
+
     var data = {
       title: this.state.title,
       to_email: "turtlesandpie@gmail.com",
       room_number: this.state.room_number,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
-      date: this.state.date
+      date: this.state.date,
     };
     //emails a nice confirmation to the user
-    emailjs.send("service_lsurk9p", "template_evr3ddw", data, "user_YLt0CRcKLOhVbiTOfPMjp").then(
-      function (response) {
-        console.log(response.status, response.text);
-      },
-      function (err) {
-        console.log(err);
-      }
-    );
+    emailjs
+      .send(
+        "service_lsurk9p",
+        "template_evr3ddw",
+        data,
+        "user_YLt0CRcKLOhVbiTOfPMjp"
+      )
+      .then(
+        function (response) {
+          console.log(response.status, response.text);
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
 
     console.log(newReservation);
 
     axios
       .post("http://localhost:5000/reservations/add", newReservation)
+      .then((res) => console.log(res.data));
+
+    axios
+      .post("http://localhost:5000/reservations/add", cleaningReservation)
       .then((res) => console.log(res.data));
   }
 
@@ -180,13 +201,15 @@ class FillReservation extends Component {
               Room Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                as="select"
-                onChange={this.onChangeRoomNumber}>
+              <Form.Control as="select" onChange={this.onChangeRoomNumber}>
                 {this.state.rooms.map((room) => {
                   return (
-                    <option key={room._id} value={room.room_number} data={room.room_number}>
-                    {room.room_number}
+                    <option
+                      key={room._id}
+                      value={room.room_number}
+                      data={room.room_number}
+                    >
+                      {room.room_number}
                     </option>
                   );
                 })}
@@ -199,9 +222,7 @@ class FillReservation extends Component {
               Desk Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                as="select"
-                onChange={this.onChangeDeskNumber}>
+              <Form.Control as="select" onChange={this.onChangeDeskNumber}>
                 {this.state.desks.map((desk) => {
                   return (
                     <option key={desk._id} value={desk.desk_number}>
@@ -293,7 +314,11 @@ class FillReservation extends Component {
             </select>
           </div> */}
 
-          <button className="button-submit" type="submit" onClick={this.onSubmit}>
+          <button
+            className="button-submit"
+            type="submit"
+            onClick={this.onSubmit}
+          >
             Create Reservation
           </button>
         </Form>
