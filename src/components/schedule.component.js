@@ -159,7 +159,7 @@ const Schedule = (props) => {
             <Button>Filter</Button>
           </div>
         </Col>
-        <Col s={12} style={{backgroundColor:"red"}}>
+        <Col s={12}>
           <Container style={{ padding: "1rem" }}>
             {desks.map((desk, index) => (
               <div
