@@ -14,7 +14,7 @@ export default class SanitationSchedule extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:5000/reservations").then(response => {
+    axios.get("http://localhost:5000/reservations/cleaning/unclaimed").then(response => {
       if (response.data.length > 0) {
         console.log(response.data);
         this.setState({
@@ -38,22 +38,17 @@ export default class SanitationSchedule extends Component {
           <h5 style={{ color: "white", textAlign: "center" }}>
             Upcoming Schedule
           </h5>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
+          {this.state.reservations.map(reserv => {
+            return (
+            <Card className="san-sched">
+              <Card.Body className="card-body">
+            <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}}>
                 Assign
               </Button>
             </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Assign
-              </Button>
-            </Card.Body>
-          </Card>
+          </Card> )
+          })}
         </div>
         <div
           style={{

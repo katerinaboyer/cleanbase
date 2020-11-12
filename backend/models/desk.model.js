@@ -7,6 +7,9 @@ const deskSchema = new Schema({
         type: String,
         required: true
     },
+    room_number: {
+        type: String
+    },
     room_id: {
         type: Schema.Types.ObjectId,
         ref: 'Room',

@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react";
 import {ListGroup} from 'react-bootstrap';
 import { Container, Row, Col, Form, Card} from 'react-bootstrap';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import {format} from "date-fns";
 import { getUser } from "../store/selectors";
@@ -13,6 +13,7 @@ const CurrentSchedule = (props) => {
 
     const history = useHistory();
     const user = useSelector(getUser);
+    const location = useLocation();
 
     const newReservation = (e) =>{
         history.push("/reservation");
@@ -55,7 +56,6 @@ const CurrentSchedule = (props) => {
         async function fetchData() {
             axios.get('http://localhost:5000/reservations/userId/' + user._id)
             .then(response => {
-                //console.log(response.data.length);
                 console.log(response.data);
                 if (response.data.length > 0) {
                     setSchedule(response.data);
@@ -76,7 +76,7 @@ const CurrentSchedule = (props) => {
                         <h4 style={{paddingLeft:"20px", paddingRight:"0px"}}>Upcoming Schedule</h4>
                     </Col>
                     <Col >
-                        <button className="button-createreservation" onClick={newReservation}>Create Reservation</button>
+                        {location.pathname !== "/schedule" && <button className="button-createreservation" onClick={newReservation}>Create Reservation</button> }
                     </Col>
                 </Row>
                 <div style={{}}>

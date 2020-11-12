@@ -12,6 +12,9 @@ const roomSchema = new Schema({
         ref: 'Floor',
         required: true
     },
+    floor_number: {
+        type: String
+    },
     capacity: {
         type: Number
     },
