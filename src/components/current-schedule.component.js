@@ -56,7 +56,6 @@ const CurrentSchedule = (props) => {
         async function fetchData() {
             axios.get('http://localhost:5000/reservations/userId/' + user._id)
             .then(response => {
-                //console.log(response.data.length);
                 console.log(response.data);
                 if (response.data.length > 0) {
                     setSchedule(response.data);
