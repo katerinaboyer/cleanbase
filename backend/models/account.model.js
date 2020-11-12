@@ -14,6 +14,9 @@ const accountSchema = new Schema({
   employees: {
       type: [Schema.Types.ObjectId]
   },
+  building_id: {
+    type: Schema.Types.ObjectId
+  },
   floors_assigned: {
       type: [Schema.Types.ObjectId]
   }

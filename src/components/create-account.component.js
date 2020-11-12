@@ -8,13 +8,16 @@ export default class CreateAccount extends Component {
 
     this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
     this.onChangeOfficeManager = this.onChangeOfficeManager.bind(this);
+    this.onChangeBuildingId = this.onChangeBuildingId.bind(this);
     this.onChangeFloorsAssigned = this.onChangeFloorsAssigned.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       business_name: "",
       office_manager: "",
+      building_id: "",
       floors_assigned: [],
+      buildings: [],
       floors: [],
       users: []
     };
@@ -26,11 +29,13 @@ export default class CreateAccount extends Component {
       .all([
         axios.get("http://localhost:5000/floors"),
         axios.get("http://localhost:5000/users/role/office_manager"),
+        axios.get("http://localhost:5000/buildings")
       ])
-      .then(([floorResponse, userResponse]) => {
+      .then(([floorResponse, userResponse, buildingResponse]) => {
         this.setState({
           floors: floorResponse.data.map((floor) => floor),
           users: userResponse.data.map((user) => user),
+          buildings: buildingResponse.data.map((building) => building)
         });
       });
   }
@@ -47,6 +52,12 @@ export default class CreateAccount extends Component {
     });
   }
 
+  onChangeBuildingId(e) {
+    this.setState({
+      building_id: e.target.value,
+    });
+  }
+
   onChangeFloorsAssigned(e) {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
     this.setState({
@@ -60,6 +71,7 @@ export default class CreateAccount extends Component {
     const newAccount = {
       business_name: this.state.business_name,
       office_manager: this.state.office_manager,
+      building_id: this.state.building_id,
       floors_assigned: this.state.floors_assigned
     };
 
@@ -90,6 +102,21 @@ export default class CreateAccount extends Component {
                 return (
                   <option key={user._id} value={user._id}>
                     {user.name}
+                  </option>
+                );
+              })}
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formManager">
+                <Form.Label column sm={3}>Building Address</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeBuildingId}>
+                    {this.state.buildings.map((building) => {
+                return (
+                  <option key={building._id} value={building._id}>
+                    {building.address}
                   </option>
                 );
               })}
