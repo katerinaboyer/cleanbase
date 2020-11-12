@@ -159,7 +159,7 @@ const Schedule = (props) => {
             <Button>Filter</Button>
           </div>
         </Col>
-        <Col s={12}>
+        <Col s={12} style={{backgroundColor:"red"}}>
           <Container style={{ padding: "1rem" }}>
             {desks.map((desk, index) => (
               <div
@@ -170,7 +170,7 @@ const Schedule = (props) => {
                   paddingBottom: "1rem",
                 }}
               >
-                <Card style={{ width: "19rem", padding: ".5rem" }}>
+                <Card style={{ width: "28rem", padding: ".5rem" }}>
                   <Card.Title>Desk: {desk.desk_number}</Card.Title>
                   <Container>
                     <Row>
