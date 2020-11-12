@@ -22,8 +22,8 @@ const BuildingAdminDash = (props) => {
 
     const test= (info) =>{
         console.log(info);
+        props.setAccountId(info);
         history.push("/edit-baccount")
-
     }
 
     const getFloorNumbers = (floors) => {
