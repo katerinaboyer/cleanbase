@@ -36,20 +36,35 @@ class CreateSelfIllnessReport extends Component {
 
   componentDidMount() {
 
-    console.log(this.state.userID);
+    
     axios
       .all([
         axios.get('http://localhost:5000/reservations/userId/' + this.state.userID)
       ])
       .then(([resResponse]) => {
-        console.log(resResponse.data[0].attendees);
+          
         this.setState({
           attendIds: resResponse.data[0].attendees
         });
-        console.log("Ids[] " + this.state.attendIds);
+        for(var i = 0; i < resResponse.data[0].attendees.length; i++){
+          axios
+          .all([
+            
+            axios.get('http://localhost:5000/users/id/' + resResponse.data[0].attendees[i])
+          ])
+          .then(([userResponse]) => {
+           
+            console.log(userResponse.data.email);
+            this.setState({
+              emails: userResponse.data[0]
+            });
+            //console.log("Ids[] " + this.state.emails);
+    
+            
+          });
+        }
       });
 
-      
 
 
   }
