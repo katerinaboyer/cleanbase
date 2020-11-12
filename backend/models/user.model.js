@@ -24,6 +24,9 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  business_account_id: {
+    type: Schema.Types.ObjectId
+  }
 },
 {
   timestamps: true,
