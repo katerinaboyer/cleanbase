@@ -170,7 +170,7 @@ const Schedule = (props) => {
                   paddingBottom: "1rem",
                 }}
               >
-                <Card style={{ width: "19rem", padding: ".5rem" }}>
+                <Card style={{ width: "28rem", padding: ".5rem" }}>
                   <Card.Title>Desk: {desk.desk_number}</Card.Title>
                   <Container>
                     <Row>
