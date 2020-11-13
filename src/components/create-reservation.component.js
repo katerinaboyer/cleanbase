@@ -13,6 +13,14 @@ const CreateReservation = (props) => {
   return <FillReservation currUser={user} reservation={reservation} />;
 };
 
+function calculateEndCleaning(cleaningStart) {
+  var minsToAdd = 30;
+  var time = cleaningStart;
+  var cleaningEnd = new Date(new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+  console.log(cleaningEnd);
+  return cleaningEnd;
+}
+
 class FillReservation extends Component {
   constructor(props) {
     super(props);
@@ -131,6 +139,7 @@ class FillReservation extends Component {
       desk_number: this.state.desk_number,
       desk: this.state.desk,
       start_time: this.state.end_time,
+      end_time: calculateEndCleaning(this.state.end_time),
       date: this.state.date,
     };
 
