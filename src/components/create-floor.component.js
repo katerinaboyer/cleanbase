@@ -72,7 +72,7 @@ export default class CreateFloor extends Component {
   render() {
     return (
       <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-            <h3 className="h3">Create Reservation:</h3>
+            <h3 className="h3">Create Floor:</h3>
             <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
                     <Form.Label column sm={3}>Floor Number</Form.Label>
@@ -103,7 +103,7 @@ export default class CreateFloor extends Component {
                 </Form.Group>
 
                 <button className="button-edit" type="submit">
-                    Create Desk
+                    Create Floor
                 </button>
             </Form>
           </div>
