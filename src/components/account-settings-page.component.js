@@ -1,23 +1,22 @@
-import React, {useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
-import { Row, Col, Form, Button} from 'react-bootstrap';
+import { Row, Col, Form} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import { getUser } from "../store/selectors";
+import { storeLogin } from '../store/userReducer';
 import "./../styles.css"
 
 
 const AccountSettings = (props) => {
 
-    const [companyInfo, setCompanyInfo] = useState([]);
+    //const [companyInfo, setCompanyInfo] = useState([]);
 
     const history = useHistory();
     const user = useSelector(getUser);
 
-    const address = "hi";
-    console.log(user._id)
     const onNameChange = (e) => {
         user.name = e.target.value;
     }
@@ -40,16 +39,20 @@ const AccountSettings = (props) => {
         
         axios.post('http://localhost:5000/users/update/' + user._id, updateUser)
         .then(res => console.log(res.data));
+
+        const newUser = {
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            _id: user._id,
+        }
+        console.log(newUser);
+
+        //props.storeLogin(newUser);
+        history.push("/account-settings")
         
     }
-    /*
-    useEffect(() => {
-        async function fetchData() {
-            
-        }
-        fetchData();
-    },[]);
-    */
     
 
     return(
@@ -103,7 +106,7 @@ const AccountSettings = (props) => {
                     <Form.Group as={Row} controlId="formBasicPhone">
                         <Form.Label column sm={3}>Role</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="role" placeholder="employee" readOnly/>
+                            <Form.Control type="role" placeholder={user.role} readOnly/>
                         </Col>
                     </Form.Group>
                 </Form>
@@ -114,4 +117,6 @@ const AccountSettings = (props) => {
 
 const mapStateToProps = (state) => {return state};
 
-export default connect(mapStateToProps)(AccountSettings);
+export default connect(mapStateToProps, {
+    storeLogin
+})(AccountSettings);

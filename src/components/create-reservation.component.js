@@ -122,6 +122,7 @@ class FillReservation extends Component {
       end_time: this.state.end_time,
       date: this.state.date,
       attendees: this.state.attendees,
+      checkedIn: false,
     };
 
     const cleaningReservation = {
@@ -132,6 +133,7 @@ class FillReservation extends Component {
       desk: this.state.desk,
       start_time: this.state.end_time,
       date: this.state.date,
+      checkedIn: false,
     };
 
     var data = {
