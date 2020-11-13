@@ -83,7 +83,7 @@ export default class CreateBuilding extends Component {
   render() {
     return (
         <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-          <h3 className="h3">Create Reservation:</h3>
+          <h3 className="h3">Create Building:</h3>
           <Form onSubmit={this.onSubmit}>
               <Form.Group as={Row} controlId="formAdmin">
                   <Form.Label column sm={3}>Building Admin</Form.Label>
@@ -116,9 +116,9 @@ export default class CreateBuilding extends Component {
               </Form.Group>
 
               <Form.Group as={Row} controlId="formBasicAddress">
-                  <Form.Label column sm={3}>Address</Form.Label>
+                  <Form.Label column sm={3}>Street Address</Form.Label>
                   <Col sm={9}>
-                      <Form.Control type="address" placeholder="EX: 123 Aggie Dr." onChange={this.onChangeAddress}/>
+                      <Form.Control type="address" placeholder="123 Aggie Dr." onChange={this.onChangeAddress}/>
                   </Col>
               </Form.Group>
 
