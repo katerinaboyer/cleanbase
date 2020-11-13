@@ -29,7 +29,7 @@ const reservationSchema = new Schema({
         type: Date,
     },
     attendees: {
-        type: [Schema.Types.ObjectId],
+        type: [String],
     }
 }, {
   timestamps: true,

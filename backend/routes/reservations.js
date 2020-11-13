@@ -22,6 +22,14 @@ router.route('/update/:id').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/update/attendees/:id').post((req, res) => {
+  var updateAttendees = req.body;
+  console.log(req.body);
+  Reservation.findByIdAndUpdate(req.params.id, { attendees: [updateAttendees] })
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/cleaning/unclaimed').get((req, res) => {
   Reservation.find({ title: "Cleaning", attendees: {$size: 0}})
     .then(reservation => res.json(reservation))

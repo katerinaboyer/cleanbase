@@ -1,29 +1,40 @@
-import React, { Component } from "react";
+import React, {useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { connect, useSelector } from "react-redux";
+import { storeLogout } from "../store/userReducer";
+import { getUser } from "../store/selectors";
 import "./../styles.css";
 import axios from "axios";
 
-export default class SanitationSchedule extends Component {
-  constructor(props) {
-    super(props);
+ const SanitationSchedule = props => {
+  const user = useSelector(getUser);
+  console.log(user);
+  
+  const [reservation, setReservation] = useState([]);
 
-    this.state = {
-      reservations: []
-    };
+  const onClick = (reservationID) => () => {
+    console.log(reservationID);
+    axios.post(`http://localhost:5000/reservations/update/attendees/${reservationID}`, { attendees: user._id });
   }
 
-  componentDidMount() {
-    axios.get("http://localhost:5000/reservations/cleaning/unclaimed").then(response => {
-      if (response.data.length > 0) {
-        console.log(response.data);
-        this.setState({
-          reservations: response.data
-        });
-      }
-    });
-  }
-  render() {
+
+  useEffect(() => {
+    async function fetchData() {
+        axios.get("http://localhost:5000/reservations/cleaning/unclaimed")
+        .then(response => {
+            console.log(response.data);
+            if (response.data.length > 0) {
+                setReservation(response.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+    fetchData();
+},[]);
+  // render() {
     return (
       <div>
         <div
@@ -38,12 +49,12 @@ export default class SanitationSchedule extends Component {
           <h5 style={{ color: "white", textAlign: "center" }}>
             Upcoming Schedule
           </h5>
-          {this.state.reservations.map(reserv => {
+          {reservation.map(reserv => {
             return (
             <Card className="san-sched">
               <Card.Body className="card-body">
             <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
-              <Button size="sm" variant="light" style={{marginLeft: "42%"}}>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onClick(reserv._id)}>
                 Assign
               </Button>
             </Card.Body>
@@ -79,5 +90,14 @@ export default class SanitationSchedule extends Component {
         </div>
       </div>
     );
-  }
+ // }
 }
+
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps, {
+  storeLogout
+})(SanitationSchedule);
+
