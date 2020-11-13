@@ -45,6 +45,12 @@ router.route('/update/:id').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/allEmployees').get((req, res) => {
+  User.find(req.query).sort({name: 1})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const email = req.body.email;
   const name = req.body.name;

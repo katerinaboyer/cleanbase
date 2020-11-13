@@ -1,9 +1,8 @@
 import React, {useState, useEffect } from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
-import './../styles.css';
-import IllnessReport from "./illness-report.component";
-import { Container, Row, Col, Form, Card} from 'react-bootstrap';
+import './../styles.css'
+import { Row, Col, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
@@ -16,26 +15,42 @@ const AccountMgmt = (props) => {
   const history = useHistory();
 
   const addAccount = (e) =>{
-      history.push("/account");
+      history.push("/addemployee");
   }
   const address = "Business Name";
 
-  const test= (info) =>{
-    console.log(info);
-    history.push("/edit-baccount")
-
-}
-
-const getFloorNumbers = (floors) => {
-    const floorNum = [1,2,3];
-    const floorText = floorNum[0] + " - " + floorNum[floorNum.length-1];
-
-    return floorText;
-}
+  const removeEmployee = (info) =>{
+      /*
+        axios.get('http://localhost:5000/users/removeComp/' + info._id)
+            .then(response => {
+                //console.log(response.data.length);
+                //console.log(response.data);
+                if (response.data.length > 0) {
+                    setAccounts(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })   
+            */ 
+           /*
+        axios.get('http://localhost:5000/account/removeEmployee/' + info._id)
+            .then(response => {
+                //console.log(response.data.length);
+                //console.log(response.data);
+                if (response.data.length > 0) {
+                    setAccounts(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })   
+            */ 
+    }
 
   useEffect(() => {
       async function fetchData() {
-          axios.get('http://localhost:5000/accounts/')
+          axios.get('http://localhost:5000/users/allEmployees')
           .then(response => {
               //console.log(response.data.length);
               //console.log(response.data);
@@ -62,13 +77,13 @@ const getFloorNumbers = (floors) => {
                     <Card style={{borderRadius:"15px"}}>
                             <Row>
                                 <Col sm={3}>
-                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Name</Card.Title>
+                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>{info.name}</Card.Title>
                                 </Col>
                                 <Col style={{textAlign: "center"}}>
-                                    <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Email</Card.Text>
+                                    <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>{info.email}</Card.Text>
                                 </Col>
                                 <Col sm={3} style={{}}>
-                                    <button className="button-edit" style={{marginLeft:"60%", fontSize:"130%"}}onClick={() => test(info)}>Edit</button>
+                                    <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}}onClick={() => removeEmployee(info)}>Remove</button>
                                 </Col>
                             </Row>
                     </Card>

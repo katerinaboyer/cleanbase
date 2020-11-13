@@ -56,7 +56,7 @@ const getFloorNumbers = (floors) => {
         <Col>
           <Row style={{paddingLeft:"3%"}}>
             <Col sm={9}><h3>Desks</h3></Col>
-            <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addAccount}>ADD</button></Col>
+            <Col><button className="button-add" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addAccount}>ADD</button></Col>
           </Row>
           <div style={{}}>
               { accounts.map(info =>
@@ -97,7 +97,7 @@ const getFloorNumbers = (floors) => {
                                       <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room</Card.Text>
                                   </Col>
                                   <Col sm={3} style={{}}>
-                                      <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}}onClick={() => test(info)}>Edit</button>
+                                      <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => test(info)}>Remove</button>
                                   </Col>
                               </Row>
                       </Card>

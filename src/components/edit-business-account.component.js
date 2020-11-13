@@ -1,10 +1,9 @@
 import React, {useState, useEffect } from "react";
-import {ListGroup} from 'react-bootstrap';
-import { Container, Row, Col, Form, Card} from 'react-bootstrap';
-import { useHistory } from "react-router-dom";
+import { Row, Col, Form} from 'react-bootstrap';
+//import { useHistory } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
-import {format} from "date-fns";
-import { getUser } from "../store/selectors";
+//import {format} from "date-fns";
+//import { getUser } from "../store/selectors";
 import { getBusinessAccount } from "../store/selectors";
 import axios from "axios";
 
@@ -13,8 +12,8 @@ const EditBusinessAccount = (props) => {
     const [oManager, setManagers] = useState([]);
     //const [disable, setDisabled] = useState();
 
-    const history = useHistory();
-    const user = useSelector(getUser);
+    //const history = useHistory();
+    //const user = useSelector(getUser);
     const businessAccount = useSelector(getBusinessAccount);
     console.log(businessAccount);
 

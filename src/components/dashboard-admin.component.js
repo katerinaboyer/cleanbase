@@ -3,7 +3,7 @@ import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
 import IllnessReport from "./illness-report.component";
-import { Container, Row, Col, Form, Card} from 'react-bootstrap';
+import { Container, Row, Col, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
