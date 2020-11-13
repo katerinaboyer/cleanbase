@@ -36,6 +36,19 @@ router.route('/cleaning/unclaimed').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/current/:id').get((req, res) => {
+  Reservation.find({attendees: req.params.id}).sort({date: 1})
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/checkin/:id').post((req, res) => {
+  Reservation.findByIdAndUpdate(req.params.id, req.body)
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
 router.route('/add').post((req, res) => {
   const title = req.body.title;
   const room = req.body.room;
@@ -46,6 +59,7 @@ router.route('/add').post((req, res) => {
   const end_time = req.body.end_time;
   const date = req.body.date;
   const attendees = req.body.attendees;
+  const checkedIn = false;
 
   const newReservation = new Reservation({
     title,
@@ -56,7 +70,8 @@ router.route('/add').post((req, res) => {
     start_time,
     end_time,
     date,
-    attendees
+    attendees,
+    checkedIn,
   });
   
   newReservation.save()

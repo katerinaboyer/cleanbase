@@ -40,11 +40,15 @@ router.route('/building_admins').get((req, res) => {
 });
 
 router.route('/update/:id').post((req, res) => {
-  var updateObject = req.body;
-  console.log(req.body)
-  User.findByIdAndUpdate(req.params.id, {updateObject})
+  User.findByIdAndUpdate(req.params.id, req.body)
   .then(user => res.json(user))
   .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/allEmployees').get((req, res) => {
+  User.find(req.query).sort({name: 1})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {
@@ -66,5 +70,6 @@ router.route('/add').post((req, res) => {
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 module.exports = router;

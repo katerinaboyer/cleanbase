@@ -1,162 +1,147 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-//import TimePicker from "react-bootstrap-time-picker";
-import InputGroup from "react-bootstrap/InputGroup";
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
+import TimePicker from "react-time-picker";
 import { Link } from "react-router-dom";
-//import Button from "react-bootstrap/Button";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setReservation } from "../store/reservationReducer";
 import "./../styles.css";
 
 const Schedule = (props) => {
-
   const [desks, setDesks] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [date, setDate] = useState(new Date());
+  const [start, setStart] = useState("08:00");
+  const [end, setEnd] = useState("17:00");
+  const [isOffice, toggleIsOffice] = useState(false);
+  const [isConference, toggleIsConference] = useState(false);
+  const [isDesk, toggleIsDesk] = useState(false);
 
   const history = useHistory();
 
-  let state = {
-    date: new Date(),
-    startTime: "10:00",
-    endTime: "17:00",
-  };
-
-  axios.all([
-    axios.get("http://localhost:5000/rooms"),
-    axios.get("http://localhost:5000/desks"),
-  ])
-    .then(([roomResponse, deskResponse]) => {
-      setRooms(roomResponse.data.map((room) => room));
-      setDesks(deskResponse.data.map((desk) => desk));
-    });
+  useEffect(() => {
+    async function fetchData() {
+        axios.all([
+          axios.get('http://localhost:5000/rooms'),
+          axios.get('http://localhost:5000/desks')
+        ])
+        .then(([roomResponse, deskResponse]) => {
+            if (roomResponse.data.length > 0) {
+                setRooms(roomResponse.data);
+            }
+            if (deskResponse.data.length >0 ) {
+              setDesks(deskResponse.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+    fetchData();
+},[]);
 
   const handleClick = (desk) => {
     props.setReservation(desk);
-    history.push('/reservation');
-  }
+    history.push("/reservation");
+  };
 
-  // = (date) => this.setState({ date });
-  // onChangeStart = (startTime) => this.setState({ startTime });
-  // onChangeEnd = (endTime) => this.setState({ endTime });
+ function handleDayClick(date) {
+   var dateStr = String(date);
+   var formattedDate = dateStr.slice(0, 15);
+   console.log(formattedDate)
+   setDate(formattedDate);
+ };
 
-  // on change date get reservations where date == selected_date
-  // remove rooms and desks that are present in that resulting array
-  const onChangeDate = () => {
-    // query reservations
-  }
+ function onChangeStart(startTime) {
+   console.log(startTime);
+   setStart(startTime)
+ };
 
-  // get start and end time
-  // invalid reservations will have start times
-  // onChangeStart() {
+ function onChangeEnd(endTime) {
+   console.log(endTime);
+   setEnd(endTime)
+ };
 
-  // }
 
-  // onChangeEnd() {
-
-  // }
-
-  // onSelectDesk() {
-    // get desks
-  // }
-
-  const onSelectOffice = (e) => {
-    // get room_type == office
-    axios.get("http://localhost:5000/rooms/room_type/office")
-      .then(response => {
-        if (response.data.length > 0) {
-          setRooms(response.data.map(room => room));
-        }
-      })
-  }
-
-//   componentDidMount() {
-//     axios.get('http://localhost:5000/users/building_admins?role=building_admin', {
-//       params: {
-//         role: 'building_admin'
-//       }
-//     })
-//       .then(response => {
-//           if (response.data.length > 0) {
-//               this.setState({
-//                   users: response.data.map(user => user),
-//                   building_admin: response.data[0]
-//               })
-//           }
-//       })
-//       .catch((error) => {
-//           console.log(error);
-//       })
-// }
-
-  //onSelectConference() {
-    // get room_type == conference
-  //}
-
-  let dateformat = require("dateformat");
-  let currentDate = dateformat(state.date, "dddd mmmm d");
+  const today = new Date();
 
   return (
     <Container fluid>
       <Row>
         <Col style={{ paddingLeft: "75px" }}>
           <div
-            style={
-              {
-                padding: "5px"
-              }
-            }
+            style={{
+              padding: "0px",
+            }}
           >
-            <p>{currentDate}</p>
-            <Calendar
-              onChange={onChangeDate}
-              value={state.date}
-              className="calendar"
-            />
-            {/* <div style={{padding: "10px"}}> */}
-              {/* <TimePicker
-                onChange={this.onChangeStart}
-                value={this.state.startTime}
-                step={60}
-                style={{ width: "50%" }}
+            <div style={{ paddingBottom: "10px", backgroundColor: "white" }}>
+              <div>
+                <center>
+                <DayPicker
+                  month={today}
+                  fromMonth={today}
+                  disabledDays={{ daysOfWeek: [0, 6] }}
+                  onDayClick={handleDayClick}
+                  format="MM/dd/yyyy"
+                  style={{backgroundColor: "White"}}
+                />
+                </center>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: "white", padding: "20px" }}>
+              <TimePicker 
+                onChange={onChangeStart}
               />
-              <TimePicker
-                onChange={this.onChangeEnd}
-                value={this.state.endTime}
-                step={60}
-                style={{ width: "50%"}}
+              <TimePicker 
+                onChange={onChangeEnd}
               />
-              </div> */}
-            <div class="custom-control custom-checkbox" style={{color: "white"}}>
-              <input type="checkbox" class="custom-control-input" id="desk" />
-              <label class="custom-control-label" for="desk">Desk</label>
             </div>
-            <div class="custom-control custom-checkbox" style={{color: "white"}}>
-              <input type="checkbox" class="custom-control-input" id="office" onChange={onSelectOffice}/>
-              <label class="custom-control-label" for="office">Office</label>
+
+            <div
+              class="custom-control custom-checkbox"
+              style={{ color: "white" }}
+            >
+              <input type="checkbox" class="custom-control-input" id="desk"/>
+              <label class="custom-control-label" for="desk">
+                Desk
+              </label>
             </div>
-            <div class="custom-control custom-checkbox" style={{color: "white"}}>
-              <input type="checkbox" class="custom-control-input" id="conference" />
-              <label class="custom-control-label" for="conference">Conference Room</label>
+            <div
+              class="custom-control custom-checkbox"
+              style={{ color: "white" }}
+            >
+              <input type="checkbox" class="custom-control-input" id="office" />
+              <label class="custom-control-label" for="office">
+                Office
+              </label>
             </div>
-            {/* <InputGroup style={{ marginTop: "3%" }}>
-              <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-              </InputGroup.Prepend>
-              <p>Desks</p>
-            </InputGroup>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-              </InputGroup.Prepend>
-              <p>Conference Room</p>
-            </InputGroup> */}
-            <Button>Filter</Button>
+            <div
+              class="custom-control custom-checkbox"
+              style={{ color: "white" }}
+            >
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="conference"
+              />
+              <label class="custom-control-label" for="conference">
+                Conference Room
+              </label>
+            </div>
+
+            <div style={{ paddingTop: "15px", alignSelf: "left"}}>
+              <button className="button-submit" type="submit">
+                Filter
+              </button>
+            </div>
           </div>
         </Col>
         <Col s={12}>
@@ -170,14 +155,20 @@ const Schedule = (props) => {
                   paddingBottom: "1rem",
                 }}
               >
-                <Card style={{ width: "19rem", padding: ".5rem" }}>
+                <Card style={{ width: "28rem", padding: ".5rem" }}>
                   <Card.Title>Desk: {desk.desk_number}</Card.Title>
                   <Container>
                     <Row>
                       <Col>Floor #</Col>
                       <Col>Room #</Col>
                       <Col>
-                        <Button onClick={() => {handleClick(desk)}} size="sm" style={{ float: "right" }}>
+                        <Button
+                          onClick={() => {
+                            handleClick(desk);
+                          }}
+                          size="sm"
+                          style={{ float: "right" }}
+                        >
                           ADD
                         </Button>
                       </Col>
@@ -215,7 +206,7 @@ const Schedule = (props) => {
           </Container>
         </Col>
         {/* <Col xs={5} style={{ paddingTop: "75px" }}> */}
-          {/* <Card
+        {/* <Card
             style={{
               borderRadius: "1rem",
               width: "90%",
@@ -240,8 +231,10 @@ const Schedule = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {return state};
+const mapStateToProps = (state) => {
+  return state;
+};
 
 export default connect(mapStateToProps, {
-  setReservation
+  setReservation,
 })(Schedule);

@@ -30,6 +30,9 @@ const reservationSchema = new Schema({
     },
     attendees: {
         type: [String],
+    },
+    checkedIn: {
+        type: Boolean,
     }
 }, {
   timestamps: true,
