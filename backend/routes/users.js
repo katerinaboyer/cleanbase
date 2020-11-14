@@ -51,6 +51,12 @@ router.route('/allEmployees').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/onlyemployees').get((req, res) => {
+  User.find({role: {$eq: "employee"}}).sort({name: 1})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const email = req.body.email;
   const name = req.body.name;

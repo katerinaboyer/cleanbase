@@ -130,7 +130,7 @@ const CurrentSchedule = (props) => {
                                     </Row>
                                     }
                             </Card>
-}
+                        }
                         </div>
                     )
                     }
