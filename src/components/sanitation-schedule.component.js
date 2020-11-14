@@ -9,13 +9,19 @@ import axios from "axios";
 
  const SanitationSchedule = props => {
   const user = useSelector(getUser);
-  console.log(user);
   
   const [reservation, setReservation] = useState([]);
+  const [sanSchedule, setSanSchedule] = useState([]);
 
-  const onClick = (reservationID) => () => {
+  const onAssign = (reservationID) => () => {
+    let userArr = [];
+    userArr[0] = user._id;
+    const te = {attendees: userArr};
+    axios.post('http://localhost:5000/reservations/update/attendees/' + reservationID,  te );
+  }
+
+  const onComplete = (reservationID) => () => {
     console.log(reservationID);
-    axios.post(`http://localhost:5000/reservations/update/attendees/${reservationID}`, { attendees: user._id });
   }
 
 
@@ -23,7 +29,7 @@ import axios from "axios";
     async function fetchData() {
         axios.get("http://localhost:5000/reservations/cleaning/unclaimed")
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data.length > 0) {
                 setReservation(response.data);
             }
@@ -34,6 +40,24 @@ import axios from "axios";
     }
     fetchData();
 },[]);
+
+useEffect(() => {
+  async function fetchData() {
+      axios.get("http://localhost:5000/reservations/cleaning/")
+      .then(response => {
+          console.log(response.data);
+          console.log(user);
+          if (response.data.length > 0) {
+            setSanSchedule(response.data);
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+  }
+  fetchData();
+},[]);
+
   // render() {
     return (
       <div>
@@ -54,7 +78,7 @@ import axios from "axios";
             <Card className="san-sched">
               <Card.Body className="card-body">
             <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
-              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onClick(reserv._id)}>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onAssign(reserv._id)}>
                 Assign
               </Button>
             </Card.Body>
@@ -71,22 +95,17 @@ import axios from "axios";
           }}
         >
           <h5 style={{ color: "white", textAlign: "center" }}>My Schedule</h5>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Complete
+          {sanSchedule.filter(san => san.attendees[0] == user._id).map(reserv => {
+            return (
+            <Card className="san-sched">
+              <Card.Body className="card-body">
+            <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onComplete(reserv._id)}>
+                complete
               </Button>
             </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Complete
-              </Button>
-            </Card.Body>
-          </Card>
+          </Card> )
+          })}
         </div>
       </div>
     );

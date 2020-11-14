@@ -29,7 +29,7 @@ const reservationSchema = new Schema({
         type: Date,
     },
     attendees: {
-        type: [String],
+        type: [Schema.Types.ObjectId],
     },
     checkedIn: {
         type: Boolean,

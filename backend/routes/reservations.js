@@ -24,14 +24,20 @@ router.route('/update/:id').post((req, res) => {
 
 router.route('/update/attendees/:id').post((req, res) => {
   var updateAttendees = req.body;
-  console.log(req.body);
-  Reservation.findByIdAndUpdate(req.params.id, { attendees: [updateAttendees] })
+  console.log(updateAttendees);
+  Reservation.findByIdAndUpdate(req.params.id, updateAttendees)
     .then(reservation => res.json(reservation))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('Error:' + err));
 })
 
 router.route('/cleaning/unclaimed').get((req, res) => {
   Reservation.find({ title: "Cleaning", attendees: {$size: 0}})
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/cleaning/').get((req, res) => {
+  Reservation.find({ title: "Cleaning"})
     .then(reservation => res.json(reservation))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -44,6 +50,12 @@ router.route('/current/:id').get((req, res) => {
 
 router.route('/checkin/:id').post((req, res) => {
   Reservation.findByIdAndUpdate(req.params.id, req.body)
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/delete/:id').post((req, res) => {
+  Reservation.findByIdAndRemove(req.params.id, req.body)
     .then(reservation => res.json(reservation))
     .catch(err => res.status(400).json('Error: ' + err));
 });
