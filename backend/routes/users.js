@@ -52,9 +52,15 @@ router.route('/allEmployees').get((req, res) => {
 });
 
 router.route('/onlyemployees').get((req, res) => {
-  User.find({role: {$eq: "employee"}}).sort({name: 1})
+  User.find({role: {$eq: "employee"}} /*&& {business_account_id: {$eq: "Jon"}}*/).sort({name: 1})
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/addbusiness/:id').post((req, res) => {
+  User.findByIdAndUpdate(req.params.id, req.body)
+  .then(user => res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {

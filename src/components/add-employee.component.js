@@ -8,19 +8,36 @@ import './../styles.css';
 const AccountSettings = (props) => {
 
     const [user, setUsers] = useState([]);
+    const [id, setID] = useState();
 
     const history = useHistory();
 
-    const onNameChange = (e) => {
-        user.name = e.target.value;
-    }
-
     const onSubmit = () => {
-
+      const update = {
+        business_account_id: "test",
+      }
+      axios.post("http://localhost:5000/users/addbusiness/" + id, update)
+      .then(res => console.log(res.data));
+      history.push("/account-mgmt");
     }
 
-    const onChangeAttendees = (e) => {
+    const onChangeBusinessId = (e) => {
+      let value = e.target.value;
+      setID(value);
+    }
 
+    const filter = () => {
+        let temp = user;
+        console.log(user);
+        for(var i = 0; i < temp.size; i++) {
+            //if(temp[i].business_account_id.length < 1){
+                //temp.splice(i,1);
+            //}
+            console.log(temp[i].business_account_id.length)
+        }
+        setUsers(temp);
+        //console.log(user);
+        //console.log(temp);
     }
 
     useEffect(() => {
@@ -30,6 +47,7 @@ const AccountSettings = (props) => {
               console.log(response.data);
               if (response.data.length > 0) {
                   setUsers(response.data);
+                  //filter();
               }
           })
           .catch((error) => {
@@ -43,28 +61,23 @@ const AccountSettings = (props) => {
     return(
         <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
         <h3 className="h3">Add Employee to </h3>
-        <Form onSubmit={onSubmit}>
+        <Form>
         <Form.Group as={Row} controlId="formBasicAttendees">
             <Form.Label column sm={3}>Employees</Form.Label>
             <Col sm={9}>
-              <Form.Control
-                as="select"
-                multiple
-                onChange={onChangeAttendees}
-              >
+              <Form.Control as="select" onChange={onChangeBusinessId}>
                 {user.map((user) => {
                   return (
-                    <option key={user._id} value={user._id}>{user.name}</option>
+                    <option key={user._id} value={user._id}>{user.name} + {user.business_account_id}</option>
                   );
                 })}
               </Form.Control>
             </Col>
           </Form.Group>
-
-            <button className="button-submit" type="submit">
-                Add Employee
-            </button>
         </Form>
+        <button className="button-submit" onClick={onSubmit}>
+          Add Employee
+        </button>
       </div>
     )
 }
