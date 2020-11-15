@@ -21,9 +21,12 @@ const SpaceMgmt = (props) => {
   const history = useHistory();
   const user = useSelector(getUser);
 
-  const addAccount = (e) =>{
-      history.push("/account");
+  const addDesk = (e) =>{
+      history.push("/desk");
   }
+  const addRoom = (e) =>{
+    history.push("/room");
+}
   const address = "Business Name";
 
   const test= (info) =>{
@@ -52,6 +55,7 @@ const getFloorNumbers = (floors) => {
                         axios.get('http://localhost:5000/rooms/id/' + response.data.room_list[i])
                         .then(response => {
                             setRooms(response.data);
+                            console.log(rooms);
                         })
                         .catch((error) => {
                             console.log(error);
@@ -79,10 +83,64 @@ const getFloorNumbers = (floors) => {
   },[]);
 
   return (
-      <div style={{padding:"30px 8%"}}>
-        
-      </div>
-      )
+    <div style={{padding:"30px 8%"}}>
+        <Row>
+        <Col>
+          <Row style={{paddingLeft:"3%"}}>
+            <Col sm={9}><h3>Desks</h3></Col>
+            <Col><button className="button-add" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>ADD</button></Col>
+          </Row>
+          <div style={{}}>
+              {/* { desks.map(info =>
+                  <div style={{paddingBottom:"20px"}}>
+                      <Card style={{borderRadius:"15px"}}>
+                              <Row>
+                                  <Col sm={3}>
+                                      <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor 1</Card.Title>
+                                  </Col>
+                                  <Col style={{textAlign: "center"}}>
+                                      <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk</Card.Text>
+                                  </Col>
+                                  <Col sm={3} style={{}}>
+                                      <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}} onClick={() => test(info)}>Edit</button>
+                                  </Col>
+                              </Row>
+                      </Card>
+                  </div>
+                  )
+              } */}
+          </div>
+        </Col>
+        <Col sm={1}></Col>
+        <Col>
+          <Row style={{paddingLeft:"3%"}}>
+            <Col sm={9}><h3>Rooms</h3></Col>
+            <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>ADD</button></Col>
+          </Row>
+          <div style={{}}>
+              {/* { rooms.map(info =>
+                  <div style={{paddingBottom:"20px"}}>
+                      <Card style={{borderRadius:"15px"}}>
+                              <Row>
+                                  <Col sm={3}>
+                                      <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor</Card.Title>
+                                  </Col>
+                                  <Col style={{textAlign: "center"}}>
+                                      <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room</Card.Text>
+                                  </Col>
+                                  <Col sm={3} style={{}}>
+                                      <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => test(info)}>Remove</button>
+                                  </Col>
+                              </Row>
+                      </Card>
+                  </div>
+                  )
+              } */}
+          </div>
+        </Col>
+        </Row>
+    </div>
+    )
 }
 
 const mapStateToProps = (state) => {return state};

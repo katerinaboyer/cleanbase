@@ -30,6 +30,7 @@ export default class CreateRoom extends Component {
             floors: response.data.map((floor) => floor),
             floor_id: response.data[0],
           });
+          console.log(this.state.floors);
         }
       })
       .catch((error) => {
@@ -71,11 +72,31 @@ export default class CreateRoom extends Component {
       room_type: this.state.room_type,
     };
 
+    var tempRooms = [];
+
+    for(var i = 0; i < this.state.floors.length; i++){
+      if(this.state.floors[i]._id === this.state.floor_id){
+        tempRooms = this.state.floors[i].room_list;
+      }
+    }
+
     console.log(newRoom);
 
-    axios
-      .post("http://localhost:5000/rooms/add", newRoom)
-      .then((res) => console.log(res.data));
+    axios.post("http://localhost:5000/rooms/add", newRoom)
+      .then((res) => {
+        console.log(res.data);
+        axios.get('http://localhost:5000/rooms/')
+        .then((res) => {
+          tempRooms.push(res.data[res.data.length-1]._id);
+          const updateFloor = {
+            room_list: tempRooms
+          };
+          console.log(updateFloor);
+          console.log(this.state.floor_id);
+          axios.post('http://localhost:5000/floors/update/' + this.state.floor_id, updateFloor)
+          .then((res) => console.log(res.data));
+        });
+      });
   }
 
   render() {
