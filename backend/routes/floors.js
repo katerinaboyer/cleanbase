@@ -26,13 +26,11 @@ router.route('/add').post((req, res) => {
   const floor_number = req.body.floor_number;
   const room_list = req.body.room_list;
   const building_id = req.body.building_id;
-  const capacity = req.body.capacity
 
   const newFloor = new Floor({
       floor_number,
       room_list,
       building_id,
-      capacity
   });
 
   newFloor.save()

@@ -59,7 +59,6 @@ export default class CreateFloor extends Component {
     const newFloor = {
       floor_number: this.state.floor_number,
       building_id: this.state.building_id,
-      capacity: this.state.capacity,
     };
 
     console.log(newFloor);
