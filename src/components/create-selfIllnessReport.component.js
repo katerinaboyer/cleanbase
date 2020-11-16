@@ -20,12 +20,12 @@ class CreateSelfIllnessReport extends Component {
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeReport = this.onChangeReport.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
+    
 
     this.state = {
       email: props.currUser.email,
       name: props.currUser.name,
-      userID: props.currUser.id,
+      userID: props.currUser._id,
       phone: '',
       date: '',
       report: '',
@@ -35,41 +35,38 @@ class CreateSelfIllnessReport extends Component {
   }
 
   componentDidMount() {
-
-    
     axios
-      .all([
+      .all([ //This gets the most recent reservation for the currently logged in user
         axios.get('http://localhost:5000/reservations/userId/' + this.state.userID)
       ])
       .then(([resResponse]) => {
-          
-        this.setState({
-          attendIds: resResponse.data[0].attendees
+        console.log(resResponse);
+        this.setState({//here we extract the list of userIds who also attened the meeting
+          attendIds: resResponse.data[0].attendees 
         });
         for(var i = 0; i < resResponse.data[0].attendees.length; i++){
           axios
           .all([
-            
+            //from each attendee, we extract their email and place it into an array
             axios.get('http://localhost:5000/users/id/' + resResponse.data[0].attendees[i])
           ])
           .then(([userResponse]) => {
-           
-            console.log(userResponse.data.email);
+           if(userResponse.data.email != null){
+            var test = this.state.emails.concat(userResponse.data.email);
             this.setState({
-              emails: userResponse.data[0]
+               emails: test
             });
-            //console.log("Ids[] " + this.state.emails);
-    
-            
+            console.log(this.state.emails);
+          }
           });
         }
       });
 
-
+      
 
   }
 
-  
+
 
   onChangeEmail(e) {
     this.setState({
@@ -117,7 +114,7 @@ class CreateSelfIllnessReport extends Component {
     console.log(newselfIllnessReport);
     console.log(this.state.email);
     var data = {
-      to_email: this.state.email,
+      to_email: this.state.emails,
       from_name: this.state.name
     };
 
@@ -130,25 +127,11 @@ class CreateSelfIllnessReport extends Component {
       }
     );
 
-    axios
-      .all([
-        axios.get("http://localhost:5000/rooms"),
-        axios.get("http://localhost:5000/desks"),
-        axios.get("http://localhost:5000/users/all"),
-      ])
-      .then(([roomResponse, deskResponse, userResponse]) => {
-        this.setState({
-          rooms: roomResponse.data.map((room) => room),
-          room_number: roomResponse.data[0],
-          desks: deskResponse.data.map((desk) => desk),
-          desk_number: deskResponse.data[0],
-          all_users: userResponse.data.map((user) => user)
-        });
-      });
+    
 
     axios.post('http://localhost:5000/selfIllnessReport/add', newselfIllnessReport)
       .then(res => console.log(res.data));
-    this.props.history.push('/')
+    //this.props.history.push('/')
   }
 
   render() {
@@ -186,7 +169,7 @@ class CreateSelfIllnessReport extends Component {
           <div className="form-group">
             <label>Date: </label>
             <input  type="date"
-                required
+                
                 className="form-control"
                 value={this.state.date}
                 onChange={this.onChangeDate}
