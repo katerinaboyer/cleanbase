@@ -17,17 +17,16 @@ function calculateEndCleaning(cleaningStart) {
   var minsToAdd = 30;
   var time = cleaningStart;
   var cleaningEnd = new Date(new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-  console.log(cleaningEnd);
   return cleaningEnd;
 }
 
 class FillReservation extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     const currUserId = props.currUser._id;
     const currUserEmail = props.currUser._email;
-    console.log(currUserId);
+    // console.log(currUserId);
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
@@ -41,9 +40,9 @@ class FillReservation extends Component {
     // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
-      room: "",
+      room_id: "",
       room_number: "",
-      desk: "",
+      desk_id: "",
       desk_number: "",
       start_time: "",
       end_time: "",
@@ -82,14 +81,22 @@ class FillReservation extends Component {
   }
 
   onChangeRoomNumber(e) {
+    const roomNumber = e.target.selectedOptions[0].text;
+    const roomId = e.target.value;
+    console.log(roomNumber, roomId);
     this.setState({
-      room_number: e.target.value,
+      room_number: roomNumber,
+      room_id: roomId
     });
   }
 
+  
   onChangeDeskNumber(e) {
+    const deskNumber = e.target.selectedOptions[0].text;
+    const deskId = e.target.value;
     this.setState({
-      desk_number: e.target.value,
+      desk_number: deskNumber,
+      desk_id: deskId
     });
   }
 
@@ -123,9 +130,9 @@ class FillReservation extends Component {
     const newReservation = {
       title: this.state.title,
       room_number: this.state.room_number,
-      room: this.state.room,
+      room_id: this.state.room_id,
       desk_number: this.state.desk_number,
-      desk: this.state.desk,
+      desk_id: this.state.desk_id,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
@@ -136,9 +143,9 @@ class FillReservation extends Component {
     const cleaningReservation = {
       title: "Cleaning",
       room_number: this.state.room_number,
-      room: this.state.room,
+      room_id: this.state.room_id,
       desk_number: this.state.desk_number,
-      desk: this.state.desk,
+      desk_id: this.state.desk_id,
       start_time: this.state.end_time,
       end_time: calculateEndCleaning(this.state.end_time),
       date: this.state.date,
@@ -217,8 +224,7 @@ class FillReservation extends Component {
                   return (
                     <option
                       key={room._id}
-                      value={room.room_number}
-                      data={room.room_number}
+                      value={room._id}
                     >
                       {room.room_number}
                     </option>
@@ -236,7 +242,7 @@ class FillReservation extends Component {
               <Form.Control as="select" onChange={this.onChangeDeskNumber}>
                 {this.state.desks.map((desk) => {
                   return (
-                    <option key={desk._id} value={desk.desk_number}>
+                    <option key={desk._id} value={desk._id} data={desk.desk_number}>
                       {desk.desk_number}
                     </option>
                   );
