@@ -35,6 +35,7 @@ const SignIn = (props) => {
               const signedInUser = {
                 name: res.data.name,
                 email: res.data.email,
+                phone: res.data.phone,
                 role: res.data.role,
                 _id: res.data._id,
               }

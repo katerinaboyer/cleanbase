@@ -21,6 +21,22 @@ router.route('/update/:id').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/update/isclean/:id').post((req, res) => {
+  var updateIsClean = req.body;
+  console.log(updateIsClean);
+  Desk.findByIdAndUpdate(req.params.id, updateIsClean)
+    .then(desk => res.json(desk))
+    .catch(err => res.status(400).json('Error:' + err));
+});
+
+router.route('/update/isavailable/:id').post((req, res) => {
+  var updateIsAvailable = req.body;
+  console.log(updateIsAvailable);
+  Desk.findByIdAndUpdate(req.params.id, updateIsAvailable)
+    .then(desk => res.json(desk))
+    .catch(err => res.status(400).json('Error:' + err));
+});
+
 router.route('/add').post((req, res) => {
   const desk_number = req.body.desk_number;
   const room_id = req.body.room_id;

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import CurrentSchedule from "./current-schedule.component";
 import IllnessReport from "./illness-report.component";
-import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col} from 'react-bootstrap';
 
 const DashboardManager = (props) => {
   return (

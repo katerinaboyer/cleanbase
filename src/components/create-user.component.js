@@ -84,6 +84,7 @@ export default class CreateUser extends Component {
       phone: this.state.phone,
       password: bcrypt.hashSync(this.state.password, 10),
       role: this.state.role,
+      business_account_id: "",
     };
 
     // window.location = '/'; // take user back to homepage on submit

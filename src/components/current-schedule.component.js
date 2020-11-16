@@ -1,11 +1,12 @@
-import React, {useState, useEffect } from "react";
-import {ListGroup} from 'react-bootstrap';
-import { Container, Row, Col, Form, Card} from 'react-bootstrap';
+import React, {useState, useEffect} from "react";
+import { Row, Col, Card} from 'react-bootstrap';
 import { useHistory, useLocation } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import {format} from "date-fns";
 import { getUser } from "../store/selectors";
 import axios from "axios";
+
+
 
 const CurrentSchedule = (props) => {
 
@@ -19,9 +20,24 @@ const CurrentSchedule = (props) => {
         history.push("/reservation");
     }
     const currDate = format(new Date(), 'MM/dd');
+    //const [value, setValue] = useState(0);
 
-    const checkIn = (e) => {
 
+    const checkIn = (info) => {
+        console.log(info);
+        const updateCheckIn = {
+            checkedIn: true,
+        }
+        axios.post('http://localhost:5000/reservations/checkin/' + info._id, updateCheckIn)
+            .then(response => {
+                console.log(response.data);
+                if (response.data.length > 0) {
+                    setSchedule(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     const formatDate = (date) =>{
@@ -42,7 +58,7 @@ const CurrentSchedule = (props) => {
         timeValue= "" + hours;
         } else if (hours > 12) {
         timeValue= "" + (hours - 12);
-        } else if (hours == 0) {
+        } else if (hours === 0) {
         timeValue= "12";
         }
         
@@ -54,7 +70,7 @@ const CurrentSchedule = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            axios.get('http://localhost:5000/reservations/userId/' + user._id)
+            axios.get('http://localhost:5000/reservations/current/' + user._id)
             .then(response => {
                 console.log(response.data);
                 if (response.data.length > 0) {
@@ -81,11 +97,12 @@ const CurrentSchedule = (props) => {
                 </Row>
                 <div style={{}}>
                     { schedule.map(info =>
-                        <div style={{paddingBottom:"10px"}}>
-                            <Card style={{borderRadius:"15px"}}>
+                        <div>
+                            { formatDate(info.date) >= currDate && 
+                            <Card style={{borderRadius:"15px", marginBottom: "10px"}}>
                                     <Row>
                                         {info.title.length > 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date) + " - " + info.title}</h5>}
-                                        {info.title.length == 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>}
+                                        {info.title.length === 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>}
                                     </Row>
                                     <Row>
                                         <Card.Text style={{color:"#434343", padding:"0px 0px 5px 100px"}}>
@@ -102,14 +119,20 @@ const CurrentSchedule = (props) => {
                                             {formatTime(info.start_time) + "-" + formatTime(info.end_time)}
                                         </Card.Text>
                                     </Row>
-                                    {formatDate(info.date) === currDate && 
+                                    {formatDate(info.date) === currDate && !info.checkedIn &&
                                     <Row>
-                                        <button className="button-checkin" onClick={checkIn}>Check In</button>
+                                        <button className="button-checkin" onClick={() => checkIn(info)}>Check In</button>
+                                    </Row>
+                                    }
+                                    {formatDate(info.date) === currDate && info.checkedIn &&
+                                    <Row>
+                                        <button className="button-checkin" disabled>Checked In!</button>
                                     </Row>
                                     }
                             </Card>
+                        }
                         </div>
-                        )
+                    )
                     }
                 </div>
             </Col>

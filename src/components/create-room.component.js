@@ -90,8 +90,26 @@ export default class CreateRoom extends Component {
                 </Col>
             </Form.Group>
 
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Capacity</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="12" onChange={this.onChangeCapacity}/>
+                </Col>
+            </Form.Group>
+
             <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor ID</Form.Label>
+                <Form.Label column sm={3}>Room Type</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeRoomType}>
+                      <option value="desk_space">Desk Space</option>
+                      <option value="office">Office</option>
+                      <option value="conference">Conference</option>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formFloorNumbers">
+                <Form.Label column sm={3}>Floor Number</Form.Label>
                 <Col sm={9}>
                     <Form.Control as="select" onChange={this.onChangeFloorId}>
                     {this.state.floors.map((floor) => {
@@ -101,24 +119,6 @@ export default class CreateRoom extends Component {
                   </option>
                 );
               })}
-                    </Form.Control>
-                </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formAdmin">
-                <Form.Label column sm={3}>Capacity</Form.Label>
-                <Col sm={9}>
-                    <Form.Control type="name" placeholder="12" onChange={this.onChangeCapacity}/>
-                </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor ID</Form.Label>
-                <Col sm={9}>
-                    <Form.Control as="select" onChange={this.onChangeRoomType}>
-                      <option value="desk_space">Desk Space</option>
-                      <option value="office">Office</option>
-                      <option value="conference">Conference</option>
                     </Form.Control>
                 </Col>
             </Form.Group>

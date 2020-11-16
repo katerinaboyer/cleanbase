@@ -92,6 +92,11 @@
   color: #434343;
 }
 
+.button-checkin:disabled {
+  background-color: #434343;
+  color: white
+}
+
 .button-createreservation {
   border: none;
   text-align: center;
