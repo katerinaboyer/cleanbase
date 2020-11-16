@@ -13,10 +13,10 @@ const reservationSchema = new Schema({
     room_number: {
         type: String
     },
-    desk_number: {
-        type: String
-    },
     desk_id: {
+        type: Schema.Types.ObjectId
+    },
+    desk_number: {
         type: String
     },
     start_time: {
