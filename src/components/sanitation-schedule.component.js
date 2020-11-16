@@ -14,14 +14,15 @@ import axios from "axios";
   const [sanSchedule, setSanSchedule] = useState([]);
 
   const onAssign = (reservationID) => () => {
-    let userArr = [];
-    userArr[0] = user._id;
-    const te = {attendees: userArr};
-    axios.post('http://localhost:5000/reservations/update/attendees/' + reservationID,  te );
+    let attendeelist = [];
+    attendeelist[0] = user._id;
+    const partialUpdate = {attendees: attendeelist};
+    axios.post('http://localhost:5000/reservations/update/attendees/' + reservationID,  partialUpdate );
   }
 
   const onComplete = (reservationID) => () => {
     console.log(reservationID);
+    // axios.post('http://localhost:5000/desks/update/isclean/' + reservationID,  partialUpdate );
   }
 
 
