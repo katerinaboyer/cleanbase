@@ -30,37 +30,44 @@ class CreateSelfIllnessReport extends Component {
       date: '',
       report: '',
       emails: [],
-      attendIds:[],
+      nonDupeEmails:[],
     };
   }
 
-  componentDidMount() {
+  componentDidMount() { //12096e5 is two weeks in miliseconds, a nessary magic number
     axios
       .all([ //This gets the most recent reservation for the currently logged in user
         axios.get('http://localhost:5000/reservations/userId/' + this.state.userID)
       ])
       .then(([resResponse]) => {
-        console.log(resResponse);
-        this.setState({//here we extract the list of userIds who also attened the meeting
-          attendIds: resResponse.data[0].attendees 
-        });
-        for(var i = 0; i < resResponse.data[0].attendees.length; i++){
-          axios
-          .all([
-            //from each attendee, we extract their email and place it into an array
-            axios.get('http://localhost:5000/users/id/' + resResponse.data[0].attendees[i])
-          ])
-          .then(([userResponse]) => {
-           if(userResponse.data.email != null){
-            var test = this.state.emails.concat(userResponse.data.email);
-            this.setState({
-               emails: test
-            });
-            console.log(this.state.emails);
-          }
-          });
-        }
-      });
+        var date = new Date();
+        var dateAdjusted = new Date(Date.now() - 12096e5);
+        console.log(dateAdjusted);
+        for(var j = 0; j < resResponse.data.length; j++){
+          date = new Date(resResponse.data[j].date) //date from the current reservation
+          if(date.getDate() >= dateAdjusted.getDate()){
+            //console.log(resResponse.data[j]);
+            for(var i = 0; i < resResponse.data[j].attendees.length; i++){
+              axios
+              .all([
+                //from each attendee, we extract their email and place it into an array
+                axios.get('http://localhost:5000/users/id/' + resResponse.data[j].attendees[i])
+              ])
+              .then(([userResponse]) => {
+
+              if(userResponse.data.email != null){
+                var test = this.state.emails.concat(userResponse.data.email);
+                this.setState({
+                  emails: test
+                });
+                console.log(this.state.emails);
+              }
+              });
+            }//attend for loop end line 50
+      }
+      }// 2 weeks back forloop end
+      
+    });
 
       
 
@@ -102,6 +109,12 @@ class CreateSelfIllnessReport extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    var emailDupes = this.state.emails
+    var noDupes = emailDupes.filter((c,index) => {
+      return emailDupes.indexOf(c) === index;
+    });
+
+    
 
     const newselfIllnessReport = {
       email: this.state.email,
