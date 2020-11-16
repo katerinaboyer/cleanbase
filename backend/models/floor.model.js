@@ -15,9 +15,6 @@ const floorSchema = new Schema({
     building_id: {
         type: String
     },
-    capacity: {
-        type: Number
-    }
 }, {
   timestamps: true,
 });
