@@ -18,7 +18,7 @@ export default class CreateDesk extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/rooms/')
+        axios.get('http://localhost:5000/rooms/room_type/desk_space')
           .then(response => {
               if (response.data.length > 0) {
                   this.setState({
@@ -60,7 +60,7 @@ export default class CreateDesk extends Component {
     render() {
         return (
           <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-            <h3 className="h3">Create Reservation:</h3>
+            <h3 className="h3">Create Desk:</h3>
             <Form onSubmit={this.onSubmit}>
                 <Form.Group as={Row} controlId="formFloorNumbers">
                     <Form.Label column sm={3}>Room ID</Form.Label>
