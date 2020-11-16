@@ -27,55 +27,48 @@ const Schedule = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (isDesk) {
-      console.log("hELLO")
-    }
     async function fetchData() {
-      axios
-        .all([
-          axios.get("http://localhost:5000/rooms"),
-          axios.get("http://localhost:5000/desks"),
+        axios.all([
+          axios.get('http://localhost:5000/rooms'),
+          axios.get('http://localhost:5000/desks')
         ])
         .then(([roomResponse, deskResponse]) => {
-          if (roomResponse.data.length > 0) {
-            setRooms(roomResponse.data);
-          }
-          if (deskResponse.data.length > 0) {
-            setDesks(deskResponse.data);
-          }
+            if (roomResponse.data.length > 0) {
+                setRooms(roomResponse.data);
+            }
+            if (deskResponse.data.length >0 ) {
+              setDesks(deskResponse.data);
+            }
         })
         .catch((error) => {
-          console.log(error);
-        });
+            console.log(error);
+        })
     }
     fetchData();
-  }, [rooms, desks, isOffice, isConference, isDesk]);
-
-  
-
-  // filter button run use effect function again. re render
+},[]);
 
   const handleClick = (desk) => {
     props.setReservation(desk);
     history.push("/reservation");
   };
 
-  function handleDayClick(date) {
-    var dateStr = String(date);
-    var formattedDate = dateStr.slice(0, 15);
-    console.log(formattedDate);
-    setDate(formattedDate);
-  }
+ function handleDayClick(date) {
+   var dateStr = String(date);
+   var formattedDate = dateStr.slice(0, 15);
+   console.log(formattedDate)
+   setDate(formattedDate);
+ };
 
-  function onChangeStart(startTime) {
-    console.log(startTime);
-    setStart(startTime);
-  }
+ function onChangeStart(startTime) {
+   console.log(startTime);
+   setStart(startTime)
+ };
 
-  function onChangeEnd(endTime) {
-    console.log(endTime);
-    setEnd(endTime);
-  }
+ function onChangeEnd(endTime) {
+   console.log(endTime);
+   setEnd(endTime)
+ };
+
 
   const today = new Date();
 
@@ -91,28 +84,32 @@ const Schedule = (props) => {
             <div style={{ paddingBottom: "10px", backgroundColor: "white" }}>
               <div>
                 <center>
-                  <DayPicker
-                    month={today}
-                    fromMonth={today}
-                    disabledDays={{ daysOfWeek: [0, 6] }}
-                    onDayClick={handleDayClick}
-                    format="MM/dd/yyyy"
-                    style={{ backgroundColor: "White" }}
-                  />
+                <DayPicker
+                  month={today}
+                  fromMonth={today}
+                  disabledDays={{ daysOfWeek: [0, 6] }}
+                  onDayClick={handleDayClick}
+                  format="MM/dd/yyyy"
+                  style={{backgroundColor: "White"}}
+                />
                 </center>
               </div>
             </div>
 
             <div style={{ backgroundColor: "white", padding: "20px" }}>
-              <TimePicker onChange={onChangeStart} />
-              <TimePicker onChange={onChangeEnd} />
+              <TimePicker 
+                onChange={onChangeStart}
+              />
+              <TimePicker 
+                onChange={onChangeEnd}
+              />
             </div>
 
             <div
               class="custom-control custom-checkbox"
               style={{ color: "white" }}
             >
-              <input type="checkbox" class="custom-control-input" id="desk" onClick={e => {toggleIsDesk(!isDesk)}}/>
+              <input type="checkbox" class="custom-control-input" id="desk"/>
               <label class="custom-control-label" for="desk">
                 Desk
               </label>
@@ -121,7 +118,7 @@ const Schedule = (props) => {
               class="custom-control custom-checkbox"
               style={{ color: "white" }}
             >
-              <input type="checkbox" class="custom-control-input" id="office" onClick={e => {toggleIsOffice(!isOffice)}}/>
+              <input type="checkbox" class="custom-control-input" id="office" />
               <label class="custom-control-label" for="office">
                 Office
               </label>
@@ -134,14 +131,13 @@ const Schedule = (props) => {
                 type="checkbox"
                 class="custom-control-input"
                 id="conference"
-                onClick={e => {toggleIsConference(!isConference)}}
               />
               <label class="custom-control-label" for="conference">
                 Conference Room
               </label>
             </div>
 
-            <div style={{ paddingTop: "15px", alignSelf: "left" }}>
+            <div style={{ paddingTop: "15px", alignSelf: "left"}}>
               <button className="button-submit" type="submit">
                 Filter
               </button>
@@ -159,7 +155,7 @@ const Schedule = (props) => {
                   paddingBottom: "1rem",
                 }}
               >
-                <Card style={{ width: "19rem", padding: ".5rem" }}>
+                <Card style={{ width: "28rem", padding: ".5rem" }}>
                   <Card.Title>Desk: {desk.desk_number}</Card.Title>
                   <Container>
                     <Row>
