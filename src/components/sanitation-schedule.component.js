@@ -13,16 +13,23 @@ import axios from "axios";
   const [reservation, setReservation] = useState([]);
   const [sanSchedule, setSanSchedule] = useState([]);
 
-  const onAssign = (reservationID) => () => {
+  const onAssign = (reservationID,roomID, deskID) => () => {
     let attendeelist = [];
+    let isAvail = false;
     attendeelist[0] = user._id;
     const partialUpdate = {attendees: attendeelist};
+    const isAvailable = {is_available: isAvail};
+    axios.post('http://localhost:5000/desks/update/isavailable/' + deskID,  isAvailable );
+    axios.post('http://localhost:5000/rooms/update/isavailable/' + roomID,  isAvailable );
     axios.post('http://localhost:5000/reservations/update/attendees/' + reservationID,  partialUpdate );
   }
 
-  const onComplete = (reservationID) => () => {
-    console.log(reservationID);
-    // axios.post('http://localhost:5000/desks/update/isclean/' + reservationID,  partialUpdate );
+  const onComplete = (reservationID, roomID, deskID) => () => {
+    let isCl = true;
+    const isClean = {is_clean: isCl};
+     axios.post('http://localhost:5000/desks/update/isclean/' + deskID,  isClean );
+     axios.post('http://localhost:5000/rooms/update/isclean/' + roomID,  isClean );
+     axios.post('http://localhost:5000/reservations/delete/' + reservationID);
   }
 
 
@@ -30,7 +37,7 @@ import axios from "axios";
     async function fetchData() {
         axios.get("http://localhost:5000/reservations/cleaning/unclaimed")
         .then(response => {
-            // console.log(response.data);
+             console.log(response.data);
             if (response.data.length > 0) {
                 setReservation(response.data);
             }
@@ -44,10 +51,23 @@ import axios from "axios";
 
 useEffect(() => {
   async function fetchData() {
+      axios.get("http://localhost:5000/rooms/")
+      .then(response => {
+           console.log(response.data);
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+  }
+  fetchData();
+},[]);
+
+useEffect(() => {
+  async function fetchData() {
       axios.get("http://localhost:5000/reservations/cleaning/")
       .then(response => {
-          console.log(response.data);
-          console.log(user);
+          // console.log(response.data);
+          // console.log(user);
           if (response.data.length > 0) {
             setSanSchedule(response.data);
           }
@@ -79,7 +99,7 @@ useEffect(() => {
             <Card className="san-sched">
               <Card.Body className="card-body">
             <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
-              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onAssign(reserv._id)}>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onAssign(reserv._id,reserv.room_id,reserv.desk_id)}>
                 Assign
               </Button>
             </Card.Body>
@@ -101,7 +121,7 @@ useEffect(() => {
             <Card className="san-sched">
               <Card.Body className="card-body">
             <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
-              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onComplete(reserv._id)}>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onComplete(reserv._id, reserv.room_id,reserv.desk_id)}>
                 complete
               </Button>
             </Card.Body>
