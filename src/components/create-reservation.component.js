@@ -129,10 +129,10 @@ class FillReservation extends Component {
     e.preventDefault();
     const newReservation = {
       title: this.state.title,
-      room_number: this.state.room_number,
       room_id: this.state.room_id,
-      desk_number: this.state.desk_number,
+      room_number: this.state.room_number,
       desk_id: this.state.desk_id,
+      desk_number: this.state.desk_number,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
       date: this.state.date,
@@ -142,10 +142,10 @@ class FillReservation extends Component {
 
     const cleaningReservation = {
       title: "Cleaning",
-      room_number: this.state.room_number,
       room_id: this.state.room_id,
-      desk_number: this.state.desk_number,
+      room_number: this.state.room_number,
       desk_id: this.state.desk_id,
+      desk_number: this.state.desk_number,
       start_time: this.state.end_time,
       end_time: calculateEndCleaning(this.state.end_time),
       date: this.state.date,
@@ -177,7 +177,7 @@ class FillReservation extends Component {
         }
       );
 
-    console.log(newReservation);
+    console.log("new Rservation", newReservation);
 
     axios
       .post("http://localhost:5000/reservations/add", newReservation)

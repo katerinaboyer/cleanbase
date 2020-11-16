@@ -63,9 +63,9 @@ router.route('/delete/:id').post((req, res) => {
 
 router.route('/add').post((req, res) => {
   const title = req.body.title;
-  const room_id = req.body.room;
+  const room_id = req.body.room_id;
   const room_number = req.body.room_number;
-  const desk_id = req.body.desk;
+  const desk_id = req.body.desk_id;
   const desk_number = req.body.desk_number;
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
