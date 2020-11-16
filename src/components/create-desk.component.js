@@ -101,12 +101,11 @@ export default class CreateDesk extends Component {
               />
             </Col>
           </Form.Group>
-
-          <button className="button-submit" type="submit">
-            Create Desk
-          </button>
-        </Form>
-      </div>
-    );
-  }
+                <button className="button-submit" type="submit">
+                    Create Desk
+                </button>
+            </Form>
+          </div>
+        )
+      }
 }

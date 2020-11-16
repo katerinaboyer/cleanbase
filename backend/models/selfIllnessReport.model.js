@@ -18,7 +18,7 @@ const selfIllnessReportSchema = new Schema({
   },
   date: {
     type: Date,
-    required: true
+    required: false
   },
   report: {
     type: String,

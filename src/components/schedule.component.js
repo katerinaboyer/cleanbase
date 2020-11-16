@@ -5,8 +5,8 @@ import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
+// import DayPicker from "react-day-picker";
+// import "react-day-picker/lib/style.css";
 import TimePicker from "react-time-picker";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -84,14 +84,14 @@ const Schedule = (props) => {
             <div style={{ paddingBottom: "10px", backgroundColor: "white" }}>
               <div>
                 <center>
-                <DayPicker
+                {/* <DayPicker
                   month={today}
                   fromMonth={today}
                   disabledDays={{ daysOfWeek: [0, 6] }}
                   onDayClick={handleDayClick}
                   format="MM/dd/yyyy"
                   style={{backgroundColor: "White"}}
-                />
+                /> */}
                 </center>
               </div>
             </div>
