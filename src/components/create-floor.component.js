@@ -61,13 +61,13 @@ export default class CreateFloor extends Component {
 
     if (
       this.state.floor_number &&
-      this.state.building_id &&
-      this.state.capacity
+      this.state.building_id //&&
+      //this.state.capacity
     ) {
       const newFloor = {
         floor_number: this.state.floor_number,
         building_id: this.state.building_id,
-        capacity: this.state.capacity,
+        //capacity: this.state.capacity,
       };
 
       console.log(newFloor);
@@ -100,7 +100,7 @@ export default class CreateFloor extends Component {
             <Form.Group as={Row} controlId="formAdmin">
                     <Form.Label column sm={3}>Floor Number</Form.Label>
                     <Col sm={9}>
-                        <Form.Control type="name" placeholder="" onChange={this.onChangeFloorNumber}/>
+                        <Form.Control type="name" placeholder="Enter floor number" onChange={this.onChangeFloorNumber}/>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="formFloorNumbers">
@@ -122,7 +122,7 @@ export default class CreateFloor extends Component {
                 <Form.Group as={Row} controlId="formAdmin">
                     <Form.Label column sm={3}>Capacity</Form.Label>
                     <Col sm={9}>
-                        <Form.Control type="name" placeholder="" onChange={this.onChangeCapacity}/>
+                        <Form.Control type="name" placeholder="Enter floor capacity" onChange={this.onChangeCapacity}/>
                     </Col>
                 </Form.Group>
 

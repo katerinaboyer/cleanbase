@@ -26,10 +26,12 @@ const roomSchema = new Schema({
         type: String
     },
     is_available: {
-        type: Boolean
+        type: Boolean, 
+        default: true
     },
     is_clean: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 }, {
   timestamps: true,
