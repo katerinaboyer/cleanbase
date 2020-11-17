@@ -2,8 +2,7 @@ import React, {useState, useEffect } from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
-import IllnessReport from "./illness-report.component";
-import { Container, Row, Col, Form, Card} from 'react-bootstrap';
+import { Row, Col, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
@@ -27,7 +26,7 @@ const SpaceMgmt = (props) => {
   const addRoom = (e) =>{
     history.push("/room");
 }
-  const address = "Business Name";
+  //const address = "Business Name";
 
   const test= (info) =>{
     console.log(info);
