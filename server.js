@@ -5,10 +5,10 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 
+require('dotenv').config();
+
 const app = express();
 const PORT = process.env.PORT || 5000; // Step 1
-
-const routes = require('./routes/api');
 
 // Step 2
 mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://jon:UJ62J1tfuqRuZ1WV@cluster0.qxidv.mongodb.net/<cb-test>?retryWrites=true&w=majority", {
@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://jon:UJ62J1tfuqRuZ1WV@
     useCreateIndex: true
 });
 
-mongoose.connection.on('connected', () => {
+mongoose.connection.once('open', () => {
     console.log('Mongoose is connected');
 });
 
