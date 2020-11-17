@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Floor = require('../models/Floor.model');
 
 router.route('/').get((req, res) => {
-  Floor.find()
+  Floor.find().sort({floor_number: 1})
     .then(floors => res.json(floors))
     .catch(err => res.status(400).json('Error: ' + err));
 });

@@ -47,7 +47,9 @@ const getFloorNumbers = (floors) => {
           axios.get('http://localhost:5000/accounts/officemanager/' + user._id)
           .then(response => {
               console.log(response.data[0].floors_assigned);
+              console.log(response.data[0].business_name);
               for(var i = 0; i < response.data[0].floors_assigned.length; i++){
+                  console.log("HERE" + i)
                 axios.get('http://localhost:5000/floors/id/' + response.data[0].floors_assigned[i])
                 .then(response => {
                     console.log(response.data);
