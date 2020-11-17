@@ -1,0 +1,185 @@
+.background-image {
+  position: relative;
+}
+
+.button {
+  border: none;
+  text-align: left;
+  display: block;
+  margin: 4px 2px;
+  min-width: 450px;
+  padding-top: 5px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+}
+
+.button-edit {
+  border: none;
+  text-align: left;
+  margin: 20px 10px 20px max(40%, 30%);
+  background-color: transparent;
+  color: #ee6c4d;
+  font-weight: bold;
+  font-size: 115%;
+}
+
+.button:hover {
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-secondary {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 2px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-submit {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 15px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #ee6c4d;
+  color: #434343;
+  padding: 7px 20px;
+}
+
+.button-add {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  min-width: 80px;
+  border-radius: 14px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-remove {
+  border: none;
+  text-align: center;
+  display: block;
+  margin: 4px 7px;
+  min-width: 125px;
+  border-radius: 10px;
+  background: #434343;
+  color: white;
+  padding: 7px 20px;
+}
+
+.button-checkin {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  margin-left: 40%;
+  min-width: 80px;
+  border-radius: 10px;
+  padding: 3px 25px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.button-checkin:disabled {
+  background-color: #434343;
+  color: white
+}
+
+.button-createreservation {
+  border: none;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
+  margin-bottom: 15px;
+  margin-left: 0%;
+  min-width: 80px;
+  border-radius: 14px;
+  padding: 5px 18px;
+  background: #ee6c4d;
+  color: #434343;
+}
+
+.text {
+  color: white;
+  padding-top: 100px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  flex: 1;
+}
+
+.nav-bar a {
+  color: white !important;
+}
+
+.nav-bar-items a {
+  padding-left: 30px !important;
+}
+
+.dropdown a {
+  color: #434343 !important;
+}
+
+.calender {
+  width: 78%;
+  height: 295px;
+}
+
+.start-time {
+  position: absolute;
+}
+
+.end-time {
+  margin-left: 5%;
+}
+
+.card-body {
+  margin-bottom: 2%;
+}
+.h3 {
+  color: white;
+}
+
+.formLabels {
+  color: white;
+}
+
+* p {
+  color: white;
+}
+
+* h3,
+h4 {
+  color: white;
+}
+
+.space-mgmt {
+  height: 4rem;
+  margin-bottom: 2%;
+}
+
+.san-sched {
+  height: 9rem;
+  margin-bottom: 2%;
+}
