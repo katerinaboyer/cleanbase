@@ -11,6 +11,7 @@ import axios from "axios";
 const CurrentSchedule = (props) => {
 
     const [schedule, setSchedule] = useState([]);
+    const [value, setValue] = useState(0);
 
     const history = useHistory();
     const user = useSelector(getUser);
@@ -38,6 +39,8 @@ const CurrentSchedule = (props) => {
             .catch((error) => {
                 console.log(error);
             })
+
+        setValue(info.length);
     }
 
     const formatDate = (date) =>{
@@ -82,7 +85,7 @@ const CurrentSchedule = (props) => {
             })
         }
         fetchData();
-    },[]);
+    },[value]);
 
     return(
         <div style={{paddingTop:"0px"}}>
