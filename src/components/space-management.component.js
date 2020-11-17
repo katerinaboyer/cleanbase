@@ -5,13 +5,15 @@ import './../styles.css';
 import IllnessReport from "./illness-report.component";
 import { Container, Row, Col, Form, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
+import { getUser } from "../store/selectors";
 
 
 const SpaceMgmt = (props) => {
 
   const [accounts, setAccounts] = useState([]);
+  const user = useSelector(getUser);
 
   const history = useHistory();
 
@@ -35,7 +37,7 @@ const getFloorNumbers = (floors) => {
 
   useEffect(() => {
       async function fetchData() {
-          axios.get('http://localhost:5000/accounts/')
+          axios.get('http://localhost:5000/accounts/officemanager/' + user._id)
           .then(response => {
               //console.log(response.data.length);
               //console.log(response.data);

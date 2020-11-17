@@ -15,6 +15,12 @@ router.route('/update/:id').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/officemanager/:id').get((req, res) => {
+  Account.find({office_manager: {$eq: req.params.id}})
+    .then(accounts => res.json(accounts))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const business_name = req.body.business_name;
   const office_manager = req.body.office_manager;
