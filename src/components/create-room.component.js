@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import {Form, Col, Row} from 'react-bootstrap';
+import ToastMessage from './toast.component';
 
 export default class CreateRoom extends Component {
   constructor(props) {
@@ -18,6 +19,8 @@ export default class CreateRoom extends Component {
       capacity: "",
       room_type: "",
       floors: [],
+      show_error: false,
+      show_success: false,
     };
   }
 
@@ -64,18 +67,39 @@ export default class CreateRoom extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const newRoom = {
-      room_number: this.state.room_number,
-      floor_id: this.state.floor_id,
-      capacity: this.state.capacity,
-      room_type: this.state.room_type,
-    };
+    if (
+      this.state.room_number &&
+      this.state.floor_id &&
+      this.state.capacity &&
+      this.state.room_type
+    ) {
+      const newRoom = {
+        room_number: this.state.room_number,
+        floor_id: this.state.floor_id,
+        capacity: this.state.capacity,
+        room_type: this.state.room_type,
+      };
 
-    console.log(newRoom);
+      console.log(newRoom);
 
-    axios
-      .post("http://localhost:5000/rooms/add", newRoom)
-      .then((res) => console.log(res.data));
+      axios
+        .post("http://localhost:5000/rooms/add", newRoom)
+        .then((res) => console.log(res.data));
+
+        this.setState({
+          show_success: true
+        });
+        setTimeout(() => {this.setState({
+          show_success: false
+        })}, 5000);
+    } else {
+      this.setState({
+        show_error: true
+      });
+      setTimeout(() => {this.setState({
+        show_error: false
+      })}, 5000);
+    }
   }
 
   render() {
@@ -86,14 +110,34 @@ export default class CreateRoom extends Component {
             <Form.Group as={Row} controlId="formAdmin">
                 <Form.Label column sm={3}>Room Number</Form.Label>
                 <Col sm={9}>
-                    <Form.Control type="name" placeholder="12A" onChange={this.onChangeRoomNumber}/>
+                    <Form.Control type="name" placeholder="Enter room number" onChange={this.onChangeRoomNumber}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formAdmin">
+                <Form.Label column sm={3}>Capacity</Form.Label>
+                <Col sm={9}>
+                    <Form.Control type="name" placeholder="Enter capacity" onChange={this.onChangeCapacity}/>
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor ID</Form.Label>
+                <Form.Label column sm={3}>Room Type</Form.Label>
+                <Col sm={9}>
+                    <Form.Control as="select" onChange={this.onChangeRoomType}>
+                      <option hidden disabled selected value> -- select an option -- </option>
+                      <option value="desk_space">Desk Space</option>
+                      <option value="office">Office</option>
+                      <option value="conference">Conference</option>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formFloorNumbers">
+                <Form.Label column sm={3}>Floor Number</Form.Label>
                 <Col sm={9}>
                     <Form.Control as="select" onChange={this.onChangeFloorId}>
+                    <option hidden disabled selected value> -- select an option -- </option>
                     {this.state.floors.map((floor) => {
                 return (
                   <option key={floor._id} value={floor._id}>
@@ -105,30 +149,14 @@ export default class CreateRoom extends Component {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="formAdmin">
-                <Form.Label column sm={3}>Capacity</Form.Label>
-                <Col sm={9}>
-                    <Form.Control type="name" placeholder="12" onChange={this.onChangeCapacity}/>
-                </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formFloorNumbers">
-                <Form.Label column sm={3}>Floor ID</Form.Label>
-                <Col sm={9}>
-                    <Form.Control as="select" onChange={this.onChangeRoomType}>
-                      <option value="desk_space">Desk Space</option>
-                      <option value="office">Office</option>
-                      <option value="conference">Conference</option>
-                    </Form.Control>
-                </Col>
-            </Form.Group>
-
             <button className="button-submit" type="submit">
                 Create Room
             </button>
         </Form>
+        <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+        <ToastMessage show={this.state.show_success} text={`This room has been created.`} />
       </div>
-     
+
     );
   }
 }

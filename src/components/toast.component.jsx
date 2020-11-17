@@ -10,7 +10,7 @@ const ToastMessage = (props) => {
         position: 'fixed',
         right: 30,
         top: 100,
-        backgroundColor: '#00A8FF',
+        backgroundColor: props.error ? '#EE6C4D' : '#00A8FF',
         color: 'white',
       }}
     >

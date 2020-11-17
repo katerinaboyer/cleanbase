@@ -1,29 +1,64 @@
-import React, { Component } from "react";
+import React, {useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { connect, useSelector } from "react-redux";
+import { storeLogout } from "../store/userReducer";
+import { getUser } from "../store/selectors";
 import "./../styles.css";
 import axios from "axios";
 
-export default class SanitationSchedule extends Component {
-  constructor(props) {
-    super(props);
+ const SanitationSchedule = props => {
+  const user = useSelector(getUser);
+  
+  const [reservation, setReservation] = useState([]);
+  const [sanSchedule, setSanSchedule] = useState([]);
 
-    this.state = {
-      reservations: []
-    };
+  const onAssign = (reservationID) => () => {
+    let userArr = [];
+    userArr[0] = user._id;
+    const te = {attendees: userArr};
+    axios.post('http://localhost:5000/reservations/update/attendees/' + reservationID,  te );
   }
 
-  componentDidMount() {
-    axios.get("http://localhost:5000/reservations").then(response => {
-      if (response.data.length > 0) {
-        console.log(response.data);
-        this.setState({
-          reservations: response.data
-        });
-      }
-    });
+  const onComplete = (reservationID) => () => {
+    console.log(reservationID);
   }
-  render() {
+
+
+  useEffect(() => {
+    async function fetchData() {
+        axios.get("http://localhost:5000/reservations/cleaning/unclaimed")
+        .then(response => {
+            // console.log(response.data);
+            if (response.data.length > 0) {
+                setReservation(response.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+    fetchData();
+},[]);
+
+useEffect(() => {
+  async function fetchData() {
+      axios.get("http://localhost:5000/reservations/cleaning/")
+      .then(response => {
+          console.log(response.data);
+          console.log(user);
+          if (response.data.length > 0) {
+            setSanSchedule(response.data);
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+  }
+  fetchData();
+},[]);
+
+  // render() {
     return (
       <div>
         <div
@@ -38,22 +73,17 @@ export default class SanitationSchedule extends Component {
           <h5 style={{ color: "white", textAlign: "center" }}>
             Upcoming Schedule
           </h5>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
+          {reservation.map(reserv => {
+            return (
+            <Card className="san-sched">
+              <Card.Body className="card-body">
+            <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onAssign(reserv._id)}>
                 Assign
               </Button>
             </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Assign
-              </Button>
-            </Card.Body>
-          </Card>
+          </Card> )
+          })}
         </div>
         <div
           style={{
@@ -65,24 +95,28 @@ export default class SanitationSchedule extends Component {
           }}
         >
           <h5 style={{ color: "white", textAlign: "center" }}>My Schedule</h5>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Complete
+          {sanSchedule.filter(san => san.attendees[0] == user._id).map(reserv => {
+            return (
+            <Card className="san-sched">
+              <Card.Body className="card-body">
+            <ul style={{listStyleType: "none"}}><li>{reserv.title}</li><li>{reserv.start_time} - {reserv.end_time}</li><li>Room: {reserv.room_number} Desk: {reserv.desk_number}</li></ul>
+              <Button size="sm" variant="light" style={{marginLeft: "42%"}} onClick={onComplete(reserv._id)}>
+                complete
               </Button>
             </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body className="card-body">
-              This is some text within a card body.
-              <Button size="sm" variant="light">
-                Complete
-              </Button>
-            </Card.Body>
-          </Card>
+          </Card> )
+          })}
         </div>
       </div>
     );
-  }
+ // }
 }
+
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps, {
+  storeLogout
+})(SanitationSchedule);
+

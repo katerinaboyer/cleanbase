@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import {Form, Col, Row} from 'react-bootstrap';
+import ToastMessage from './toast.component';
 
 export default class CreateFloor extends Component {
   constructor(props) {
@@ -16,6 +17,8 @@ export default class CreateFloor extends Component {
       building_id: "",
       capacity: "",
       buildings: [],
+      show_error: false,
+      show_success: false,
     };
   }
 
@@ -56,23 +59,43 @@ export default class CreateFloor extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const newFloor = {
-      floor_number: this.state.floor_number,
-      building_id: this.state.building_id,
-      capacity: this.state.capacity,
-    };
+    if (
+      this.state.floor_number &&
+      this.state.building_id &&
+      this.state.capacity
+    ) {
+      const newFloor = {
+        floor_number: this.state.floor_number,
+        building_id: this.state.building_id,
+        capacity: this.state.capacity,
+      };
 
-    console.log(newFloor);
+      console.log(newFloor);
 
-    axios
-      .post("http://localhost:5000/floors/add", newFloor)
-      .then((res) => console.log(res.data));
+      axios
+        .post("http://localhost:5000/floors/add", newFloor)
+        .then((res) => console.log(res.data));
+
+        this.setState({
+          show_success: true
+        });
+        setTimeout(() => {this.setState({
+          show_success: false
+        })}, 5000);
+    } else {
+      this.setState({
+        show_error: true
+      });
+      setTimeout(() => {this.setState({
+        show_error: false
+      })}, 5000);
+    }
   }
 
   render() {
     return (
       <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-            <h3 className="h3">Create Reservation:</h3>
+            <h3 className="h3">Create Floor:</h3>
             <Form onSubmit={this.onSubmit}>
             <Form.Group as={Row} controlId="formAdmin">
                     <Form.Label column sm={3}>Floor Number</Form.Label>
@@ -84,6 +107,7 @@ export default class CreateFloor extends Component {
                     <Form.Label column sm={3}>Building ID</Form.Label>
                     <Col sm={9}>
                         <Form.Control as="select" onChange={this.onChangeBuildingId}>
+                        <option hidden disabled selected value> -- select an option -- </option>
                         {this.state.buildings.map((building) => {
                 return (
                   <option key={building._id} value={building._id}>
@@ -102,10 +126,12 @@ export default class CreateFloor extends Component {
                     </Col>
                 </Form.Group>
 
-                <button className="button-edit" type="submit">
-                    Create Desk
+                <button className="button-submit" type="submit">
+                    Create Floor
                 </button>
             </Form>
+            <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+            <ToastMessage show={this.state.show_success} text={`This floor has been created.`} />
           </div>
     );
   }

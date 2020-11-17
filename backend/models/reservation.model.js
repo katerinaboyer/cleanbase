@@ -30,6 +30,9 @@ const reservationSchema = new Schema({
     },
     attendees: {
         type: [Schema.Types.ObjectId],
+    },
+    checkedIn: {
+        type: Boolean,
     }
 }, {
   timestamps: true,

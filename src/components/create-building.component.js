@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Form, Col, Row} from 'react-bootstrap';
+import ToastMessage from './toast.component';
 
 export default class CreateBuilding extends Component {
   constructor(props) {
@@ -17,7 +18,9 @@ export default class CreateBuilding extends Component {
       num_floors: '',
       capacity: '',
       address: '',
-      users: []
+      users: [],
+      show_error: false,
+      show_success: false,
     }
   }
 
@@ -67,28 +70,51 @@ export default class CreateBuilding extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const newBuilding = {
-        building_admin: this.state.building_admin,
-        num_floors: this.state.num_floors,
-        capacity: this.state.capacity,
-        address: this.state.address
+    if (
+      this.state.building_admin &&
+      this.state.num_floors &&
+      this.state.capacity &&
+      this.state.address
+    ) {
+      const newBuilding = {
+          building_admin: this.state.building_admin,
+          num_floors: this.state.num_floors,
+          capacity: this.state.capacity,
+          address: this.state.address
+      }
+
+      console.log(newBuilding);
+
+      axios.post('http://localhost:5000/buildings/add', newBuilding)
+        .then(res => console.log(res.data));
+
+      this.setState({
+        show_success: true
+      });
+      setTimeout(() => {this.setState({
+        show_success: false
+      })}, 5000);
+    } else {
+      console.log(this.state.building_admin);
+      this.setState({
+        show_error: true
+      });
+      setTimeout(() => {this.setState({
+        show_error: false
+      })}, 5000);
     }
-
-    console.log(newBuilding);
-
-    axios.post('http://localhost:5000/buildings/add', newBuilding)
-      .then(res => console.log(res.data));
   }
 
   render() {
     return (
         <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}} >
-          <h3 className="h3">Create Reservation:</h3>
+          <h3 className="h3">Create Building:</h3>
           <Form onSubmit={this.onSubmit}>
               <Form.Group as={Row} controlId="formAdmin">
                   <Form.Label column sm={3}>Building Admin</Form.Label>
                   <Col sm={9}>
                       <Form.Control as="select" placeholder="Name" onChange={this.onChangeBuildingAdmin}>
+                        <option hidden disabled selected value> -- select an option -- </option>
                                 {
                           this.state.users.map((user) => {
                             return <option
@@ -116,9 +142,9 @@ export default class CreateBuilding extends Component {
               </Form.Group>
 
               <Form.Group as={Row} controlId="formBasicAddress">
-                  <Form.Label column sm={3}>Address</Form.Label>
+                  <Form.Label column sm={3}>Street Address</Form.Label>
                   <Col sm={9}>
-                      <Form.Control type="address" placeholder="EX: 123 Aggie Dr." onChange={this.onChangeAddress}/>
+                      <Form.Control type="address" placeholder="Your building address" onChange={this.onChangeAddress}/>
                   </Col>
               </Form.Group>
 
@@ -126,6 +152,8 @@ export default class CreateBuilding extends Component {
                   Create Building
               </button>
           </Form>
+          <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+          <ToastMessage show={this.state.show_success} text={`This building has been created.`} />
       </div>
     )
   }

@@ -97,7 +97,7 @@ const CreateUser = (props) => {
           <Col sm={9}>
             <Form.Control
               type="name"
-              placeholder=""
+              placeholder="Enter email"
               onChange={onChangeEmail}
               required
               //pattern=".{1,}@[^.]{1,}"
@@ -111,7 +111,7 @@ const CreateUser = (props) => {
         <Form.Group as={Row} controlId="validationName">
           <Form.Label column sm={3}>Name</Form.Label>
           <Col sm={9}>
-            <Form.Control type="name" placeholder="" onChange={onChangeName} required/>
+            <Form.Control type="name" placeholder="Enter name" onChange={onChangeName} required/>
           </Col>
         </Form.Group>
 
@@ -120,7 +120,7 @@ const CreateUser = (props) => {
           <Col sm={9}>
             <Form.Control
               type="name"
-              placeholder="xxx-xxx-xxxx"
+              placeholder="ex: 1234567890"
               onChange={onChangePhone}
               required
               //pattern=""
@@ -131,10 +131,10 @@ const CreateUser = (props) => {
         <Form.Group as={Row} controlId="formAdmin">
           <Form.Label column sm={3}>Password</Form.Label>
           <Col sm={9}>
-            <Form.Control type="password" placeholder="" onChange={onChangePassword} required/>
+            <Form.Control type="password" placeholder="Enter password" onChange={onChangePassword} required/>
             <Form.Text id="passwordHelp" style={{color:"white"}}>
-              Your password must be 8-20 character long, contain letters and numbers,
-              and must not contain spaces, special characters, or emoji.
+              We recommend your password be 8-20 character long, contain letters, numbers,
+              and special characters.
             </Form.Text>
           </Col>
         </Form.Group>
@@ -142,7 +142,7 @@ const CreateUser = (props) => {
         <Form.Group as={Row} controlId="formAdmin">
           <Form.Label column sm={3}>Confirm Password</Form.Label>
           <Col sm={9}>
-            <Form.Control type="password" placeholder="" required/>
+            <Form.Control type="password" placeholder="Enter password again" required/>
             <Form.Text id="confirmPassword" muted>
               {passwordMatch}
             </Form.Text>
@@ -167,8 +167,8 @@ const CreateUser = (props) => {
         </button>
 
       </Form>
-      <ToastMessage show={showToast} text={"Oops, it looks like that didn't work! That username might be taken."}/>
-      <ToastMessage show={validatedToast} text={"That input seems invalid, check again."}/>
+      <ToastMessage show={showToast}  error={true} text={"Oops, it looks like that didn't work! That username might be taken."}/>
+      <ToastMessage show={validatedToast}  error={true} text={"That input seems invalid, check again."}/>
     </div>
   )
 }

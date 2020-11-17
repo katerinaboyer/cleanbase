@@ -4,6 +4,7 @@ import * as emailjs from "emailjs-com";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import { Form, Button, Col, Row } from "react-bootstrap";
+import ToastMessage from './toast.component';
 import { connect, useSelector } from "react-redux";
 import { getUser, getReservation } from "../store/selectors";
 
@@ -12,6 +13,14 @@ const CreateReservation = (props) => {
   const reservation = useSelector(getReservation);
   return <FillReservation currUser={user} reservation={reservation} />;
 };
+
+function calculateEndCleaning(cleaningStart) {
+  var minsToAdd = 30;
+  var time = cleaningStart;
+  var cleaningEnd = new Date(new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+  console.log(cleaningEnd);
+  return cleaningEnd;
+}
 
 class FillReservation extends Component {
   constructor(props) {
@@ -44,6 +53,8 @@ class FillReservation extends Component {
       rooms: [],
       desks: [],
       all_users: [],
+      show_error: false,
+      show_success: false,
     };
 
     this.state.attendees.map((value) => value.currUserId);
@@ -98,7 +109,6 @@ class FillReservation extends Component {
   }
 
   onChangeDate(e) {
-
     this.setState({
       date: e.target.value,
     });
@@ -113,41 +123,88 @@ class FillReservation extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const newReservation = {
-      title: this.state.title,
-      room_number: this.state.room_number,
-      room: this.state.room,
-      desk_number: this.state.desk_number,
-      desk: this.state.desk,
-      start_time: this.state.start_time,
-      end_time: this.state.end_time,
-      date: this.state.date,
-      attendees: this.state.attendees,
-    };
 
-    var data = {
-      title: this.state.title,
-      to_email: "turtlesandpie@gmail.com",
-      room_number: this.state.room_number,
-      start_time: this.state.start_time,
-      end_time: this.state.end_time,
-      date: this.state.date
-    };
-    //emails a nice confirmation to the user
-    emailjs.send("service_lsurk9p", "template_evr3ddw", data, "user_YLt0CRcKLOhVbiTOfPMjp").then(
-      function (response) {
-        console.log(response.status, response.text);
-      },
-      function (err) {
-        console.log(err);
-      }
-    );
+    if (
+      this.state.title &&
+      this.state.room_number &&
+      this.state.desk_number &&
+      this.state.start_time &&
+      this.state.end_time
+    ) {
+      const newReservation = {
+        title: this.state.title,
+        room_number: this.state.room_number,
+        room: this.state.room,
+        desk_number: this.state.desk_number,
+        desk: this.state.desk,
+        start_time: this.state.start_time,
+        end_time: this.state.end_time,
+        date: this.state.date,
+        attendees: this.state.attendees,
+        checkedIn: false,
+      };
 
-    console.log(newReservation);
+      const cleaningReservation = {
+        title: "Cleaning",
+        room_number: this.state.room_number,
+        room: this.state.room,
+        desk_number: this.state.desk_number,
+        desk: this.state.desk,
+        start_time: this.state.end_time,
+        end_time: calculateEndCleaning(this.state.end_time),
+        date: this.state.date,
+        checkedIn: false,
+      };
 
-    axios
-      .post("http://localhost:5000/reservations/add", newReservation)
-      .then((res) => console.log(res.data));
+      var data = {
+        title: this.state.title,
+        to_email: "turtlesandpie@gmail.com",
+        room_number: this.state.room_number,
+        start_time: this.state.start_time,
+        end_time: this.state.end_time,
+        date: this.state.date,
+      };
+      //emails a nice confirmation to the user
+      emailjs
+        .send(
+          "service_lsurk9p",
+          "template_evr3ddw",
+          data,
+          "user_YLt0CRcKLOhVbiTOfPMjp"
+        )
+        .then(
+          function (response) {
+            console.log(response.status, response.text);
+          },
+          function (err) {
+            console.log(err);
+          }
+        );
+
+      console.log(newReservation);
+
+      axios
+        .post("http://localhost:5000/reservations/add", newReservation)
+        .then((res) => console.log(res.data));
+
+      axios
+        .post("http://localhost:5000/reservations/add", cleaningReservation)
+        .then((res) => console.log(res.data));
+
+      this.setState({
+        show_success: true
+      });
+      setTimeout(() => {this.setState({
+        show_success: false
+      })}, 5000);
+    } else {
+      this.setState({
+        show_error: true
+      });
+      setTimeout(() => {this.setState({
+        show_error: false
+      })}, 5000);
+    }
   }
 
   render() {
@@ -162,7 +219,7 @@ class FillReservation extends Component {
         }}
       >
         <h3 className="h3">Create Reservation:</h3>
-        <Form onSubmit={this.onSubmit}>
+        <Form noValidate onSubmit={this.onSubmit}>
           <Form.Group as={Row} controlId="formBasicTitle">
             <Form.Label column sm={3}>
               Title
@@ -170,8 +227,9 @@ class FillReservation extends Component {
             <Col sm={9}>
               <Form.Control
                 type="name"
-                placeholder="Name"
+                placeholder="Enter name"
                 onChange={this.onChangeTitle}
+                required
               />
             </Col>
           </Form.Group>
@@ -181,13 +239,16 @@ class FillReservation extends Component {
               Room Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                as="select"
-                onChange={this.onChangeRoomNumber}>
+              <Form.Control as="select" onChange={this.onChangeRoomNumber} required>
+                <option hidden disabled selected value> -- select an option -- </option>
                 {this.state.rooms.map((room) => {
                   return (
-                    <option key={room._id} value={room.room_number} data={room.room_number}>
-                    {room.room_number}
+                    <option
+                      key={room._id}
+                      value={room.room_number}
+                      data={room.room_number}
+                    >
+                      {room.room_number}
                     </option>
                   );
                 })}
@@ -200,9 +261,8 @@ class FillReservation extends Component {
               Desk Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                as="select"
-                onChange={this.onChangeDeskNumber}>
+              <Form.Control as="select" onChange={this.onChangeDeskNumber} required>
+                <option hidden disabled selected value> -- select an option -- </option>
                 {this.state.desks.map((desk) => {
                   return (
                     <option key={desk._id} value={desk.desk_number}>
@@ -221,8 +281,9 @@ class FillReservation extends Component {
             <Col sm={9}>
               <Form.Control
                 type="date"
-                placeholder="11/2/2020"
+                placeholder="ex: 11/2/2020"
                 onChange={this.onChangeDate}
+                required
               />
             </Col>
           </Form.Group>
@@ -234,8 +295,9 @@ class FillReservation extends Component {
             <Col sm={9}>
               <Form.Control
                 type="time"
-                placeholder="8:30 AM"
+                placeholder="ex: 8:30 AM"
                 onChange={this.onChangeStartTime}
+                required
               />
             </Col>
           </Form.Group>
@@ -247,8 +309,9 @@ class FillReservation extends Component {
             <Col sm={9}>
               <Form.Control
                 type="time"
-                placeholder="9:30 AM"
+                placeholder="ex: 9:30 AM"
                 onChange={this.onChangeEndTime}
+                required
               />
             </Col>
           </Form.Group>
@@ -262,7 +325,9 @@ class FillReservation extends Component {
                 as="select"
                 multiple
                 onChange={this.onChangeAttendees}
+                required
               >
+                <option hidden disabled selected value> -- select an option -- </option>
                 {this.state.all_users.map((user) => {
                   return (
                     <option key={user._id} value={user._id}>
@@ -294,10 +359,16 @@ class FillReservation extends Component {
             </select>
           </div> */}
 
-          <button className="button-submit" type="submit" onClick={this.onSubmit}>
+          <button
+            className="button-submit"
+            type="submit"
+            onClick={this.onSubmit}
+          >
             Create Reservation
           </button>
         </Form>
+        <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the reservation."} />
+        <ToastMessage show={this.state.show_success} text={"This reservation has been created."} />
       </div>
     );
   }
