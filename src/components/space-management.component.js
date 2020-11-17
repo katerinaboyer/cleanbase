@@ -12,7 +12,7 @@ import { getUser } from "../store/selectors";
 
 const SpaceMgmt = (props) => {
 
-  const [accounts, setAccounts] = useState([]);
+  //const [accounts, setAccounts] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [desks, setDesks] = useState([]);
   //setAccounts([]);
