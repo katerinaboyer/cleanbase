@@ -11,11 +11,16 @@ import { getUser } from "../store/selectors";
 
 const SpaceMgmt = (props) => {
 
+<<<<<<< HEAD
   //const [accounts, setAccounts] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [desks, setDesks] = useState([]);
   //setAccounts([]);
 
+=======
+  const [accounts, setAccounts] = useState([]);
+  const user = useSelector(getUser);
+>>>>>>> dev
 
   const history = useHistory();
   const user = useSelector(getUser);
