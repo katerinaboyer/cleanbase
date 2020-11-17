@@ -42,6 +42,9 @@ const getFloorNumbers = (floors) => {
     return floorText;
 }
 
+var tempRooms = [];
+var tempDesks= [];
+
   useEffect(() => {
       async function fetchData() {
           axios.get('http://localhost:5000/accounts/officemanager/' + user._id)
@@ -49,14 +52,14 @@ const getFloorNumbers = (floors) => {
               console.log(response.data[0].floors_assigned);
               console.log(response.data[0].business_name);
               for(var i = 0; i < response.data[0].floors_assigned.length; i++){
-                  console.log("HERE" + i)
                 axios.get('http://localhost:5000/floors/id/' + response.data[0].floors_assigned[i])
                 .then(response => {
                     console.log(response.data);
                     for(var i = 0; i < response.data.room_list.length; i++){
                         axios.get('http://localhost:5000/rooms/id/' + response.data.room_list[i])
                         .then(response => {
-                            setRooms(response.data);
+                            tempRooms.push(response.data);
+                            //setRooms(response.data);
                             console.log(rooms);
                         })
                         .catch((error) => {
@@ -64,7 +67,8 @@ const getFloorNumbers = (floors) => {
                         })
                         axios.get('http://localhost:5000/desks/byrooom/' + response.data.room_list[i])
                         .then(response => {
-                            setDesks(response.data);
+                            tempDesks.push(response.data);
+                            //setDesks(response.data);
                         })
                         .catch((error) => {
                             console.log(error);
@@ -75,6 +79,8 @@ const getFloorNumbers = (floors) => {
                     console.log(error);
                 })
               }
+              setRooms(tempRooms);
+              setDesks(tempDesks);
           })
           .catch((error) => {
               console.log(error);
@@ -93,7 +99,7 @@ const getFloorNumbers = (floors) => {
             <Col><button className="button-add" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>ADD</button></Col>
           </Row>
           <div style={{}}>
-              {/* { desks.map(info =>
+              { desks.map(info =>
                   <div style={{paddingBottom:"20px"}}>
                       <Card style={{borderRadius:"15px"}}>
                               <Row>
@@ -110,7 +116,7 @@ const getFloorNumbers = (floors) => {
                       </Card>
                   </div>
                   )
-              } */}
+              }
           </div>
         </Col>
         <Col sm={1}></Col>
@@ -120,7 +126,7 @@ const getFloorNumbers = (floors) => {
             <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>ADD</button></Col>
           </Row>
           <div style={{}}>
-              {/* { rooms.map(info =>
+              { rooms.map(info =>
                   <div style={{paddingBottom:"20px"}}>
                       <Card style={{borderRadius:"15px"}}>
                               <Row>
@@ -137,7 +143,7 @@ const getFloorNumbers = (floors) => {
                       </Card>
                   </div>
                   )
-              } */}
+              }
           </div>
         </Col>
         </Row>
