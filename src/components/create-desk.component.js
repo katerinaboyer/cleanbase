@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Form, Col, Row } from "react-bootstrap";
+import React, { Component } from 'react';
+import axios from 'axios';
+import {Form, Col, Row} from 'react-bootstrap';
+import ToastMessage from './toast.component';
 
 export default class CreateDesk extends Component {
   constructor(props) {
@@ -10,12 +11,28 @@ export default class CreateDesk extends Component {
     this.onChangeRoomId = this.onChangeRoomId.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    this.state = {
-      desk_number: "",
-      room_id: "",
-      rooms: [],
-    };
-  }
+        this.state = {
+            desk_number: '',
+            room_id: '',
+            rooms: [],
+            show_error: false,
+            show_success: false,
+        }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/rooms/')
+          .then(response => {
+              if (response.data.length > 0) {
+                  this.setState({
+                      rooms: response.data.map(room => room),
+                  })
+              }
+          })
+          .catch((error) => {
+              console.log(error);
+          })
+    }
 
   componentDidMount() {
     axios
@@ -48,17 +65,35 @@ export default class CreateDesk extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const newDesk = {
-      desk_number: this.state.desk_number,
-      room_id: this.state.room_id,
-    };
+    if (
+      this.state.desk_number &&
+      this.state.room_id
+    ) {
+      const newDesk = {
+        desk_number: this.state.desk_number,
+        room_id: this.state.room_id,
+      };
 
-    console.log(newDesk);
+      console.log(newDesk);
 
-    axios
-      .post("http://localhost:5000/desks/add", newDesk)
-      .then((res) => console.log(res.data));
-  }
+      axios
+        .post("http://localhost:5000/desks/add", newDesk)
+        .then((res) => console.log(res.data));
+
+    this.setState({
+      show_success: true
+    });
+    setTimeout(() => {this.setState({
+      show_success: false
+    })}, 5000);
+  } else {
+    this.setState({
+      show_error: true
+    });
+    setTimeout(() => {this.setState({
+      show_error: false
+    })}, 5000);
+  }}
 
   render() {
     return (
@@ -78,6 +113,7 @@ export default class CreateDesk extends Component {
             </Form.Label>
             <Col sm={9}>
               <Form.Control as="select" onChange={this.onChangeRoomId}>
+                <option hidden disabled selected value> -- select an option -- </option>
                 {this.state.rooms.map((room) => {
                     return (
                         <option key={room._id} value ={room._id}>
@@ -96,7 +132,7 @@ export default class CreateDesk extends Component {
             <Col sm={9}>
               <Form.Control
                 type="name"
-                placeholder=""
+                placeholder="Enter desk number/name"
                 onChange={this.onChangeDeskNumber}
               />
             </Col>
@@ -105,6 +141,8 @@ export default class CreateDesk extends Component {
                     Create Desk
                 </button>
             </Form>
+            <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+            <ToastMessage show={this.state.show_success} text={`This desk has been created.`} />
           </div>
         )
       }

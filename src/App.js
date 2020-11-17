@@ -26,6 +26,7 @@ import CreateReservation from "./components/create-reservation.component";
 import CreateAccount from "./components/create-account.component";
 import CreateRoom from "./components/create-room.component";
 import CreateFloor from "./components/create-floor.component";
+import CreateReport from "./components/create-selfIllnessReport.component";
 import ConfirmationPage from "./components/schedule-confirmation.component";
 import SanitationRequest from "./components/sanitation-request.component";
 import SanitationSchedule from "./components/sanitation-schedule.component";
@@ -68,6 +69,7 @@ function App(props) {
         <PrivateRoute path="/selfIllnessReports" component={CreateSelfIllnessReport} />
         <PrivateRoute path="/addEmployee" component={AddEmployee} />
         <PrivateRoute path="/edit-baccount" component={EditBusinessAccount} />
+        <PrivateRoute path="/illness-report" component={CreateReport} />
       </Switch>
     </Router>
   );

@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Form, Col, Row } from "react-bootstrap";
+import ToastMessage from './toast.component';
 import { connect } from "mongoose";
 
 const CreateBuilding = (props) => {
@@ -11,6 +12,8 @@ const CreateBuilding = (props) => {
   const [address, setAddress] = useState("");
   const [_id, setId] = useState("");
   const [admins, setAdmins] = useState([]);
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // const history = useHistory();
 
@@ -51,14 +54,23 @@ const CreateBuilding = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newBuilding = {
-      building_admin: buildingAdmin,
-      num_floors: numFloors,
-      capacity: capacity,
-      address: address,
-    };
+    if (
+      buildingAdmin &&
+      numFloors &&
+      capacity &&
+      address
+    ) {
+      const newBuilding = {
+          building_admin: buildingAdmin,
+          num_floors: numFloors,
+          capacity: capacity,
+          address: address
+      }
 
-    console.log(newBuilding);
+      console.log(newBuilding);
+
+      axios.post('http://localhost:5000/buildings/add', newBuilding)
+        .then(res => console.log(res.data));
 
     axios
       .post("http://localhost:5000/buildings/add", newBuilding)
@@ -67,14 +79,22 @@ const CreateBuilding = (props) => {
         postFloors(numFloors);
       })
 
+    setShowSuccess(true);
+    setTimeout(() => {setShowSuccess(false)}, 5000);
+
+    } else {
+      setShowError(true);
+      setTimeout(() => {setShowError(false)}, 5000);
+    }
+
       // (res) => console.log(res.data),
       //   postFloors(num_floors)
-      // get num floors from building object and create that many floor objects for that building id 
+      // get num floors from building object and create that many floor objects for that building id
     // for rooms need the id of the room put axios in .then()
-    // return most recent axios post 
-    //array list.length -1 in response 
-    // posting room, get request for all rooms and only return the last one 
-    
+    // return most recent axios post
+    //array list.length -1 in response
+    // posting room, get request for all rooms and only return the last one
+
   };
 
   return (
@@ -95,9 +115,10 @@ const CreateBuilding = (props) => {
           <Col sm={9}>
             <Form.Control
               as="select"
-              placeholder="Name"
+              placeholder="Enter name"
               onChange={e => setBuildingAdmin(e.target.value)}
             >
+              <option hidden disabled selected value> -- select an option -- </option>
               {admins.map((admin) => {
                 return (
                   <option key={admin._id} value={admin._id}>
@@ -114,7 +135,7 @@ const CreateBuilding = (props) => {
             Number of Floors
           </Form.Label>
           <Col sm={9}>
-            <Form.Control type="numFloors" 
+            <Form.Control type="numFloors"
             onChange={e => setNumFloors(e.target.value)}
             />
           </Col>
@@ -125,7 +146,7 @@ const CreateBuilding = (props) => {
             Capacity
           </Form.Label>
           <Col sm={9}>
-            <Form.Control type="capacity" 
+            <Form.Control type="capacity"
             onChange={e => setCapacity(e.target.value)}
             />
           </Col>
@@ -138,7 +159,7 @@ const CreateBuilding = (props) => {
           <Col sm={9}>
             <Form.Control
               type="address"
-             placeholder="123 Aggie Dr."
+             placeholder="Enter address"
               onChange={e => setAddress(e.target.value)} />
           </Col>
         </Form.Group>
@@ -147,6 +168,8 @@ const CreateBuilding = (props) => {
           Create Building
         </button>
       </Form>
+      <ToastMessage show={showError} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+      <ToastMessage show={showSuccess} text={`This building has been created.`} />
     </div>
   );
 };
