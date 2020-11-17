@@ -2,36 +2,32 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const selfIllnessReportSchema = new Schema({
   email: {
     type: String,
     required: true,
     unique: true,
   },
   name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true,
+      type: String,
+      required: true
   },
   phone: {
     type: String,
     required: true
   },
-  role: {
+  date: {
+    type: Date,
+    required: false
+  },
+  report: {
     type: String,
     required: true
   },
-  business_account_id: {
-    type: Schema.Types.ObjectId
-  }
-},
-{
+}, {
   timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
+const selfIllnessReport = mongoose.model('selfIllnessReport', selfIllnessReportSchema);
 
-module.exports = User;
+module.exports = selfIllnessReport;

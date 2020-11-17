@@ -3,14 +3,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const deskSchema = new Schema({
-    building_id: {
-        type: String
+    desk_number: {
+        type: String,
+        required: true
     },
-    floor_id: {
+    room_number: {
         type: String
     },
     room_id: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'Room',
+        required: true
     },
     is_available: {
         type: Boolean

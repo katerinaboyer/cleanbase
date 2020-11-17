@@ -7,17 +7,30 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/id/:id').get((req, res) => {
+  Floor.findById(req.params.id)
+    .then(floors => res.json(floors))
+    .catch(err => res.status(400).json('Error: ' + err));
+    //res.send(floor_number)
+});
+
+router.route('/update/:id').post((req, res) => {
+  var updateObject = req.body;
+  console.log(req.body)
+  Floor.findByIdAndUpdate(req.params.id, {updateObject})
+  .then(floor => res.json(floor))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
+  const floor_number = req.body.floor_number;
   const room_list = req.body.room_list;
   const building_id = req.body.building_id;
-  const desk_list = req.body.desk_list;
-  const capacity = req.body.capacity
 
   const newFloor = new Floor({
+      floor_number,
       room_list,
       building_id,
-      desk_list,
-      capacity
   });
 
   newFloor.save()

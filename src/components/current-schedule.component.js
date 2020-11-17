@@ -1,35 +1,146 @@
-import React, { Component } from "react";
-import { ListGroup} from 'react-bootstrap';
+import React, {useState, useEffect} from "react";
+import { Row, Col, Card} from 'react-bootstrap';
+import { useHistory, useLocation } from "react-router-dom";
+import {connect, useSelector} from "react-redux";
+import {format} from "date-fns";
+import { getUser } from "../store/selectors";
+import axios from "axios";
 
 
-export default class CurrentSchedule extends Component {
 
-    constructor(props) {
-        super(props);
+const CurrentSchedule = (props) => {
 
-        this.state = {
-            schedule: []
+    const [schedule, setSchedule] = useState([]);
+
+    const history = useHistory();
+    const user = useSelector(getUser);
+    const location = useLocation();
+
+    const newReservation = (e) =>{
+        history.push("/reservation");
+    }
+    const currDate = format(new Date(), 'MM/dd');
+    //const [value, setValue] = useState(0);
+
+
+    const checkIn = (info) => {
+        console.log(info);
+        const updateCheckIn = {
+            checkedIn: true,
         }
+        axios.post('http://localhost:5000/reservations/checkin/' + info._id, updateCheckIn)
+            .then(response => {
+                console.log(response.data);
+                if (response.data.length > 0) {
+                    setSchedule(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
-    componentDidMount() {
-        this.setState({
-            schedule: [{'date': "Wednesday 9/12", 'reservationSpace': 25, 'floorNumber': 15,'start': 12, end: 2}, {'date': "Monday 9/15", 'reservationSpace': 65, 'floorNumber': 8,'start': 1, end: 4}, {'date': "Friday 9/30", 'reservationSpace': 5, 'floorNumber': 15,'start': 12, end: 7}, {'date': "Thursday 9/24", 'reservationSpace': 51, 'floorNumber': 5,'start': 4, end: 3}]
-        })
+    const formatDate = (date) =>{
+        return  date.substring(5,7) + '/' + date.substring(8,10);
     }
-    
-    
-    render() {
-        return(
-            <div>
-                <p>upcoming schedule</p>
-                <ListGroup>
-                {
-                    this.state.schedule.map(info => 
-                    <ListGroup.Item style={{width: "45%"}}> <ul><li>{info.date}</li><li>{info.reservationSpace}</li><li>{info.floorNumber}</li><li>{info.start} - {info.end}</li></ul></ListGroup.Item> )
+
+    const formatTime = (time) => {
+
+        time = time.split(':'); // convert to array
+
+        // fetch
+        var hours = Number(time[0]);
+        var minutes = Number(time[1]);
+        // calculate
+        var timeValue;
+
+        if (hours > 0 && hours <= 12) {
+        timeValue= "" + hours;
+        } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+        } else if (hours === 0) {
+        timeValue= "12";
+        }
+        
+        timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+        timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+        return timeValue;
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+            axios.get('http://localhost:5000/reservations/current/' + user._id)
+            .then(response => {
+                console.log(response.data);
+                if (response.data.length > 0) {
+                    setSchedule(response.data);
                 }
-                 </ListGroup>
-            </div>
-        );
-    }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+        fetchData();
+    },[]);
+
+    return(
+        <div style={{paddingTop:"0px"}}>
+            <Col style={{paddingRight:"8%"}}>
+                <Row>
+                    <Col sm={7} >
+                        <h4 style={{paddingLeft:"20px", paddingRight:"0px"}}>Upcoming Schedule</h4>
+                    </Col>
+                    <Col >
+                        {location.pathname !== "/schedule" && <button className="button-createreservation" onClick={newReservation}>Create Reservation</button> }
+                    </Col>
+                </Row>
+                <div style={{}}>
+                    { schedule.map(info =>
+                        <div>
+                            { formatDate(info.date) >= currDate && 
+                            <Card style={{borderRadius:"15px", marginBottom: "10px"}}>
+                                    <Row>
+                                        {info.title.length > 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date) + " - " + info.title}</h5>}
+                                        {info.title.length === 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date)}</h5>}
+                                    </Row>
+                                    <Row>
+                                        <Card.Text style={{color:"#434343", padding:"0px 0px 5px 100px"}}>
+                                            {"Room: " + info.room_number}
+                                        </Card.Text>
+                                    </Row>
+                                    <Row>
+                                        <Card.Text style={{color:"#434343", padding:"0px 0px 10px 100px"}}>
+                                            {"Desk: " + info.desk_number}
+                                        </Card.Text>
+                                    </Row>
+                                    <Row>
+                                        <Card.Text style={{color:"#434343", padding:"0px 0px 10px 100px"}}>
+                                            {formatTime(info.start_time) + "-" + formatTime(info.end_time)}
+                                        </Card.Text>
+                                    </Row>
+                                    {formatDate(info.date) === currDate && !info.checkedIn &&
+                                    <Row>
+                                        <button className="button-checkin" onClick={() => checkIn(info)}>Check In</button>
+                                    </Row>
+                                    }
+                                    {formatDate(info.date) === currDate && info.checkedIn &&
+                                    <Row>
+                                        <button className="button-checkin" disabled>Checked In!</button>
+                                    </Row>
+                                    }
+                            </Card>
+                        }
+                        </div>
+                    )
+                    }
+                </div>
+            </Col>
+        </div>
+    )
+
 }
+
+const mapStateToProps = (state) => {return state};
+
+export default connect(mapStateToProps)(CurrentSchedule);
