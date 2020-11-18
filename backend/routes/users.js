@@ -13,6 +13,7 @@ router.route('/id/:id').get((req, res) => {
   .then(user => res.json(user))
   .catch(err => res.status(400).json('Error: ' + err));
 })
+
 //get user from email
 router.route('/email/:email').get((req, res) => {
   User.find({email: req.params.email})

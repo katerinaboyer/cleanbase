@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 //import { Link } from 'react-router';
 import './../styles.css';
@@ -12,7 +12,7 @@ import "./../styles.css"
 
 const AccountSettings = (props) => {
 
-    //const [companyInfo, setCompanyInfo] = useState([]);
+    const [companyInfo, setCompanyInfo] = useState("HI");
 
     const history = useHistory();
     const user = useSelector(getUser);
@@ -28,6 +28,8 @@ const AccountSettings = (props) => {
     const onPhoneChange = (e) => {
         user.phone = e.target.value;
     }
+
+    useEffect(()=> console.log("PLS"),[companyInfo]);
 
     const onUpdateUser = (e) => {
         
@@ -48,6 +50,7 @@ const AccountSettings = (props) => {
             _id: user._id,
         }
         console.log(newUser);
+        setCompanyInfo("NOW");
 
         //props.storeLogin(newUser);
         history.push("/account-settings")

@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import './../styles.css';
 
-const AccountSettings = (props) => {
+const AddEmployee = (props) => {
 
     const [user, setUsers] = useState([]);
     const [id, setID] = useState();
@@ -84,4 +84,4 @@ const AccountSettings = (props) => {
 
 const mapStateToProps = (state) => {return state};
 
-export default connect(mapStateToProps)(AccountSettings);
+export default connect(mapStateToProps)(AddEmployee);
