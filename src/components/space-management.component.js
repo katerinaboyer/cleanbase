@@ -16,8 +16,6 @@ const SpaceMgmt = (props) => {
   const [desks, setDesks] = useState([]);
   //setAccounts([]);
 
-  const [accounts, setAccounts] = useState([]);
-
   const history = useHistory();
   const user = useSelector(getUser);
 

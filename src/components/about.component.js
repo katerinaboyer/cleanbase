@@ -55,25 +55,25 @@ const About = (props) => {
               <Row style={{ paddingBottom: '20px', fontWeight: '500', fontSize: '18px' }}>
                 <Col xs={12} lg={4}>
                   <div>Katerina Boyer</div>
-                  <img src={kat} width="200"></img>
+                  <img src={kat} alt="Kat" width="200"></img>
                 </Col>
                 <Col xs={12} lg={4}>
                   <div>Ledet Awano</div>
-                  <img style={{ paddingTop: '50px' }} src={ledet} width="200"></img>
+                  <img style={{ paddingTop: '50px' }}  alt="Ledet" src={ledet} width="200"></img>
                 </Col>
                 <Col xs={12} lg={4}>
                   <div>Thomas Gough (right)</div>
-                  <img src={thomas} width="200"></img>
+                  <img src={thomas}  alt="Thomas" width="200"></img>
                 </Col>
               </Row>
               <Row style={{ paddingBottom: '20px', fontWeight: '500', fontSize: '18px' }}>
                 <Col xs={12} lg={6}>
                   <div>Cole Heath</div>
-                  <img src={cole} width="200"></img>
+                  <img src={cole} alt="Cole" width="200"></img>
                 </Col>
                 <Col xs={12} lg={6}>
                   <div>Jon Hillier</div>
-                  <img src={jon} width="200"></img>
+                  <img src={jon} alt="Jon" width="200"></img>
                 </Col>
               </Row>
             </Container>
