@@ -4,33 +4,38 @@ import * as emailjs from "emailjs-com";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-datepicker";
 import { Form, Button, Col, Row } from "react-bootstrap";
-import ToastMessage from './toast.component';
+import ToastMessage from "./toast.component";
 import { connect, useSelector } from "react-redux";
 import { getUser, getReservation } from "../store/selectors";
 
 const CreateReservation = (props) => {
   const user = useSelector(getUser);
   const reservation = useSelector(getReservation);
+  console.log("res", reservation);
   return <FillReservation currUser={user} reservation={reservation} />;
 };
 
 function calculateEndCleaning(cleaningStart) {
   var minsToAdd = 30;
   var time = cleaningStart;
-  var cleaningEnd = new Date(new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+  var cleaningEnd = new Date(
+    new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000
+  ).toLocaleTimeString("en-UK", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
   return cleaningEnd;
 }
 
 class FillReservation extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
     const currUserId = props.currUser._id;
     const currUserEmail = props.currUser._email;
-    // console.log(currUserId);
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
+    // this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
     this.onChangeDeskNumber = this.onChangeDeskNumber.bind(this);
     this.onChangeStartTime = this.onChangeStartTime.bind(this);
     this.onChangeEndTime = this.onChangeEndTime.bind(this);
@@ -41,13 +46,13 @@ class FillReservation extends Component {
     // should initialize attendees[0] with the current signed in user
     this.state = {
       title: "",
-      room_id: "",
-      room_number: "",
-      desk_id: "",
-      desk_number: "",
-      start_time: "",
-      end_time: "",
-      date: "",
+      room_id: props.reservation.room_id,
+      room_number: props.reservation.room_number,
+      desk_id: props.reservation.desk_id,
+      desk_number: props.reservation.desk_number,
+      start_time: props.reservation.start_time,
+      end_time: props.reservation.end_time,
+      date: props.reservation.date,
       attendees: [],
       rooms: [],
       desks: [],
@@ -55,6 +60,16 @@ class FillReservation extends Component {
       show_error: false,
       show_success: false,
     };
+
+    // const selectedReservation = {
+    //   room_id: props.reservation.room_id,
+    //   room_number: props.reservation.room_number,
+    //   desk_id: props.reservation.desk_id,
+    //   desk_number: props.reservation.desk_number,
+    //   start_time: props.reservation.start_time,
+    //   end_time: props.reservation.end_time,
+    //   date: props.reservation.date
+    // }
 
     this.state.attendees.map((value) => value.currUserId);
   }
@@ -83,23 +98,22 @@ class FillReservation extends Component {
     });
   }
 
-  onChangeRoomNumber(e) {
-    const roomNumber = e.target.selectedOptions[0].text;
-    const roomId = e.target.value;
-    console.log(roomNumber, roomId);
-    this.setState({
-      room_number: roomNumber,
-      room_id: roomId
-    });
-  }
-
+  // onChangeRoomNumber(e) {
+  //   const roomNumber = e.target.selectedOptions[0].text;
+  //   const roomId = e.target.value;
+  //   console.log(roomNumber, roomId);
+  //   this.setState({
+  //     room_number: roomNumber,
+  //     room_id: roomId
+  //   });
+  // }
 
   onChangeDeskNumber(e) {
     const deskNumber = e.target.selectedOptions[0].text;
     const deskId = e.target.value;
     this.setState({
       desk_number: deskNumber,
-      desk_id: deskId
+      desk_id: deskId,
     });
   }
 
@@ -138,57 +152,57 @@ class FillReservation extends Component {
       this.state.start_time &&
       this.state.end_time
     ) {
-    const newReservation = {
-      title: this.state.title,
-      room_id: this.state.room_id,
-      room_number: this.state.room_number,
-      desk_id: this.state.desk_id,
-      desk_number: this.state.desk_number,
-      start_time: this.state.start_time,
-      end_time: this.state.end_time,
-      date: this.state.date,
-      attendees: this.state.attendees,
-      checkedIn: false,
-    };
+      const newReservation = {
+        title: this.state.title,
+        room_id: this.state.room_id,
+        room_number: this.state.room_number,
+        desk_id: this.state.desk_id,
+        desk_number: this.state.desk_number,
+        start_time: this.state.start_time,
+        end_time: this.state.end_time,
+        date: this.state.date,
+        attendees: this.state.attendees,
+        checkedIn: false,
+      };
 
-    const cleaningReservation = {
-      title: "Cleaning",
-      room_id: this.state.room_id,
-      room_number: this.state.room_number,
-      desk_id: this.state.desk_id,
-      desk_number: this.state.desk_number,
-      start_time: this.state.end_time,
-      end_time: calculateEndCleaning(this.state.end_time),
-      date: this.state.date,
-      checkedIn: false,
-    };
+      const cleaningReservation = {
+        title: "Cleaning",
+        room_id: this.state.room_id,
+        room_number: this.state.room_number,
+        desk_id: this.state.desk_id,
+        desk_number: this.state.desk_number,
+        start_time: this.state.end_time,
+        end_time: calculateEndCleaning(this.state.end_time),
+        date: this.state.date,
+        checkedIn: false,
+      };
 
-    var data = {
-      title: this.state.title,
-      to_email: "turtlesandpie@gmail.com",
-      room_number: this.state.room_number,
-      start_time: this.state.start_time,
-      end_time: this.state.end_time,
-      date: this.state.date,
-    };
-    //emails a nice confirmation to the user
-    emailjs
-      .send(
-        "service_lsurk9p",
-        "template_evr3ddw",
-        data,
-        "user_YLt0CRcKLOhVbiTOfPMjp"
-      )
-      .then(
-        function (response) {
-          console.log(response.status, response.text);
-        },
-        function (err) {
-          console.log(err);
-        }
-      );
+      var data = {
+        title: this.state.title,
+        to_email: "turtlesandpie@gmail.com",
+        room_number: this.state.room_number,
+        start_time: this.state.start_time,
+        end_time: this.state.end_time,
+        date: this.state.date,
+      };
+      //emails a nice confirmation to the user
+      emailjs
+        .send(
+          "service_lsurk9p",
+          "template_evr3ddw",
+          data,
+          "user_YLt0CRcKLOhVbiTOfPMjp"
+        )
+        .then(
+          function (response) {
+            console.log(response.status, response.text);
+          },
+          function (err) {
+            console.log(err);
+          }
+        );
 
-    console.log("new Rservation", newReservation);
+      console.log("new Rservation", newReservation);
 
       var data = {
         title: this.state.title,
@@ -226,18 +240,22 @@ class FillReservation extends Component {
         .then((res) => console.log(res.data));
 
       this.setState({
-        show_success: true
+        show_success: true,
       });
-      setTimeout(() => {this.setState({
-        show_success: false
-      })}, 5000);
+      setTimeout(() => {
+        this.setState({
+          show_success: false,
+        });
+      }, 5000);
     } else {
       this.setState({
-        show_error: true
+        show_error: true,
       });
-      setTimeout(() => {this.setState({
-        show_error: false
-      })}, 5000);
+      setTimeout(() => {
+        this.setState({
+          show_error: false,
+        });
+      }, 5000);
     }
   }
 
@@ -273,19 +291,14 @@ class FillReservation extends Component {
               Room Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control as="select" onChange={this.onChangeRoomNumber} required>
-                <option hidden disabled selected value> -- select an option -- </option>
-                {this.state.rooms.map((room) => {
-                  return (
-                    <option
-                      key={room._id}
-                      value={room._id}
-                    >
-                      {room.room_number}
-                    </option>
-                  );
-                })}
-              </Form.Control>
+              <div>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={this.state.room_number}
+                  readonly
+                />
+              </div>
             </Col>
           </Form.Group>
 
@@ -294,16 +307,14 @@ class FillReservation extends Component {
               Desk Number
             </Form.Label>
             <Col sm={9}>
-              <Form.Control as="select" onChange={this.onChangeDeskNumber} required>
-                <option hidden disabled selected value> -- select an option -- </option>
-                {this.state.desks.map((desk) => {
-                  return (
-                    <option key={desk._id} value={desk._id} data={desk.desk_number}>
-                      {desk.desk_number}
-                    </option>
-                  );
-                })}
-              </Form.Control>
+              <div>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={this.state.desk_number}
+                  readonly
+                />
+              </div>
             </Col>
           </Form.Group>
 
@@ -312,12 +323,14 @@ class FillReservation extends Component {
               Date
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                type="date"
-                placeholder="ex: 11/2/2020"
-                onChange={this.onChangeDate}
-                required
-              />
+              <div>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={this.state.date}
+                  readonly
+                />
+              </div>
             </Col>
           </Form.Group>
 
@@ -326,12 +339,14 @@ class FillReservation extends Component {
               Start Time
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                type="time"
-                placeholder="ex: 8:30 AM"
-                onChange={this.onChangeStartTime}
-                required
-              />
+              <div>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={this.state.start_time}
+                  readonly
+                />
+              </div>
             </Col>
           </Form.Group>
 
@@ -340,12 +355,15 @@ class FillReservation extends Component {
               End Time
             </Form.Label>
             <Col sm={9}>
-              <Form.Control
-                type="time"
-                placeholder="ex: 9:30 AM"
-                onChange={this.onChangeEndTime}
-                required
-              />
+              <div>
+                <input
+                  type="text"
+                  readonly
+                  class="form-control"
+                  id="staticEmail"
+                  value={this.state.end_time}
+                />
+              </div>
             </Col>
           </Form.Group>
 
@@ -360,7 +378,10 @@ class FillReservation extends Component {
                 onChange={this.onChangeAttendees}
                 required
               >
-                <option hidden disabled selected value> -- select an option -- </option>
+                <option hidden disabled selected value>
+                  {" "}
+                  -- select an option --{" "}
+                </option>
                 {this.state.all_users.map((user) => {
                   return (
                     <option key={user._id} value={user._id}>
@@ -400,8 +421,15 @@ class FillReservation extends Component {
             Create Reservation
           </button>
         </Form>
-        <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the reservation."} />
-        <ToastMessage show={this.state.show_success} text={"This reservation has been created."} />
+        <ToastMessage
+          show={this.state.show_error}
+          error={true}
+          text={"Opps, it looks like you didn't fill out the reservation."}
+        />
+        <ToastMessage
+          show={this.state.show_success}
+          text={"This reservation has been created."}
+        />
       </div>
     );
   }

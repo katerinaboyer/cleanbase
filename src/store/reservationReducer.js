@@ -2,8 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialReservationState = {
   createdAt: "",
-  desk_number: "",
   room_id: "",
+  room_number: "",
+  room_type: "",
+  desk_id: "",
+  desk_number: "",
+  start_time: "",
+  end_time: "",
+  date: "",
   updatedAt: "",
   __v: 0,
   _id: "",
