@@ -11,7 +11,7 @@ const CreateReport = (props) => {
   return <CreateSelfIllnessReport currUser={user} />;
 };
 
-class CreateSelfIllnessReport extends Component {
+export class CreateSelfIllnessReport extends Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +28,7 @@ class CreateSelfIllnessReport extends Component {
       name: props.currUser.name,
       userID: props.currUser._id,
       phone: '',
-      date: '',
+      date: Date.now(),
       report: '',
       emails: [],
       attendIds:[],
@@ -45,11 +45,12 @@ class CreateSelfIllnessReport extends Component {
       .then(([resResponse]) => {
         var date = new Date();
         var dateAdjusted = new Date(Date.now() - 12096e5);
-        console.log(dateAdjusted);
+        console.log(this.state.userID);
+        console.log(resResponse);
         for(var j = 0; j < resResponse.data.length; j++){
           date = new Date(resResponse.data[j].date) //date from the current reservation
           if(date.getDate() >= dateAdjusted.getDate()){
-            //console.log(resResponse.data[j]);
+            
             for(var i = 0; i < resResponse.data[j].attendees.length; i++){
               axios
               .all([
@@ -57,7 +58,7 @@ class CreateSelfIllnessReport extends Component {
                 axios.get('http://localhost:5000/users/id/' + resResponse.data[j].attendees[i])
               ])
               .then(([userResponse]) => {
-
+                console.log(this.state.userID);
               if(userResponse.data.email != null){
                 var test = this.state.emails.concat(userResponse.data.email);
                 this.setState({
