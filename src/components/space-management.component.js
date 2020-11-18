@@ -106,17 +106,17 @@ useEffect(() => {
               { desks.map(info =>
                   <div style={{paddingBottom:"20px"}}>
                       <Card style={{borderRadius:"15px"}}>
-                              <Row>
-                                  <Col sm={3}>
-                                      <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor {getDeskFloorNumbers(info.room_id)}</Card.Title>
-                                  </Col>
-                                  <Col style={{textAlign: "center"}}>
-                                      <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk {info.desk_number}</Card.Text>
-                                  </Col>
-                                  <Col sm={3} style={{}}>
-                                      <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}} onClick={() => test(info)}>Edit</button>
-                                  </Col>
-                              </Row>
+                            <Row>
+                                <Col sm={3}>
+                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor {getDeskFloorNumbers(info.room_id)}</Card.Title>
+                                </Col>
+                                <Col style={{textAlign: "center"}}>
+                                    <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk {info.desk_number}</Card.Text>
+                                </Col>
+                                <Col sm={3} style={{}}>
+                                    <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}} onClick={() => test(info)}>Edit</button>
+                                </Col>
+                            </Row>
                       </Card>
                   </div>
                   )
@@ -130,24 +130,24 @@ useEffect(() => {
             <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>{rooms.length}</button></Col>
           </Row>
           <div style={{}}>
-              { rooms.map(info =>
-                  <div style={{paddingBottom:"20px"}}>
-                      <Card style={{borderRadius:"15px"}}>
-                              <Row>
-                                  <Col sm={3}>
-                                      <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor {getFloorNumbers(info.floor_id)}</Card.Title>
-                                  </Col>
-                                  <Col style={{textAlign: "center"}}>
-                                      <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room: {info.room_number}</Card.Text>
-                                  </Col>
-                                  <Col sm={3} style={{}}>
-                                      <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => test(info)}>Remove</button>
-                                  </Col>
-                              </Row>
-                      </Card>
-                  </div>
-                  )
-              }
+            { rooms.map(info =>
+                <div style={{paddingBottom:"20px"}}>
+                    <Card style={{borderRadius:"15px"}}>
+                        <Row>
+                            <Col sm={3}>
+                                <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor {getFloorNumbers(info.floor_id)}</Card.Title>
+                            </Col>
+                            <Col style={{textAlign: "center"}}>
+                                <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room: {info.room_number}</Card.Text>
+                            </Col>
+                            <Col sm={3} style={{}}>
+                                <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => test(info)}>Remove</button>
+                            </Col>
+                        </Row>
+                    </Card>
+                </div>
+                )
+            }
           </div>
         </Col>
         </Row>

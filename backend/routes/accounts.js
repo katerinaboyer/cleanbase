@@ -7,8 +7,8 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/office/:id').get((req, res) => {
-  Account.find({office_manager: req.params.id})
+router.route('/id/:id').get((req, res) => {
+  Account.find({_id: req.params.id})
     .then(reservation => res.json(reservation))
     .catch(err => res.status(400).json('Error: ' + err));
 });

@@ -4,13 +4,15 @@ import axios from "axios";
 import './../styles.css'
 import { Row, Col, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
+import { getUser } from "../store/selectors";
 
 
 const AccountMgmt = (props) => {
 
   const [accounts, setAccounts] = useState([]);
+  const user = useSelector(getUser);
 
   const history = useHistory();
 
@@ -20,40 +22,38 @@ const AccountMgmt = (props) => {
   const address = "Business Name";
 
   const removeEmployee = (info) =>{
-      /*
-        axios.get('http://localhost:5000/users/removeComp/' + info._id)
-            .then(response => {
-                //console.log(response.data.length);
-                //console.log(response.data);
-                if (response.data.length > 0) {
-                    setAccounts(response.data);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })   
-            */ 
-           /*
-        axios.get('http://localhost:5000/account/removeEmployee/' + info._id)
-            .then(response => {
-                //console.log(response.data.length);
-                //console.log(response.data);
-                if (response.data.length > 0) {
-                    setAccounts(response.data);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })   
-            */ 
+      const update = {
+          business_account_id: ""
+      }
+    axios.get('http://localhost:5000/users/removeComp/' + info._id,update)
+        .then(response => {
+            //console.log(response.data.length);
+            //console.log(response.data);
+            if (response.data.length > 0) {
+                setAccounts(response.data);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })   
+    // axios.get('http://localhost:5000/account/removeEmployee/' + info._id)
+    //     .then(response => {
+    //         //console.log(response.data.length);
+    //         //console.log(response.data);
+    //         if (response.data.length > 0) {
+    //             setAccounts(response.data);
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     })   
     }
 
   useEffect(() => {
       async function fetchData() {
-          axios.get('http://localhost:5000/users/allEmployees')
+          console.log(user);
+          axios.get('http://localhost:5000/user/businessAcct/' + user.business_account_id)
           .then(response => {
-              //console.log(response.data.length);
-              //console.log(response.data);
               if (response.data.length > 0) {
                   setAccounts(response.data);
               }

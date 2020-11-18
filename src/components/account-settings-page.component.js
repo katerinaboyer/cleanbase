@@ -12,7 +12,8 @@ import "./../styles.css"
 
 const AccountSettings = (props) => {
 
-    const [companyInfo, setCompanyInfo] = useState("HI");
+    const [companyInfo, setCompanyInfo] = useState();
+    const [value, setValue] = useState(0)
 
     const history = useHistory();
     const user = useSelector(getUser);
@@ -29,7 +30,13 @@ const AccountSettings = (props) => {
         user.phone = e.target.value;
     }
 
-    useEffect(()=> console.log("PLS"),[companyInfo]);
+    useEffect(()=> {
+        axios.get("http://localhost:5000/accounts/id/" + user.business_account_id)
+        .then((response) => {
+            setCompanyInfo(response.data[0])
+            console.log(response.data[0])
+        })
+    },[value]);
 
     const onUpdateUser = (e) => {
         
@@ -50,10 +57,10 @@ const AccountSettings = (props) => {
             _id: user._id,
         }
         console.log(newUser);
-        setCompanyInfo("NOW");
 
         //props.storeLogin(newUser);
-        history.push("/account-settings")
+        //history.push("/account-settings")
+        setValue(updateUser.length)
         
     }
     
