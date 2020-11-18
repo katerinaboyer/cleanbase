@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import {Form, Col, Row} from 'react-bootstrap';
 import { getUser } from "../store/selectors";
+import ToastMessage from './toast.component';
 
 const CreateRoom = (props) => {
   const [room_number, setRoomNumber] = useState();
@@ -11,6 +12,8 @@ const CreateRoom = (props) => {
   const [capacity, setCapacity] = useState();
   const [room_type, setRoomType] = useState();
   const [floors, setFloors] = useState([]);
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   var floorID = "";
 
@@ -69,38 +72,50 @@ const CreateRoom = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const newRoom = {
-      room_number: room_number,
-      floor_id: floorID,
-      capacity: capacity,
-      room_type: room_type,
-    };
+    if (
+      room_number &&
+      floorID &&
+      capacity &&
+      room_type
+    ) {
+      const newRoom = {
+        room_number: room_number,
+        floor_id: floorID,
+        capacity: capacity,
+        room_type: room_type,
+      };
 
-    var tempRooms = [];
+      var tempRooms = [];
 
-    for(var i = 0; i < floors.length; i++){
-      if(floors[i]._id === floor_id._id){
-        tempRooms = floors[i].room_list;
+      for(var i = 0; i < floors.length; i++){
+        if(floors[i]._id === floor_id._id){
+          tempRooms = floors[i].room_list;
+        }
       }
-    }
 
-    console.log(tempRooms);
+      console.log(tempRooms);
 
-    axios.post("http://localhost:5000/rooms/add", newRoom)
-      .then((res) => {
-        console.log(res.data);
-        axios.get('http://localhost:5000/rooms/')
+      axios.post("http://localhost:5000/rooms/add", newRoom)
         .then((res) => {
-          tempRooms.push(res.data[res.data.length-1]._id);
-          const updateFloor = {
-            room_list: tempRooms
-          };
-          console.log(updateFloor);
-          console.log(floorID);
-          axios.post('http://localhost:5000/floors/update/' + floorID, updateFloor)
-          .then((res) => console.log(res.data));
+          console.log(res.data);
+          axios.get('http://localhost:5000/rooms/')
+          .then((res) => {
+            tempRooms.push(res.data[res.data.length-1]._id);
+            const updateFloor = {
+              room_list: tempRooms
+            };
+            console.log(updateFloor);
+            console.log(floorID);
+            axios.post('http://localhost:5000/floors/update/' + floorID, updateFloor)
+            .then((res) => console.log(res.data));
+          });
         });
-      });
+      setShowSuccess(true);
+      setTimeout(() => {setShowSuccess(false)}, 5000);
+    } else {
+      setShowError(true);
+      setTimeout(() => {setShowError(false)}, 5000);
+    }
   }
 
   return (
@@ -110,14 +125,14 @@ const CreateRoom = (props) => {
           <Form.Group as={Row} controlId="formAdmin">
               <Form.Label column sm={3}>Room Number</Form.Label>
               <Col sm={9}>
-                  <Form.Control type="name" placeholder="12A" onChange={onChangeRoomNumber}/>
+                  <Form.Control type="name" placeholder="Enter room number" onChange={onChangeRoomNumber}/>
               </Col>
           </Form.Group>
 
           <Form.Group as={Row} controlId="formAdmin">
               <Form.Label column sm={3}>Capacity</Form.Label>
               <Col sm={9}>
-                  <Form.Control type="name" placeholder="12" onChange={onChangeCapacity}/>
+                  <Form.Control type="name" placeholder="Enter capacity" onChange={onChangeCapacity}/>
               </Col>
           </Form.Group>
 
@@ -125,6 +140,7 @@ const CreateRoom = (props) => {
               <Form.Label column sm={3}>Room Type</Form.Label>
               <Col sm={9}>
                   <Form.Control as="select" onChange={onChangeRoomType}>
+                    <option hidden disabled selected value> -- select an option -- </option>
                     <option value="desk_space">Desk Space</option>
                     <option value="office">Office</option>
                     <option value="conference">Conference</option>
@@ -136,13 +152,14 @@ const CreateRoom = (props) => {
               <Form.Label column sm={3}>Floor Number</Form.Label>
               <Col sm={9}>
                   <Form.Control as="select" onChange={onChangeFloorId}>
-                  {floors.map((floor) => {
-                    return (
-                      <option key={floor._id} value={floor._id}>
-                        {floor.floor_number}
-                      </option>
-                    );
-                  })}
+                    <option hidden disabled selected value> -- select an option -- </option>
+                    {floors.map((floor) => {
+                      return (
+                        <option key={floor._id} value={floor._id}>
+                          {floor.floor_number}
+                        </option>
+                      );
+                    })}
                   </Form.Control>
               </Col>
           </Form.Group>
@@ -151,8 +168,10 @@ const CreateRoom = (props) => {
               Create Room
           </button>
       </Form>
+      <ToastMessage show={showError} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+      <ToastMessage show={showSuccess} text={`This room has been created.`} />
     </div>
-   
+
   );
 
 }
