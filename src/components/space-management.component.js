@@ -11,19 +11,13 @@ import { getUser } from "../store/selectors";
 
 const SpaceMgmt = (props) => {
 
-<<<<<<< HEAD
   //const [accounts, setAccounts] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [desks, setDesks] = useState([]);
   //setAccounts([]);
-
-=======
-  const [accounts, setAccounts] = useState([]);
   const user = useSelector(getUser);
->>>>>>> dev
 
   const history = useHistory();
-  const user = useSelector(getUser);
 
   const addDesk = (e) =>{
       history.push("/desk");
@@ -51,7 +45,8 @@ var tempDesks= [];
 
   useEffect(() => {
       async function fetchData() {
-          axios.get('http://localhost:5000/accounts/officemanager/' + user._id)
+          console.log(user._id);
+          axios.get('http://localhost:5000/accounts/office/' + user._id)
           .then(response => {
               console.log(response.data[0].floors_assigned);
               console.log(response.data[0].business_name);

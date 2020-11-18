@@ -7,24 +7,18 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/office/:id').get((req, res) => {
+  Account.find({office_manager: req.params.id})
+    .then(reservation => res.json(reservation))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/update/:id').post((req, res) => {
   var updateObject = req.body;
   console.log(req.body)
   Account.findByIdAndUpdate(req.params.id, {updateObject})
   .then(account => res.json(account))
   .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/officemanager/:id').get((req, res) => {
-<<<<<<< HEAD
-  Account.find({ office_manager: {$eq: req.params.id } })
-  .then(user => res.json(user))
-  .catch(err => res.status(400).json('Error: ' + err));
-=======
-  Account.find({office_manager: {$eq: req.params.id}})
-    .then(accounts => res.json(accounts))
-    .catch(err => res.status(400).json('Error: ' + err));
->>>>>>> dev
 });
 
 router.route('/add').post((req, res) => {
