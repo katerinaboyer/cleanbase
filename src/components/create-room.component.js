@@ -22,7 +22,7 @@ const CreateRoom = (props) => {
     var temp = [];
 
     async function fetchData() {
-        axios.get("http://localhost:5000/accounts/officemanager/" + user._id)
+        axios.get("http://localhost:5000/accounts/office/" + user._id)
       .then((response) => {
           for(var j = 0; j < response.data[0].floors_assigned.length; j++){
             axios.get("http://localhost:5000/floors/id/" + response.data[0].floors_assigned[j])
