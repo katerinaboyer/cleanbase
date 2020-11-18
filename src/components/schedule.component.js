@@ -1,13 +1,9 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import TimePicker from "react-time-picker";
-import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setReservation } from "../store/reservationReducer";
@@ -53,31 +49,45 @@ const Schedule = (props) => {
     fetchData();
   }, [isDesk, isOffice, isConference]);
 
-  const handleClick = (desk) => {
-    props.setReservation(desk);
+  const handleDeskClick = (desk) => {
+    console.log(desk)
+    const newReservation = {
+      start_time: start,
+      end_time: end,
+      date: date,
+      desk_id: desk._id,
+      desk_number: desk.desk_number,
+      room_number: desk.room_number,
+      room_id: desk.room_id
+    }
+    props.setReservation(newReservation);
     history.push("/reservation");
   };
 
-  function handleDayClick(date) {
-    var dateStr = String(date);
-    var formattedDate = dateStr.slice(0, 15);
-    console.log(formattedDate);
-    setDate(formattedDate);
+  const handleRoomClick = (room) => {
+    console.log(room)
+    const newReservation = {
+      start_time: start,
+      end_time: end,
+      date: date,
+      room_id: room._id,
+      room_number: room.room_number,
+      room_type: room.room_type,
+      desk_number: 1
+    }
+    props.setReservation(newReservation);
+    history.push("/reservation");
   }
 
-  function onSubmitFilter() {
-    // get reservations on the same day --> get array of desks and rooms used --> remove the desks and rooms from display
-    // if radio box checked display only rooms same type
-  }
-
-  const today = new Date();
+  
 
   return (
     <div>
       <Container fluid>
         <Row>
           <Col style={{ paddingLeft: "60px" }} s={12}>
-            <Form onSubmit={onSubmitFilter}>
+            <h4>Filters</h4>
+            <Form>
               <Form.Group as={Row} controlId="formDate">
                 <Form.Label column sm={3} style={{ color: "white" }}>
                   Date
@@ -129,6 +139,7 @@ const Schedule = (props) => {
           </Col>
 
           <Col s={12}>
+            <h4>Available</h4>
             {!isDesk && !isOffice && !isConference && (
               <Container>
                 {desks.map((desk, index) => (
@@ -149,7 +160,7 @@ const Schedule = (props) => {
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(desk);
+                                handleDeskClick(desk);
                               }}
                               size="sm"
                               style={{ float: "right" }}
@@ -180,7 +191,7 @@ const Schedule = (props) => {
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(room);
+                                handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
@@ -211,7 +222,7 @@ const Schedule = (props) => {
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(room);
+                                handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
@@ -242,10 +253,11 @@ const Schedule = (props) => {
                       <Container>
                         <Row>
                           <Col>Room {desk.room_number}</Col>
+                          <Col>Capacity 1</Col>
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(desk);
+                                handleDeskClick(desk);
                               }}
                               size="sm"
                               style={{ float: "right" }}
@@ -280,7 +292,7 @@ const Schedule = (props) => {
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(room);
+                                handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
@@ -315,7 +327,7 @@ const Schedule = (props) => {
                           <Col>
                             <Button
                               onClick={() => {
-                                handleClick(room);
+                                handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
