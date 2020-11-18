@@ -13,6 +13,12 @@ router.route('/room_type/:room_type').get((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/floorId/:id').get((req, res) => {
+  Room.find({ floor_id: { $eq: req.params.id }})
+  .then(rooms => res.json(rooms))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/id/:id').get((req, res) => {
   Room.findById(req.params.id)
     .then(rooms => res.json(rooms))

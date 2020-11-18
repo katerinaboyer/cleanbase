@@ -109,16 +109,6 @@ class RoomForm extends Component {
       axios.post("http://localhost:5000/rooms/add", newRoom)
         .then((res) => {
           console.log(res.data);
-          axios.get('http://localhost:5000/rooms/')
-          .then((res) => {
-            tempRooms.push(res.data[res.data.length-1]._id);
-            const updateFloor = {
-              room_list: tempRooms
-            };
-            console.log(updateFloor);
-            axios.post('http://localhost:5000/floors/update/' + this.floor_id, updateFloor)
-            .then((res) => console.log(res.data));
-          });
         });
 
         this.setState({

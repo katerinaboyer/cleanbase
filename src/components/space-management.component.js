@@ -58,52 +58,41 @@ const getDeskFloorNumbers = (room) => {
 var tempRooms = [];
 var tempDesks= [];
 
-  useEffect(() => {
-      const fetchData = async () => {
-          await axios.get('http://localhost:5000/accounts/office/' + user._id)
-          .then(response => {
-              //console.log(response.data[0].floors_assigned);
-              for(var i = 0; i < response.data[0].floors_assigned.length; i++){
-                axios.get('http://localhost:5000/floors/id/' + response.data[0].floors_assigned[i])
-                .then(response => {
-                    console.log(response.data);
-                    for(var i = 0; i < response.data.room_list.length; i++){
-                        axios.get('http://localhost:5000/rooms/id/' + response.data.room_list[i])
-                        .then(response => {
-                            console.log(response.data);
-                            tempRooms.push(response.data);
-                            axios.get('http://localhost:5000/desks/byroom/' + response.data._id)
-                            .then(response => {
-                                console.log(response.data);
-                                tempDesks.push(response.data);
-                                
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            })
-                            
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        })
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-              }
-              setRooms(tempRooms);
-              setDesks(tempDesks);
-          })
-          .catch((error) => {
-              console.log(error);
-          })
+useEffect(() => {
+    async function fetchData() {
+        const floorsAssigned = await axios.get('http://localhost:5000/accounts/office/' + user._id);
+        console.log(floorsAssigned.data[0].floors_assigned);
+        for(var i = 0; i < floorsAssigned.data[0].floors_assigned.length; i++){
+            console.log(floorsAssigned.data[0].floors_assigned[i]);
+            const rooms = await axios.get('http://localhost:5000/rooms/floorId/' + floorsAssigned.data[0].floors_assigned[i])
+            for(var j = 0; j < rooms.data.length; j++){
+                tempRooms.push(rooms.data[j])
+            }
+        }
+        for(var i = 0; i < tempRooms.length; i++){
+            console.log(tempRooms[i]._id)
+            const desks = await axios.get('http://localhost:5000/desks/byroom/' + tempRooms[i]._id);
+            console.log(desks.data)
+            for(var j = 0; j < desks.data.length; j++){
+                console.log(desks.data[j])
+                tempDesks.push(desks.data[j]);
+            }
+        }
+        console.log(tempDesks);
+        console.log(tempRooms);
+        //setDesks(await tempDesks.map((desk) => desk));
+        //setRooms(await tempRooms.map((room) => room));
+    }
 
-      }
-      fetchData();
-      console.log(rooms);
-      console.log(desks);
-  },[value]);
+    fetchData().then(
+        setDesks(tempDesks.map((desk) => desk)),
+        setRooms(tempRooms.map((room) => room)),
+        console.log(desks),
+        console.log(rooms),
+        console.log(tempDesks),
+        console.log(tempRooms)
+    );
+  },[]);
 
   return (
     <div style={{padding:"30px 8%"}}>
