@@ -13,6 +13,7 @@ export default class CreateDesk extends Component {
 
         this.state = {
             desk_number: '',
+            room_number: '',
             room_id: '',
             rooms: [],
             show_error: false,
@@ -50,15 +51,16 @@ export default class CreateDesk extends Component {
   }
 
   onChangeDeskNumber(e) {
-      console.log("e target", e.target.value);
     this.setState({
       desk_number: e.target.value,
     });
   }
 
   onChangeRoomId(e) {
+    const roomNumber = e.target.selectedOptions[0].text;
       this.setState({
-          room_id: e.target.value
+          room_id: e.target.value,
+          room_number: roomNumber
       });
   }
 
@@ -71,6 +73,7 @@ export default class CreateDesk extends Component {
     ) {
       const newDesk = {
         desk_number: this.state.desk_number,
+        room_number: this.state.room_number,
         room_id: this.state.room_id,
       };
 
