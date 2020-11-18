@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Floor = require('../models/Floor.model');
 
 router.route('/').get((req, res) => {
-  Floor.find()
+  Floor.find().sort({floor_number: 1})
     .then(floors => res.json(floors))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -15,9 +15,7 @@ router.route('/id/:id').get((req, res) => {
 });
 
 router.route('/update/:id').post((req, res) => {
-  var updateObject = req.body;
-  console.log(req.body)
-  Floor.findByIdAndUpdate(req.params.id, {updateObject})
+  Floor.findByIdAndUpdate(req.params.id, req.body)
   .then(floor => res.json(floor))
   .catch(err => res.status(400).json('Error: ' + err));
 });

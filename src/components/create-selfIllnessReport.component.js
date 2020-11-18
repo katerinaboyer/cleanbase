@@ -5,13 +5,14 @@ import DatePicker from "react-datepicker";
 import { connect, useSelector } from "react-redux";
 import { getUser } from "../store/selectors";
 import ToastMessage from './toast.component';
+import {Form, Col, Row} from 'react-bootstrap';
 
 const CreateReport = (props) => {
   const user = useSelector(getUser);
   return <CreateSelfIllnessReport currUser={user} />;
 };
 
-class CreateSelfIllnessReport extends Component {
+export class CreateSelfIllnessReport extends Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +29,7 @@ class CreateSelfIllnessReport extends Component {
       name: props.currUser.name,
       userID: props.currUser._id,
       phone: '',
-      date: '',
+      date: Date.now(),
       report: '',
       emails: [],
       attendIds:[],
@@ -45,11 +46,12 @@ class CreateSelfIllnessReport extends Component {
       .then(([resResponse]) => {
         var date = new Date();
         var dateAdjusted = new Date(Date.now() - 12096e5);
-        console.log(dateAdjusted);
+        console.log(this.state.userID);
+        console.log(resResponse);
         for(var j = 0; j < resResponse.data.length; j++){
           date = new Date(resResponse.data[j].date) //date from the current reservation
           if(date.getDate() >= dateAdjusted.getDate()){
-            //console.log(resResponse.data[j]);
+
             for(var i = 0; i < resResponse.data[j].attendees.length; i++){
               axios
               .all([
@@ -57,7 +59,7 @@ class CreateSelfIllnessReport extends Component {
                 axios.get('http://localhost:5000/users/id/' + resResponse.data[j].attendees[i])
               ])
               .then(([userResponse]) => {
-
+                console.log(this.state.userID);
               if(userResponse.data.email != null){
                 var test = this.state.emails.concat(userResponse.data.email);
                 this.setState({
@@ -192,60 +194,69 @@ class CreateSelfIllnessReport extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginLeft:"10.5rem", display:"block", color:"white", width:"45%"}}>
         <h3>Create Self Illness Report</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Email: </label>
-            <input  type="text"
+        <Form onSubmit={this.onSubmit}>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Email: </Form.Label>
+            <Col sm={9}>
+            <Form.Control  type="text"
                 required
                 className="form-control"
                 value={this.state.email}
                 onChange={this.onChangeEmail}
                 />
-          </div>
-          <div className="form-group">
-            <label>Name: </label>
-            <input  type="text"
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Name: </Form.Label>
+            <Col sm={9}>
+            <Form.Control  type="text"
                 required
                 className="form-control"
                 value={this.state.name}
                 onChange={this.onChangeName}
                 />
-          </div>
-          <div className="form-group">
-            <label>Phone: </label>
-            <input  type="text"
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Phone: </Form.Label>
+            <Col sm={9}>
+            <Form.Control  type="text"
                 required
                 className="form-control"
                 value={this.state.phone}
                 onChange={this.onChangePhone}
                 />
-          </div>
-          <div className="form-group">
-            <label>Date: </label>
-            <input  type="date"
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Date: </Form.Label>
+            <Col sm={9}>
+            <Form.Control  type="date"
 
                 className="form-control"
                 value={this.state.date}
                 onChange={this.onChangeDate}
                 />
-          </div>
-          <div className="form-group">
-            <label>Report: </label>
-            <input  type="text"
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Report: </Form.Label>
+            <Col sm={9}>
+            <Form.Control  type="text"
                 required
                 className="form-control"
                 value={this.state.report}
                 onChange={this.onChangeReport}
                 />
-          </div>
+            </Col>
+          </Form.Group>
 
-
-          <div className="form-group">
-            <input type="submit" value="Create Self Illness Report" className="button-submit" />
-          </div>
-        </form>
+          <button className="button-submit" type="submit">
+              Create Self-Illness Report
+          </button>
+        </Form>
         <ToastMessage show={this.state.show_error} text={"Opps, it looks like you didn't fill out the form."} />
       </div>
     )
