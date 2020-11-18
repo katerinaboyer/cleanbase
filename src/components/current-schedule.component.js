@@ -95,13 +95,13 @@ const CurrentSchedule = (props) => {
                         <h4 style={{paddingLeft:"20px", paddingRight:"0px"}}>Upcoming Schedule</h4>
                     </Col>
                     <Col >
-                        {location.pathname !== "/schedule" && <button className="button-createreservation" onClick={newReservation}>Create Reservation</button> }
+                        {location.pathname === "/dashboard"  && <button className="button-createreservation" onClick={newReservation}>Create Reservation</button> }
                     </Col>
                 </Row>
                 <div style={{}}>
                     { schedule.map(info =>
                         <div>
-                            { formatDate(info.date) >= currDate && 
+                            {/* { formatDate(info.date) >= currDate &&  */}
                             <Card style={{borderRadius:"15px", marginBottom: "10px"}}>
                                     <Row>
                                         {info.title.length > 0 && <h5 style={{padding:"10px 0px 0px 30px"}}>{formatDate(info.date) + " - " + info.title}</h5>}
@@ -133,7 +133,7 @@ const CurrentSchedule = (props) => {
                                     </Row>
                                     }
                             </Card>
-                        }
+                            {/* } */}
                         </div>
                     )
                     }
