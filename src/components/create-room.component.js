@@ -9,6 +9,7 @@ import ToastMessage from './toast.component';
 const CreateRoom = (props) => {
   const [room_number, setRoomNumber] = useState();
   const [floor_id, setFloorId] = useState();
+  const [floor_number, setFloorNumber] = useState();
   const [capacity, setCapacity] = useState();
   const [room_type, setRoomType] = useState();
   const [floors, setFloors] = useState([]);
@@ -55,9 +56,9 @@ const CreateRoom = (props) => {
 
   const onChangeFloorId = (e) => {
     setFloorId(e.target.value)
-    floorID = e.target.value;
-    console.log(e.target.value);
-    console.log(floorID);
+    const floorNumber = e.target.selectedOptions[0].text;
+    console.log(" text", e.target.selectedOptions[0].text);
+    setFloorNumber(floorNumber)
   }
 
   const onChangeCapacity= (e) => {
@@ -73,13 +74,13 @@ const CreateRoom = (props) => {
 
     if (
       room_number &&
-      floorID &&
       capacity &&
       room_type
     ) {
       const newRoom = {
         room_number: room_number,
         floor_id: floorID,
+        floor_number: floor_number,
         capacity: capacity,
         room_type: room_type,
       };
