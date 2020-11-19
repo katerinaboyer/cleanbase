@@ -31,7 +31,7 @@ router.route('/update/attendees/:id').post((req, res) => {
 })
 
 router.route('/cleaning/unclaimed').get((req, res) => {
-  Reservation.find({ title: "Cleaning", attendees: {$size: 0}})
+  Reservation.find({ title: "Cleaning", attendees: {$size: 0}}).sort({date: 1})
     .then(reservation => res.json(reservation))
     .catch(err => res.status(400).json('Error: ' + err));
 });

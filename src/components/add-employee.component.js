@@ -3,18 +3,20 @@ import axios from "axios";
 import {Form, Col, Row} from 'react-bootstrap';
 import { useHistory, useLocation } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
+import { getUser } from "../store/selectors";
 import './../styles.css';
 
 const AddEmployee = (props) => {
 
     const [user, setUsers] = useState([]);
     const [id, setID] = useState();
+    const loggeduser = useSelector(getUser);
 
     const history = useHistory();
 
     const onSubmit = () => {
       const update = {
-        business_account_id: "test",
+        business_account_id: loggeduser.business_account_id,
       }
       axios.post("http://localhost:5000/users/addbusiness/" + id, update)
       .then(res => console.log(res.data));

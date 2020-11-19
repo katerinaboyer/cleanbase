@@ -1,22 +1,19 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import CurrentSchedule from "./current-schedule.component";
 import Card from "react-bootstrap/Card";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-// import DayPicker from "react-day-picker";
-// import "react-day-picker/lib/style.css";
-import TimePicker from "react-time-picker";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setReservation } from "../store/reservationReducer";
 import "./../styles.css";
 
 const Schedule = (props) => {
   const [desks, setDesks] = useState([]);
-  const [rooms, setRooms] = useState([]);
+  const [officeRooms, setOfficeRooms] = useState([]);
+  const [conferenceRooms, setConferenceRooms] = useState([]);
+
   const [date, setDate] = useState(new Date());
   const [start, setStart] = useState("08:00");
   const [end, setEnd] = useState("17:00");
@@ -28,185 +25,327 @@ const Schedule = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-        axios.all([
-          axios.get('http://localhost:5000/rooms'),
-          axios.get('http://localhost:5000/desks')
+      axios
+        .all([
+          axios.get("http://localhost:5000/rooms/room_type/office"),
+          axios.get("http://localhost:5000/rooms/room_type/conference"),
+          axios.get("http://localhost:5000/desks"),
         ])
-        .then(([roomResponse, deskResponse]) => {
-            if (roomResponse.data.length > 0) {
-                setRooms(roomResponse.data);
-            }
-            if (deskResponse.data.length >0 ) {
-              setDesks(deskResponse.data);
-            }
+        .then(([officeResponse, conferenceResponse, deskResponse]) => {
+          if (officeResponse.data.length > 0) {
+            setOfficeRooms(officeResponse.data);
+          }
+          if (conferenceResponse.data.length > 0) {
+            setConferenceRooms(conferenceResponse.data);
+          }
+          if (deskResponse.data.length > 0) {
+            setDesks(deskResponse.data);
+          }
         })
         .catch((error) => {
-            console.log(error);
-        })
+          console.log(error);
+        });
     }
     fetchData();
-},[]);
+  }, [isDesk, isOffice, isConference]);
 
-  const handleClick = (desk) => {
-    props.setReservation(desk);
+  const handleDeskClick = (desk) => {
+    console.log(desk)
+    const newReservation = {
+      start_time: start,
+      end_time: end,
+      date: date,
+      desk_id: desk._id,
+      desk_number: desk.desk_number,
+      room_number: desk.room_number,
+      room_id: desk.room_id
+    }
+    props.setReservation(newReservation);
     history.push("/reservation");
   };
 
- function handleDayClick(date) {
-   var dateStr = String(date);
-   var formattedDate = dateStr.slice(0, 15);
-   console.log(formattedDate)
-   setDate(formattedDate);
- };
+  const handleRoomClick = (room) => {
+    console.log(room)
+    const newReservation = {
+      start_time: start,
+      end_time: end,
+      date: date,
+      room_id: room._id,
+      room_number: room.room_number,
+      room_type: room.room_type,
+      desk_number: 1
+    }
+    props.setReservation(newReservation);
+    history.push("/reservation");
+  }
 
- function onChangeStart(startTime) {
-   console.log(startTime);
-   setStart(startTime)
- };
-
- function onChangeEnd(endTime) {
-   console.log(endTime);
-   setEnd(endTime)
- };
-
-
-  const today = new Date();
+  
 
   return (
-    <Container fluid>
-      <Row>
-        <Col style={{ paddingLeft: "75px" }}>
-          <div
-            style={{
-              padding: "0px",
-            }}
-          >
-            <div style={{ paddingBottom: "10px", backgroundColor: "white" }}>
-              <div>
-                <center>
-                {/* <DayPicker
-                  month={today}
-                  fromMonth={today}
-                  disabledDays={{ daysOfWeek: [0, 6] }}
-                  onDayClick={handleDayClick}
-                  format="MM/dd/yyyy"
-                  style={{backgroundColor: "White"}}
-                /> */}
-                </center>
-              </div>
-            </div>
+    <div>
+      <Container fluid>
+        <Row>
+          <Col style={{ paddingLeft: "60px" }} s={12}>
+            <h4>Filters</h4>
+            <Form>
+              <Form.Group as={Row} controlId="formDate">
+                <Form.Label column sm={3} style={{ color: "white" }}>
+                  Date
+                </Form.Label>
+                <Form.Control
+                  type="date"
+                  placeholder="Day of Reservation"
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </Form.Group>
 
-            <div style={{ backgroundColor: "white", padding: "20px" }}>
-              <TimePicker 
-                onChange={onChangeStart}
-              />
-              <TimePicker 
-                onChange={onChangeEnd}
-              />
-            </div>
+              <Form.Group as={Row} controlId="time">
+                <Form.Label column sm={3} style={{ color: "white" }}>
+                  Start
+                </Form.Label>
+                <Form.Control
+                  type="time"
+                  placeholder="Start"
+                  onChange={(e) => setStart(e.target.value)}
+                />
+                <Form.Label column sm={3} style={{ color: "white" }}>
+                  End
+                </Form.Label>
+                <Form.Control
+                  type="time"
+                  placeholder="End"
+                  onChange={(e) => setEnd(e.target.value)}
+                />
+              </Form.Group>
 
-            <div
-              class="custom-control custom-checkbox"
-              style={{ color: "white" }}
-            >
-              <input type="checkbox" class="custom-control-input" id="desk"/>
-              <label class="custom-control-label" for="desk">
-                Desk
-              </label>
-            </div>
-            <div
-              class="custom-control custom-checkbox"
-              style={{ color: "white" }}
-            >
-              <input type="checkbox" class="custom-control-input" id="office" />
-              <label class="custom-control-label" for="office">
-                Office
-              </label>
-            </div>
-            <div
-              class="custom-control custom-checkbox"
-              style={{ color: "white" }}
-            >
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="conference"
-              />
-              <label class="custom-control-label" for="conference">
-                Conference Room
-              </label>
-            </div>
+              <Form.Group controlId="roomType" style={{ color: "white" }}>
+                <Form.Check
+                  type="checkbox"
+                  label="Desk"
+                  onChange={(e) => toggleIsDesk(!isDesk)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="Office"
+                  onChange={(e) => toggleIsOffice(!isOffice)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="Conference"
+                  onChange={(e) => toggleIsConference(!isConference)}
+                />
+              </Form.Group>
+            </Form>
+          </Col>
 
-            <div style={{ paddingTop: "15px", alignSelf: "left"}}>
-              <button className="button-submit" type="submit">
-                Filter
-              </button>
-            </div>
-          </div>
-        </Col>
-        <Col s={12}>
-          <Container style={{ padding: "1rem" }}>
-            {desks.map((desk, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingBottom: "1rem",
-                }}
-              >
-                <Card style={{ width: "28rem", padding: ".5rem" }}>
-                  <Card.Title>Desk: {desk.desk_number}</Card.Title>
-                  <Container>
-                    <Row>
-                      <Col>Floor #</Col>
-                      <Col>Room #</Col>
-                      <Col>
-                        <Button
-                          onClick={() => {
-                            handleClick(desk);
-                          }}
-                          size="sm"
-                          style={{ float: "right" }}
-                        >
-                          ADD
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Container>
-                </Card>
-              </div>
-            ))}
+          <Col s={12}>
+            <h4>Available</h4>
+            {!isDesk && !isOffice && !isConference && (
+              <Container>
+                {desks.map((desk, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Desk {desk.desk_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>Room {desk.room_number}</Col>
+                          <Col>Capacity 1</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleDeskClick(desk);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+                {officeRooms.map((room, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Room {room.room_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>{room.room_type}</Col>
+                          <Col>Capacity {room.capacity}</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleRoomClick(room);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+                {conferenceRooms.map((room, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Room {room.room_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>{room.room_type}</Col>
+                          <Col>Capacity {room.capacity}</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleRoomClick(room);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+              </Container>
+            )}
+            {isDesk && (
+              <Container>
+                {desks.map((desk, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Desk {desk.desk_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>Room {desk.room_number}</Col>
+                          <Col>Capacity 1</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleDeskClick(desk);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+              </Container>
+            )}
+            {isOffice && (
+              <Container>
+                {officeRooms.map((room, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Room {room.room_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>{room.room_type}</Col>
+                          <Col>Capacity {room.capacity}</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleRoomClick(room);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+              </Container>
+            )}
+            {isConference && (
+              <Container>
+                {conferenceRooms.map((room, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <Card style={{ width: "23rem", padding: ".5rem" }}>
+                      <Card.Title>Room {room.room_number}</Card.Title>
+                      <Container>
+                        <Row>
+                          <Col>{room.room_type}</Col>
+                          <Col>Capacity {room.capacity}</Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                handleRoomClick(room);
+                              }}
+                              size="sm"
+                              style={{ float: "right" }}
+                            >
+                              ADD
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Card>
+                  </div>
+                ))}
+              </Container>
+            )}
+          </Col>
 
-            {rooms.map((room, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingBottom: "1rem",
-                }}
-              >
-                <Card style={{ width: "19rem", padding: ".5rem" }}>
-                  <Card.Title>Room: {room.room_number}</Card.Title>
-                  <Container>
-                    <Row>
-                      <Col>{room.room_type}</Col>
-                      <Col>Floor #</Col>
-                      <Col>
-                        <Link to="/confirm" style={{ float: "right" }}>
-                          ADD
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Container>
-                </Card>
-              </div>
-            ))}
-          </Container>
-        </Col>
-        {/* <Col xs={5} style={{ paddingTop: "75px" }}> */}
-        {/* <Card
+          {/* <Col xs={5} style={{ paddingTop: "75px" }}> */}
+          {/* <Card
             style={{
               borderRadius: "1rem",
               width: "90%",
@@ -222,12 +361,13 @@ const Schedule = (props) => {
               </Link>
             </Card.Body>
           </Card> */}
-        {/* </Col> */}
-        <Col style={{ paddingRight: "50px" }}>
-          <CurrentSchedule />
-        </Col>
-      </Row>
-    </Container>
+          {/* </Col> */}
+          <Col style={{ paddingRight: "50px" }}>
+            <CurrentSchedule />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

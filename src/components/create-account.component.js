@@ -87,7 +87,11 @@ export default class CreateAccount extends Component {
 
       axios
         .post("http://localhost:5000/accounts/add", newAccount)
-        .then((res) => console.log(res.data));
+        .then((res) => {
+          console.log(res.data)
+        });
+
+      
 
       this.setState({
         show_success: true
