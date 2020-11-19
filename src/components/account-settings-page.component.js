@@ -63,6 +63,20 @@ const AccountSettings = (props) => {
         setValue(updateUser.length)
         
     }
+
+    const properRole = (role) => {
+        if(role === "employee"){
+            return "Employee"
+        } else if (role === "office_manger"){
+            return "Office Manager"
+        } else if (role === "building_admin"){
+            return "Building Admin"
+        } else if (role === "sanitation"){
+            return "Sanitation"
+        } else {
+            return role
+        }
+    }
     
 
     return(
@@ -102,21 +116,21 @@ const AccountSettings = (props) => {
                     <Form.Group as={Row} controlId="formBasicName">
                         <Form.Label column sm={3}>Company Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="name" placeholder="Company Name" readOnly/>
+                            <Form.Control type="name" placeholder={companyInfo.business_name} readOnly/>
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
+                    {/* <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={3}>Address</Form.Label>
                         <Col sm={9}>
                             <Form.Control type="address" placeholder="Company Address" readOnly/>
                         </Col>
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group as={Row} controlId="formBasicPhone">
                         <Form.Label column sm={3}>Role</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="role" placeholder={user.role} readOnly/>
+                            <Form.Control type="role" placeholder={properRole(user.role)} readOnly/>
                         </Col>
                     </Form.Group>
                 </Form>
