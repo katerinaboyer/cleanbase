@@ -24,7 +24,7 @@ const CreateRoom = (props) => {
     var temp = [];
 
     async function fetchData() {
-        axios.get("http://localhost:5000/accounts/officemanager/" + user._id)
+        axios.get("http://localhost:5000/accounts/office/" + user._id)
       .then((response) => {
           for(var j = 0; j < response.data[0].floors_assigned.length; j++){
             axios.get("http://localhost:5000/floors/id/" + response.data[0].floors_assigned[j])
@@ -73,13 +73,12 @@ const CreateRoom = (props) => {
 
     if (
       room_number &&
-      floorID &&
       capacity &&
       room_type
     ) {
       const newRoom = {
         room_number: room_number,
-        floor_id: floorID,
+        floor_id: floor_id,
         capacity: capacity,
         room_type: room_type,
       };
@@ -105,8 +104,6 @@ const CreateRoom = (props) => {
             };
             console.log(updateFloor);
             console.log(floorID);
-            axios.post('http://localhost:5000/floors/update/' + floorID, updateFloor)
-            .then((res) => console.log(res.data));
           });
         });
       setShowSuccess(true);
