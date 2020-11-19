@@ -24,7 +24,6 @@ const NavbarOptions = props => {
         <>
           <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           <Nav.Link href="/account-mgmt">Account Management</Nav.Link>
-          <Nav.Link href="/sanitation">Sanitation</Nav.Link>
         </>
       );
     case "office_manager":

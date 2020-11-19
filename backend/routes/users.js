@@ -46,12 +46,6 @@ router.route('/update/:id').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/removecomp/:id').post((req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body)
-  .then(user => res.json(user))
-  .catch(err => res.status(400).json('Error: ' + err));
-});
-
 router.route('/allEmployees').get((req, res) => {
   User.find(req.query).sort({name: 1})
     .then(user => res.json(user))
@@ -63,6 +57,13 @@ router.route('/onlyemployees').get((req, res) => {
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/openemployees').get((req, res) => {
+  User.find({business_account_id: {$eq: null}, role: "employee"}).sort({name: 1})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/businessAcct/:id').get((req, res) => {
   User.find({business_account_id: {$eq: req.params.id}}).sort({name: 1})
     .then(user => res.json(user))

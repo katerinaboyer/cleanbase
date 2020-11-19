@@ -15,12 +15,15 @@ const AddEmployee = (props) => {
     const history = useHistory();
 
     const onSubmit = () => {
+      console.log(id);
       const update = {
         business_account_id: loggeduser.business_account_id,
       }
       axios.post("http://localhost:5000/users/addbusiness/" + id, update)
-      .then(res => console.log(res.data));
-      history.push("/account-mgmt");
+      .then((res) => {
+        console.log(res.data)
+        history.push("/account-mgmt");
+      });
     }
 
     const onChangeBusinessId = (e) => {
@@ -29,28 +32,14 @@ const AddEmployee = (props) => {
       setID(value);
     }
 
-    const filter = () => {
-        let temp = user;
-        console.log(user);
-        for(var i = 0; i < temp.size; i++) {
-            //if(temp[i].business_account_id.length < 1){
-                //temp.splice(i,1);
-            //}
-            console.log(temp[i].business_account_id.length)
-        }
-        setUsers(temp);
-        //console.log(user);
-        //console.log(temp);
-    }
-
     useEffect(() => {
         async function fetchData() {
-            axios.get('http://localhost:5000/users/onlyemployees')
+            axios.get('http://localhost:5000/users/openemployees')
           .then(response => {
-              console.log(response.data);
+              //console.log(response.data);
               if (response.data.length > 0) {
                   setUsers(response.data);
-                  //filter();
+                  setID(response.data[0]._id)
               }
           })
           .catch((error) => {

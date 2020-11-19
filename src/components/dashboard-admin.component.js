@@ -5,32 +5,29 @@ import './../styles.css';
 import IllnessReport from "./illness-report.component";
 import { Container, Row, Col, Card} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import { setAccountId } from "../store/businessAccountReducer";
+import { getUser } from "../store/selectors";
 
 
 const BuildingAdminDash = (props) => {
 
     const [accounts, setAccounts] = useState([]);
+    const [address, setAddress] = useState();
+    const [bot, setBot] = useState();
+    const [top, setTop] = useState();
+
+    const user = useSelector(getUser)
 
     const history = useHistory();
 
     const addAccount = (e) =>{
         history.push("/account");
     }
-    const address = "hi";
 
     const test= (info) =>{
-        console.log(info);
         props.setAccountId(info);
         history.push("/edit-baccount")
-    }
-
-    const getFloorNumbers = (floors) => {
-        const floorNum = [1,2,3];
-        const floorText = floorNum[0] + " - " + floorNum[floorNum.length-1];
-
-        return floorText;
     }
 
     useEffect(() => {
@@ -41,6 +38,15 @@ const BuildingAdminDash = (props) => {
                 //console.log(response.data);
                 if (response.data.length > 0) {
                     setAccounts(response.data);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            axios.get('http://localhost:5000/buildings/mybuilding/' + user._id)
+            .then(response => {
+                if (response.data.length > 0) {
+                    setAddress(response.data[0].address);
                 }
             })
             .catch((error) => {
@@ -60,7 +66,7 @@ const BuildingAdminDash = (props) => {
                     </Col>
                     <Col style={{paddingRight:"8%"}}>
                         <Row style={{paddingLeft:"4%"}}>
-                            <h3>Accounts for: {address}</h3>
+                            <h3>{address}</h3>
                             <button className="button-add" style={{marginLeft:"56%"}} onClick={addAccount}>ADD</button>
                         </Row>
                         <div style={{}}>
@@ -68,13 +74,13 @@ const BuildingAdminDash = (props) => {
                                 <div style={{paddingBottom:"10px"}}>
                                     <Card style={{borderRadius:"15px"}}>
                                             <Row>
-                                                <Col sm={3}>
-                                                    <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floors {getFloorNumbers(info.floor_assigned)}</Card.Title>
+                                                <Col sm={4}>
+                                                    <Card.Title style={{padding:"20px 0px 20px 25px"}}>Floors {info.floor_numbers}</Card.Title>
                                                 </Col>
                                                 <Col style={{textAlign: "center"}}>
                                                     <Card.Text style={{color:"#434343", padding:"25px 0px 20px 0%"}}>{info.business_name}</Card.Text>
                                                 </Col>
-                                                <Col sm={3} style={{}}>
+                                                <Col sm={4} style={{}}>
                                                     <button className="button-edit" onClick={() => test(info)}>Edit</button>
                                                 </Col>
                                             </Row>

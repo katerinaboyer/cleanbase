@@ -19,6 +19,9 @@ const accountSchema = new Schema({
   },
   floors_assigned: {
       type: [Schema.Types.ObjectId]
+  },
+  floor_numbers: {
+    type: String
   }
 }, {
   timestamps: true,

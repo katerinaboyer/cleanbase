@@ -155,14 +155,7 @@ export class CreateSelfIllnessReport extends Component {
         from_name: this.state.name
       };
 
-      emailjs.send("service_lsurk9p", "template_87jsa8q", data, "user_YLt0CRcKLOhVbiTOfPMjp").then(
-        function (response) {
-          console.log(response.status, response.text);
-        },
-        function (err) {
-          console.log(err);
-        }
-      );
+      
 
       axios
         .all([
