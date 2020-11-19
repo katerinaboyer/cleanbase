@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/count').get((req, res) => {
-  db.selfIllnessReport.count()
+  selfIllnessReport.count()
     .then(count => res.json(count))
     .catch(err => res.status(400).json('Error: ' + err));
 });

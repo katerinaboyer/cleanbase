@@ -181,7 +181,7 @@ export class CreateSelfIllnessReport extends Component {
 
       axios.post('http://localhost:5000/selfIllnessReport/add', newselfIllnessReport)
         .then(res => console.log(res.data));
-      this.props.history.push('/')
+      
     } else {
       this.setState({
         show_error: true
@@ -230,17 +230,7 @@ export class CreateSelfIllnessReport extends Component {
                 />
             </Col>
           </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm={3}>Date: </Form.Label>
-            <Col sm={9}>
-            <Form.Control  type="date"
-
-                className="form-control"
-                value={this.state.date}
-                onChange={this.onChangeDate}
-                />
-            </Col>
-          </Form.Group>
+          
           <Form.Group as={Row}>
             <Form.Label column sm={3}>Report: </Form.Label>
             <Col sm={9}>
