@@ -8,6 +8,7 @@ import ToastMessage from "./toast.component";
 import { connect, useSelector } from "react-redux";
 import { getUser, getReservation } from "../store/selectors";
 
+
 const CreateReservation = (props) => {
   const user = useSelector(getUser);
   const reservation = useSelector(getReservation);
@@ -55,6 +56,7 @@ class FillReservation extends Component {
       end_time: props.reservation.end_time,
       date: props.reservation.date,
       email: currUserEmail,
+      emails: ["thomas.yim.gough@gmail.com", "jon.hillier@me.com"],
       attendees: [],
       rooms: [],
       desks: [],
@@ -185,10 +187,28 @@ class FillReservation extends Component {
         date: this.state.date,
         checkedIn: false,
       };
+      for(var i = 0; i < this.state.attendees.length; i++){
+        axios
+              .all([
+                //from each attendee, we extract their email and place it into an array
+                axios.get('http://localhost:5000/users/id/' + this.state.attendees[i])
+              ])
+              .then(([attendResponse]) => {
+               
+              if(attendResponse.data.email != null){
+                var test = this.state.emails.concat(attendResponse.data.email);
+                this.setState({
+                  emails: test
+                });
+                console.log(this.state.emails);
+              }
+              });
+      }
+      
 
     var data = {
       title: this.state.title,
-      to_email: this.state.email,
+      to_email: this.state.emails,
       room_number: this.state.room_number,
       start_time: this.state.start_time,
       end_time: this.state.end_time,
