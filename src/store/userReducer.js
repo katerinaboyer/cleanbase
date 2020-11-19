@@ -6,6 +6,7 @@ const initialUserState = {
     phone: "",
     role: "",
     _id: "",
+    business_account_id: ""
 };
 
 export const userSlice = createSlice({

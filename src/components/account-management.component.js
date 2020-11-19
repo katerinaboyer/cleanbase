@@ -13,6 +13,7 @@ const AccountMgmt = (props) => {
 
   const [accounts, setAccounts] = useState([]);
   const user = useSelector(getUser);
+  console.log(user);
 
   const history = useHistory();
 
