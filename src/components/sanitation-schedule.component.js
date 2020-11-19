@@ -36,7 +36,7 @@ const SanitationSchedule = props => {
     const isClean = {is_clean: isCl};
      axios.post('http://localhost:5000/desks/update/isclean/' + deskID,  isClean );
      axios.post('http://localhost:5000/rooms/update/isclean/' + roomID,  isClean );
-     axios.post('http://localhost:5000/reservations/delete/' + reservationID);
+     axios.delete('http://localhost:5000/reservations/delete/' + reservationID);
      setValue(Math.random() * 1000);
   }
 
