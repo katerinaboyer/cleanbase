@@ -11,7 +11,8 @@ import axios from "axios";
 const CurrentSchedule = (props) => {
 
     const [schedule, setSchedule] = useState([]);
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(true);
+    const [avalue, setAValue] = useState(true);
 
     const history = useHistory();
     const user = useSelector(getUser);
@@ -40,11 +41,18 @@ const CurrentSchedule = (props) => {
                 console.log(error);
             })
 
-        setValue(info.length);
+        setValue(!value);
     }
 
     const formatDate = (date) =>{
         return  date.substring(5,7) + '/' + date.substring(8,10);
+    }
+
+    const cancelReservation = (info) => {
+        console.log(info._id)
+        axios.delete("http://localhost:5000/reservations/delete/" + info._id)
+        .then(res => console.log(res))
+        setAValue(!avalue)
     }
 
     const formatTime = (time) => {
@@ -75,7 +83,7 @@ const CurrentSchedule = (props) => {
         async function fetchData() {
             axios.get('http://localhost:5000/reservations/current/' + user._id)
             .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
                 if (response.data.length > 0) {
                     setSchedule(response.data);
                 }
@@ -85,7 +93,7 @@ const CurrentSchedule = (props) => {
             })
         }
         fetchData();
-    },[value]);
+    },[value, avalue]);
 
     return(
         <div style={{paddingTop:"0px"}}>
@@ -122,16 +130,16 @@ const CurrentSchedule = (props) => {
                                             {formatTime(info.start_time) + "-" + formatTime(info.end_time)}
                                         </Card.Text>
                                     </Row>
-                                    {formatDate(info.date) === currDate && !info.checkedIn &&
                                     <Row>
+                                    {formatDate(info.date) === currDate && !info.checkedIn &&
                                         <button className="button-checkin" onClick={() => checkIn(info)}>Check In</button>
-                                    </Row>
+                                        
                                     }
                                     {formatDate(info.date) === currDate && info.checkedIn &&
-                                    <Row>
                                         <button className="button-checkin" disabled>Checked In!</button>
-                                    </Row>
                                     }
+                                        <button className="button-cancel" onClick={() => cancelReservation(info)}>Cancel</button>
+                                    </Row>
                             </Card>
                             {/* } */}
                         </div>

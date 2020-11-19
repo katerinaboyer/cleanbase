@@ -54,8 +54,8 @@ router.route('/checkin/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/delete/:id').post((req, res) => {
-  Reservation.findByIdAndRemove(req.params.id, req.body)
+router.route('/delete/:id').delete((req, res) => {
+  Reservation.findByIdAndDelete(req.params.id)
     .then(reservation => res.json(reservation))
     .catch(err => res.status(400).json('Error: ' + err));
 });
