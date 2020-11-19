@@ -12,7 +12,6 @@ import { getUser, getReservation } from "../store/selectors";
 const CreateReservation = (props) => {
   const user = useSelector(getUser);
   const reservation = useSelector(getReservation);
-  console.log("res", reservation);
   return <FillReservation currUser={user} reservation={reservation} />;
 };
 
@@ -34,7 +33,8 @@ class FillReservation extends Component {
     super(props);
     const currUserId = props.currUser._id;
     const currUserEmail = props.currUser.email;
-    // console.log(currUserId);
+    const currBusiness = props.currUser.business_account_id;
+    console.log("ID", currUserId);
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
     // this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
@@ -55,12 +55,18 @@ class FillReservation extends Component {
       start_time: props.reservation.start_time,
       end_time: props.reservation.end_time,
       date: props.reservation.date,
+      attendees: [],
+
+      user_id: currUserId,
+      business_account_id: currBusiness,
+
       email: currUserEmail,
       emails: ["thomas.yim.gough@gmail.com", "jon.hillier@me.com"],
-      attendees: [],
+  
       rooms: [],
       desks: [],
       all_users: [],
+      
       show_error: false,
       show_success: false,
     };
@@ -75,16 +81,16 @@ class FillReservation extends Component {
     //   date: props.reservation.date
     // }
 
-    this.state.attendees.map((value) => value.currUserId);
+    // this.state.attendees.map((value) => value.currUserId);
   }
 
   componentDidMount() {
-    console.log(this.state.email);
+    console.log("http://localhost:5000/users/coworkers/" + this.state.business_account_id)
     axios
       .all([
         axios.get("http://localhost:5000/rooms"),
         axios.get("http://localhost:5000/desks"),
-        axios.get("http://localhost:5000/users/all"),
+        axios.get("http://localhost:5000/users/coworkers/" + this.state.business_account_id),
       ])
       .then(([roomResponse, deskResponse, userResponse]) => {
         this.setState({
@@ -94,13 +100,7 @@ class FillReservation extends Component {
           // desk: deskResponse.data[0],
           all_users: userResponse.data.map((user) => user),
         });
-
-        
       });
-
-      
-      
-
   }
 
   onChangeTitle(e) {
@@ -155,6 +155,7 @@ class FillReservation extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    console.log("attendess", this.state.attendees);
 
     if (
       this.state.title &&

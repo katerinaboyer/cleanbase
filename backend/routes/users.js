@@ -58,6 +58,12 @@ router.route('/onlyemployees').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/coworkers/:businessId').get((req, res) => {
+  User.find({ business_account_id: {$eq: req.params.businessId }})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/openemployees').get((req, res) => {
   User.find({business_account_id: {$eq: null}, role: "employee"}).sort({name: 1})
     .then(user => res.json(user))
