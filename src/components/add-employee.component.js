@@ -18,9 +18,11 @@ const AddEmployee = (props) => {
       const update = {
         business_account_id: loggeduser.business_account_id,
       }
+      console.log("update", update)
+      console.log("loggeDUSer", loggeduser.business_account_id)
       axios.post("http://localhost:5000/users/addbusiness/" + id, update)
       .then(res => console.log(res.data));
-      history.push("/account-mgmt");
+      // history.push("/account-mgmt");
     }
 
     const onChangeBusinessId = (e) => {

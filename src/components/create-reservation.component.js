@@ -35,11 +35,6 @@ class FillReservation extends Component {
     const currUserEmail = props.currUser._email;
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    // this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
-    this.onChangeDeskNumber = this.onChangeDeskNumber.bind(this);
-    this.onChangeStartTime = this.onChangeStartTime.bind(this);
-    this.onChangeEndTime = this.onChangeEndTime.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeAttendees = this.onChangeAttendees.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -60,16 +55,6 @@ class FillReservation extends Component {
       show_error: false,
       show_success: false,
     };
-
-    // const selectedReservation = {
-    //   room_id: props.reservation.room_id,
-    //   room_number: props.reservation.room_number,
-    //   desk_id: props.reservation.desk_id,
-    //   desk_number: props.reservation.desk_number,
-    //   start_time: props.reservation.start_time,
-    //   end_time: props.reservation.end_time,
-    //   date: props.reservation.date
-    // }
 
     this.state.attendees.map((value) => value.currUserId);
   }
@@ -95,43 +80,6 @@ class FillReservation extends Component {
   onChangeTitle(e) {
     this.setState({
       title: e.target.value,
-    });
-  }
-
-  // onChangeRoomNumber(e) {
-  //   const roomNumber = e.target.selectedOptions[0].text;
-  //   const roomId = e.target.value;
-  //   console.log(roomNumber, roomId);
-  //   this.setState({
-  //     room_number: roomNumber,
-  //     room_id: roomId
-  //   });
-  // }
-
-  onChangeDeskNumber(e) {
-    const deskNumber = e.target.selectedOptions[0].text;
-    const deskId = e.target.value;
-    this.setState({
-      desk_number: deskNumber,
-      desk_id: deskId,
-    });
-  }
-
-  onChangeStartTime(e) {
-    this.setState({
-      start_time: e.target.value,
-    });
-  }
-
-  onChangeEndTime(e) {
-    this.setState({
-      end_time: e.target.value,
-    });
-  }
-
-  onChangeDate(e) {
-    this.setState({
-      date: e.target.value,
     });
   }
 

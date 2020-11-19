@@ -13,6 +13,7 @@ const Schedule = (props) => {
   const [desks, setDesks] = useState([]);
   const [officeRooms, setOfficeRooms] = useState([]);
   const [conferenceRooms, setConferenceRooms] = useState([]);
+  const [reservationsArr, setReservationsArr] = useState([]);
 
   const [date, setDate] = useState(new Date());
   const [start, setStart] = useState("08:00");
@@ -79,6 +80,17 @@ const Schedule = (props) => {
     history.push("/reservation");
   }
 
+  const onChangeDate = (date) => {
+    setDate(date);
+    const dateVar = date;
+    console.log("http://localhost:5000/reservations/date/" + dateVar);
+    axios.get("http://localhost:5000/reservations/date/" + dateVar)
+      .then((res) => {
+        console.log(res.data);
+        setReservationsArr(res.data)
+      })
+  }
+
   
 
   return (
@@ -95,7 +107,8 @@ const Schedule = (props) => {
                 <Form.Control
                   type="date"
                   placeholder="Day of Reservation"
-                  onChange={(e) => setDate(e.target.value)}
+                  data-date-format="MM-DD-YYYY"
+                  onChange={ e => onChangeDate(e.target.value)}
                 />
               </Form.Group>
 

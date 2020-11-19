@@ -48,6 +48,12 @@ router.route('/current/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/date/:date').get((req, res) => {
+  Reservation.find({date: req.params.date})
+  .then(reservation => res.json(reservation))
+  .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/checkin/:id').post((req, res) => {
   Reservation.findByIdAndUpdate(req.params.id, req.body)
     .then(reservation => res.json(reservation))
