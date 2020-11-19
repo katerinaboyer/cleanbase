@@ -53,7 +53,7 @@ const AccountMgmt = (props) => {
   useEffect(() => {
       async function fetchData() {
           console.log(user);
-          axios.get('http://localhost:5000/user/businessAcct/' + user.business_account_id)
+          axios.get('http://localhost:5000/users/businessAcct/' + user.business_account_id)
           .then(response => {
               if (response.data.length > 0) {
                   setAccounts(response.data);

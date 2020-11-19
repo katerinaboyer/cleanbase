@@ -24,6 +24,7 @@ const AddEmployee = (props) => {
     }
 
     const onChangeBusinessId = (e) => {
+      console.log("id", e.target.value)
       let value = e.target.value;
       setID(value);
     }
@@ -67,10 +68,10 @@ const AddEmployee = (props) => {
         <Form.Group as={Row} controlId="formBasicAttendees">
             <Form.Label column sm={3}>Employees</Form.Label>
             <Col sm={9}>
-              <Form.Control as="select" onChange={onChangeBusinessId}>
+              <Form.Control as="select" onChange={e => onChangeBusinessId(e)}>
                 {user.map((user) => {
                   return (
-                    <option key={user._id} value={user._id}>{user.name} + {user.business_account_id}</option>
+                    <option key={user._id} value={user._id}>{user.name} </option>
                   );
                 })}
               </Form.Control>
