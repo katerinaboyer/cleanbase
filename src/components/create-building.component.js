@@ -40,9 +40,9 @@ const CreateBuilding = (props) => {
       lastBuilding.push(res.data[res.data.length-1]._id);
       console.log(typeof lastBuilding);
       console.log("buildingi d", lastBuilding[0]);
-      for (var i = 0; i < numFloors; i++) {
+      for (var i = 1; i <= numFloors; i++) {
         const newFloor = {
-          floor_number: i+1,
+          floor_number: i,
           building_id: lastBuilding[0]
         }
         axios.post('http://localhost:5000/floors/add', newFloor)

@@ -7,6 +7,12 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/mybuilding/:id').get((req, res) => {
+  Building.find({building_admin: {$eq: req.params.id}})
+    .then(buildings => res.json(buildings))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/update/:id').post((req, res) => {
   var updateObject = req.body;
   console.log(req.body)

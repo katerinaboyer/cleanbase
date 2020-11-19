@@ -41,7 +41,7 @@ const SignIn = (props) => {
                 business_account_id: res.data.business_account_id,
               }
 
-              console.log(signedInUser);
+              console.log(signedInUser)
 
               props.storeLogin(signedInUser);
               history.push('/dashboard');

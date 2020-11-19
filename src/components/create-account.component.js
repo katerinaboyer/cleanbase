@@ -23,6 +23,7 @@ export default class CreateAccount extends Component {
       users: [],
       show_error: false,
       show_success: false,
+      floor_numbers: ""
     };
     this.state.floors_assigned.map((value) => value._id);
   }
@@ -64,8 +65,11 @@ export default class CreateAccount extends Component {
 
   onChangeFloorsAssigned(e) {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
+    let num = Array.from(e.target.selectedOptions, (option) => option.text);
+    let floor = num[0] + "-" + num[num.length-1];
     this.setState({
       floors_assigned: value,
+      floor_numbers: floor
     });
   }
 
@@ -80,17 +84,16 @@ export default class CreateAccount extends Component {
         business_name: this.state.business_name,
         office_manager: this.state.office_manager,
         building_id: this.state.building_id,
-        floors_assigned: this.state.floors_assigned
+        floors_assigned: this.state.floors_assigned,
+        floor_numbers: this.state.floor_numbers
       };
 
       console.log(newAccount);
 
-      axios
-        .post("http://localhost:5000/accounts/add", newAccount)
+      axios.post("http://localhost:5000/accounts/add", newAccount)
         .then((res) => {
           console.log(res.data)
         });
-
       
 
       this.setState({
