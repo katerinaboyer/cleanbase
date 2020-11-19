@@ -18,7 +18,7 @@ const CurrentSchedule = (props) => {
     const location = useLocation();
 
     const newReservation = (e) =>{
-        history.push("/reservation");
+        history.push("/schedule");
     }
     const currDate = format(new Date(), 'MM/dd');
     //const [value, setValue] = useState(0);

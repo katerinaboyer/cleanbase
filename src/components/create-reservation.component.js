@@ -32,7 +32,8 @@ class FillReservation extends Component {
   constructor(props) {
     super(props);
     const currUserId = props.currUser._id;
-    const currUserEmail = props.currUser._email;
+    const currUserEmail = props.currUser.email;
+    // console.log(currUserId);
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
     // this.onChangeRoomNumber = this.onChangeRoomNumber.bind(this);
@@ -53,6 +54,7 @@ class FillReservation extends Component {
       start_time: props.reservation.start_time,
       end_time: props.reservation.end_time,
       date: props.reservation.date,
+      email: currUserEmail,
       attendees: [],
       rooms: [],
       desks: [],
@@ -75,6 +77,7 @@ class FillReservation extends Component {
   }
 
   componentDidMount() {
+    console.log(this.state.email);
     axios
       .all([
         axios.get("http://localhost:5000/rooms"),
@@ -89,7 +92,13 @@ class FillReservation extends Component {
           // desk: deskResponse.data[0],
           all_users: userResponse.data.map((user) => user),
         });
+
+        
       });
+
+      
+      
+
   }
 
   onChangeTitle(e) {
@@ -177,57 +186,34 @@ class FillReservation extends Component {
         checkedIn: false,
       };
 
-      var data = {
-        title: this.state.title,
-        to_email: "turtlesandpie@gmail.com",
-        room_number: this.state.room_number,
-        start_time: this.state.start_time,
-        end_time: this.state.end_time,
-        date: this.state.date,
-      };
-      //emails a nice confirmation to the user
-      emailjs
-        .send(
-          "service_lsurk9p",
-          "template_evr3ddw",
-          data,
-          "user_YLt0CRcKLOhVbiTOfPMjp"
-        )
-        .then(
-          function (response) {
-            console.log(response.status, response.text);
-          },
-          function (err) {
-            console.log(err);
-          }
-        );
+    var data = {
+      title: this.state.title,
+      to_email: this.state.email,
+      room_number: this.state.room_number,
+      start_time: this.state.start_time,
+      end_time: this.state.end_time,
+      date: this.state.date,
+    };
+    //emails a nice confirmation to the user
+    emailjs
+      .send(
+        "service_lsurk9p",
+        "template_evr3ddw",
+        data,
+        "user_YLt0CRcKLOhVbiTOfPMjp"
+      )
+      .then(
+        function (response) {
+          console.log(response.status, response.text);
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
 
-      console.log("new Rservation", newReservation);
+    console.log("new Rservation", newReservation);
 
-      var data = {
-        title: this.state.title,
-        to_email: "turtlesandpie@gmail.com",
-        room_number: this.state.room_number,
-        start_time: this.state.start_time,
-        end_time: this.state.end_time,
-        date: this.state.date,
-      };
-      //emails a nice confirmation to the user
-      emailjs
-        .send(
-          "service_lsurk9p",
-          "template_evr3ddw",
-          data,
-          "user_YLt0CRcKLOhVbiTOfPMjp"
-        )
-        .then(
-          function (response) {
-            console.log(response.status, response.text);
-          },
-          function (err) {
-            console.log(err);
-          }
-        );
+      
 
       console.log(newReservation);
 
