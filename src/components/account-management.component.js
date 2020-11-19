@@ -15,6 +15,8 @@ const AccountMgmt = (props) => {
   const [address, setAddress] = useState();
   const user = useSelector(getUser);
   const [val, setVal] = useState(true);
+
+  const [reserv, setRes] = useState([]);
   //console.log(user);
 
   const history = useHistory();
@@ -35,7 +37,25 @@ const AccountMgmt = (props) => {
         })
         .catch((error) => {
             console.log(error);
-        })   
+        }) 
+        
+        var temp = [];
+        axios.get('http://localhost:5000/reservations/')
+        .then((res)=> {
+            if(res.data.length > 0){
+                console.log(res.data[0])
+                for(var i = 0; i < res.data.length; i++){
+                    if(res.data[i].date >= new Date()){
+                        for(var j = 0; j < res.data[i].attendees.length; j++){
+                            if(res.data[i].attendees[j] === info._id){
+                                temp.push(res.data[i])
+                            }    
+                        }
+                    }
+                }
+                console.log(temp);
+            }
+        })
     }
 
   useEffect(() => {

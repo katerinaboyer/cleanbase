@@ -110,8 +110,9 @@ useEffect(() => {
         <Row>
         <Col>
           <Row style={{paddingLeft:"3%"}}>
-            <Col sm={9}><h3>Rooms</h3></Col>
-            <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>Add</button></Col>
+            <Col sm={7}><h3>Rooms</h3></Col>
+            <Col><button className="button-add" style={{marginLeft:"50%"}} onClick={addRoom}>Add Rooms</button></Col>
+            <Col><button className="button-add" style={{marginLeft: "0px"}} onClick={addDesk}>Add Desks</button></Col>
           </Row>
           <div style={{}}>
             { rooms.map(info =>
@@ -126,14 +127,12 @@ useEffect(() => {
                             </Col>
                             <Col sm={3} style={{}}>
                                 <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => removeRoom(info)}>Remove</button>
-                                {info.room_type === "desk_space" && <button className="button-edit" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>Add Rooms</button>}
                             </Col>
                         </Row>
-                    </Card>
-                    { desks.map(information => 
+                        { desks.map(information => 
                   <div style={{paddingBottom:"0px"}}>
                       { info.room_number === information.room_number &&
-                      <Card style={{borderRadius:"15px", marginTop: "20px", marginLeft: "50px"}}>
+                      <Card style={{borderRadius:"15px", marginBottom: "10px", marginLeft: "50px",marginRight: "50px", borderColor:"#ee6c4d", borderWidth:"5px"}}>
                             <Row>
                                 {/* <Col sm={3}>
                                     <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
@@ -142,13 +141,14 @@ useEffect(() => {
                                     <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk: {information.desk_number}<br/> Room: {information.room_number}</Card.Text>
                                 </Col>
                                 <Col sm={3} style={{}}>
-                                    <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}} onClick={() => removeDesk(information)}>Remove</button>
+                                    <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%",}} onClick={() => removeDesk(information)}>Remove</button>
                                 </Col>
                             </Row>
                         </Card> }
                   </div>
                   )
               }
+                    </Card>
                 </div>
                 
                 )
