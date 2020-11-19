@@ -158,15 +158,16 @@ const Schedule = (props) => {
                           <Col>Room {desk.room_number}</Col>
                           <Col>Capacity 1</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleDeskClick(desk);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
@@ -189,15 +190,16 @@ const Schedule = (props) => {
                           <Col>{room.room_type}</Col>
                           <Col>Capacity {room.capacity}</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
@@ -220,15 +222,16 @@ const Schedule = (props) => {
                           <Col>{room.room_type}</Col>
                           <Col>Capacity {room.capacity}</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
@@ -255,15 +258,16 @@ const Schedule = (props) => {
                           <Col>Room {desk.room_number}</Col>
                           <Col>Capacity 1</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleDeskClick(desk);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
@@ -290,15 +294,16 @@ const Schedule = (props) => {
                           <Col>{room.room_type}</Col>
                           <Col>Capacity {room.capacity}</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
@@ -325,15 +330,16 @@ const Schedule = (props) => {
                           <Col>{room.room_type}</Col>
                           <Col>Capacity {room.capacity}</Col>
                           <Col>
-                            <Button
+                            <button
                               onClick={() => {
                                 handleRoomClick(room);
                               }}
                               size="sm"
                               style={{ float: "right" }}
+                              className="button-submit"
                             >
                               ADD
-                            </Button>
+                            </button>
                           </Col>
                         </Row>
                       </Container>
