@@ -23,7 +23,7 @@ export default class CreateAccount extends Component {
       users: [],
       show_error: false,
       show_success: false,
-      floor_numbers: ""
+      floor_numbers: null
     };
     this.state.floors_assigned.map((value) => value._id);
   }
