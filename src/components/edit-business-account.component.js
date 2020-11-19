@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from "react";
 import { Row, Col, Form} from 'react-bootstrap';
+import ToastMessage from './toast.component';
 //import { useHistory } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 //import {format} from "date-fns";
@@ -10,12 +11,15 @@ import axios from "axios";
 const EditBusinessAccount = (props) => {
 
     const [oManager, setManagers] = useState([]);
+    const [name, setName] = useState('');
+    const [floor, setFloor] = useState('');
+    const [mananger, setManager] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
     //const [disable, setDisabled] = useState();
 
     //const history = useHistory();
     //const user = useSelector(getUser);
     const businessAccount = useSelector(getBusinessAccount);
-    console.log(businessAccount);
 
     useEffect(() => {
         async function fetchData() {
@@ -35,24 +39,27 @@ const EditBusinessAccount = (props) => {
     },[]);
 
     const nameChange = (e) => {
-        businessAccount.business_name = e.target.value;
+        setName(e.target.value);
     }
 
     const floorChange = (e) => {
-        businessAccount.floor_assigned = e.target.value;
+        setFloor(e.target.value);
     }
 
     const managerChange = (e) => {
-        //businessAccount. = e.target.value;
+        setManager(e.target.value);
     }
 
     const update = (e) => {
-
+      setShowSuccess(true);
+      setTimeout(() => {setShowSuccess(false)}, 5000);
     }
 
     const remove = (e) => {
 
     }
+
+    const floors = [1,2,3,4]
 
     return(
         <div>
@@ -69,14 +76,22 @@ const EditBusinessAccount = (props) => {
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={3}>Floors</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="email" placeholder="Enter email" onChange={floorChange}/>
+                            <Form.Control as="select" multiple onChange={floorChange}>
+                              {floors.map((floor) => {
+                              return (
+                                  <option key={floor} value={floor}>
+                                    {floor}
+                                  </option>
+                                  );
+                              })}
+                            </Form.Control>
                         </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formBasicPhone">
                         <Form.Label column sm={3}>Office Manager</Form.Label>
                         <Col sm={9}>
-                            <Form.Control as="select" multiple onChange={managerChange}> 
+                            <Form.Control as="select" multiple onChange={managerChange}>
                                 {oManager.map((user) => {
                                 return (
                                     <option key={user._id} value={user._id}>
@@ -92,11 +107,12 @@ const EditBusinessAccount = (props) => {
                     <button className="button-submit" type="submit" onClick={update}>
                         Update
                     </button>
-                    <button className="button-remove" type="submit" onclick={remove}>
+                    <button className="button-remove" type="submit" onClick={remove}>
                         Remove
                     </button>
                 </Row>
             </div>
+            <ToastMessage show={showSuccess} text={`This account has been updated.`} />
         </div>
     )
 
