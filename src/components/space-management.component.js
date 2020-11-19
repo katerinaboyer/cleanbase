@@ -15,6 +15,7 @@ const SpaceMgmt = (props) => {
   const [rooms, setRooms] = useState([]);
   const [desks, setDesks] = useState([]);
   const [value, setValue] = useState(0);
+  const [floorNum, setFloorNum] = useState();
   //setAccounts([]);
   const user = useSelector(getUser);
 
@@ -40,13 +41,12 @@ const getFloorNumbers = (floors) => {
     axios.get("http://localhost:5000/floors/id/" + floors)
     .then((response) => {
         num = response.data.floor_number
-        console.log(num);
-        return num;
+        setFloorNum(num);
     })
     .catch((error) => {
         return "NULL";
     })
-    return num;
+    return floorNum;
 }
 
 const getDeskFloorNumbers = (room) => {
@@ -69,33 +69,31 @@ useEffect(() => {
         //console.log(floorsAssigned.data[0].floors_assigned);
         for(var i = 0; i < floorsAssigned.data[0].floors_assigned.length; i++){
             //console.log(floorsAssigned.data[0].floors_assigned[i]);
-            const rooms = await axios.get('http://localhost:5000/rooms/floorId/' + floorsAssigned.data[0].floors_assigned[i])
-            for(var j = 0; j < rooms.data.length; j++){
-                tempRooms.push(rooms.data[j])
-                setRooms(tempRooms)
+            const roomsData = await axios.get('http://localhost:5000/rooms/floorId/' + floorsAssigned.data[0].floors_assigned[i])
+            for(var j = 0; j < roomsData.data.length; j++){
+                //tempRooms = rooms;
+                tempRooms.push(roomsData.data[j])
             }
         }
+        //setRooms(tempRooms)
         for(var i = 0; i < tempRooms.length; i++){
             //console.log(tempRooms[i]._id)
-            const desks = await axios.get('http://localhost:5000/desks/byroom/' + tempRooms[i]._id);
+            const desksData = await axios.get('http://localhost:5000/desks/byroom/' + tempRooms[i]._id);
             //console.log(desks.data)
-            for(var j = 0; j < desks.data.length; j++){
+            for(var j = 0; j < desksData.data.length; j++){
                 //console.log(desks.data[j])
-                tempDesks.push(desks.data[j]);
+                //tempDesks = desks;
+                tempDesks.push(desksData.data[j]);
+                //setDesks(tempDesks);
             }
         }
-        //console.log(tempDesks);
-        //console.log(tempRooms);
+        console.log(tempDesks);
+        console.log(tempRooms);
+        setDesks(tempDesks)
+        setRooms(tempRooms)
     }
 
-    fetchData().then(
-        // setDesks(tempDesks.map((desk) => desk)),
-        // setRooms(tempRooms.map((room) => room)),
-        console.log(desks),
-        console.log(rooms),
-        //console.log(tempDesks),
-        // console.log(tempRooms)
-    );
+    fetchData();
   },[]);
 
   return (
@@ -104,16 +102,16 @@ useEffect(() => {
         <Col>
           <Row style={{paddingLeft:"3%"}}>
             <Col sm={9}><h3>Desks</h3></Col>
-            <Col><button className="button-add" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>{desks.length}</button></Col>
+            <Col><button className="button-add" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>Add</button></Col>
           </Row>
           <div style={{}}>
               { desks.map(info =>
                   <div style={{paddingBottom:"20px"}}>
                       <Card style={{borderRadius:"15px"}}>
                             <Row>
-                                <Col sm={3}>
-                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor {getDeskFloorNumbers(info.room_id)}</Card.Title>
-                                </Col>
+                                {/* <Col sm={3}>
+                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
+                                </Col> */}
                                 <Col style={{textAlign: "center"}}>
                                     <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk {info.desk_number}</Card.Text>
                                 </Col>
@@ -131,16 +129,16 @@ useEffect(() => {
         <Col>
           <Row style={{paddingLeft:"3%"}}>
             <Col sm={9}><h3>Rooms</h3></Col>
-            <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>{rooms.length}</button></Col>
+            <Col><button className="button-add" style={{marginLeft:"35%"}} onClick={addRoom}>Add</button></Col>
           </Row>
           <div style={{}}>
             { rooms.map(info =>
                 <div style={{paddingBottom:"20px"}}>
                     <Card style={{borderRadius:"15px"}}>
                         <Row>
-                            <Col sm={3}>
-                                <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}>Floor: {getFloorNumbers(info.floor_id)}</Card.Title>
-                            </Col>
+                            {/* <Col sm={3}>
+                                <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
+                            </Col> */}
                             <Col style={{textAlign: "center"}}>
                                 <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room: {info.room_number}</Card.Text>
                             </Col>
