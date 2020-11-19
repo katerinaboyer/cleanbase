@@ -19,6 +19,12 @@ router.route('/byroom/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/remove/:id').delete((req, res) => {
+  Desk.findByIdAndDelete(req.params.id)
+    .then(desks => res.json(desks))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/update/:id').post((req, res) => {
   var updateObject = req.body;
   console.log(req.body)

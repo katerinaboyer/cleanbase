@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/id/:id').get((req, res) => {
-  Floor.findById(req.params.id)
+  Floor.findById(req.params.id).sort({floor_number: 1})
     .then(floors => res.json(floors))
     .catch(err => res.status(400).json('Error: ' + err));
     //res.send(floor_number)

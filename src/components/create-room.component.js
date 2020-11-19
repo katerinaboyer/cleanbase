@@ -33,11 +33,8 @@ const CreateRoom = (props) => {
               console.log(response.data);
               if (response.data !== null) {
                 temp.push(response.data)
-                console.log(response.data._id);
                 setFloorId(response.data._id);
                 floorID = response.data._id;
-                console.log(floorID);
-                console.log(floor_id);
               }
             })
             .catch((error) => {
@@ -86,6 +83,7 @@ const CreateRoom = (props) => {
       };
 
       var tempRooms = [];
+      console.log(newRoom)
 
       for(var i = 0; i < floors.length; i++){
         if(floors[i]._id === floor_id._id){
