@@ -34,6 +34,7 @@ export class CreateSelfIllnessReport extends Component {
       emails: [],
       attendIds:[],
       show_error: false,
+      show_success: false,
       nonDupeEmails:[],
     };
   }
@@ -181,7 +182,14 @@ export class CreateSelfIllnessReport extends Component {
 
       axios.post('http://localhost:5000/selfIllnessReport/add', newselfIllnessReport)
         .then(res => console.log(res.data));
-      
+
+      this.setState({
+        show_success: true
+      });
+      setTimeout(() => {this.setState({
+        show_success: false
+      })}, 5000);
+
     } else {
       this.setState({
         show_error: true
@@ -230,7 +238,7 @@ export class CreateSelfIllnessReport extends Component {
                 />
             </Col>
           </Form.Group>
-          
+
           <Form.Group as={Row}>
             <Form.Label column sm={3}>Report: </Form.Label>
             <Col sm={9}>
@@ -247,7 +255,8 @@ export class CreateSelfIllnessReport extends Component {
               Create Self-Illness Report
           </button>
         </Form>
-        <ToastMessage show={this.state.show_error} text={"Opps, it looks like you didn't fill out the form."} />
+        <ToastMessage show={this.state.show_error} error={true} text={"Opps, it looks like you didn't fill out the form."} />
+        <ToastMessage show={this.state.show_success} text={"This report has been created."} />
       </div>
     )
   }
