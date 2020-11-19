@@ -84,6 +84,7 @@ const CreateRoom = (props) => {
         capacity: capacity,
         room_type: room_type,
       };
+      console.log(newRoom);
 
       var tempRooms = [];
 

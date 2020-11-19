@@ -52,12 +52,14 @@ router.route('/update/isavailable/:id').post((req, res) => {
 router.route('/add').post((req, res) => {
   const room_number = req.body.room_number;
   const floor_id = req.body.floor_id;
+  const floor_number = req.body.floor_number;
   const capacity = req.body.capacity;
   // const desk_list = req.body.desk_list;
   const room_type = req.body.room_type;
 
   const newRoom = new Room({
     room_number,
+    floor_number,
     floor_id,
     capacity,
     // desk_list,
