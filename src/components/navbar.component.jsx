@@ -33,7 +33,7 @@ const NavbarOptions = props => {
           <Nav.Link href="/account-mgmt">Account Management</Nav.Link>
           <Nav.Link href="/space-mgmt">Space Management</Nav.Link>
           <Nav.Link href="/schedule">Schedule</Nav.Link>
-          <Nav.Link href="/illness-report">Illness Report</Nav.Link>
+          <Nav.Link href="/illness-report">Report Illness</Nav.Link>
         </>
       );
     case "sanitation":
