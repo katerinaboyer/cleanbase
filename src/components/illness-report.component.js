@@ -102,8 +102,7 @@ export default class IllnessReport extends Component {
             <h3>Illness Report:</h3> 
             <p>Reported Illnesses: {this.state.count}</p> 
             <Card style={{ width: '13rem', height: '10rem'}}>
-               <Card.Title style={{color:"#434343",fontSize:128}}>{this.state.count}</Card.Title>
-               <Card.Body style ={{color:"red", fontSize:128}}>{this.state.arrow}</Card.Body>
+               <Card.Title style={{color:"#434343",fontSize:128}}>{this.state.count}{this.state.arrow}</Card.Title>
             </Card>
 
         </div>
