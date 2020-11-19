@@ -180,7 +180,7 @@ export class CreateSelfIllnessReport extends Component {
 
       axios.post('http://localhost:5000/selfIllnessReport/add', newselfIllnessReport)
         .then(res => console.log(res.data));
-      this.props.history.push('/')
+      
     } else {
       this.setState({
         show_error: true
@@ -223,15 +223,7 @@ export class CreateSelfIllnessReport extends Component {
                 onChange={this.onChangePhone}
                 />
           </div>
-          <div className="form-group">
-            <label>Date: </label>
-            <input  type="date"
-
-                className="form-control"
-                value={this.state.date}
-                onChange={this.onChangeDate}
-                />
-          </div>
+          
           <div className="form-group">
             <label>Report: </label>
             <input  type="text"

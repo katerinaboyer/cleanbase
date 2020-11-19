@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const selfIllnessReportSchema = new Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
+    
   },
   name: {
       type: String,

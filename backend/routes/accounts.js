@@ -16,15 +16,9 @@ router.route('/update/:id').post((req, res) => {
 });
 
 router.route('/officemanager/:id').get((req, res) => {
-<<<<<<< HEAD
-  Account.find({ office_manager: {$eq: req.params.id } })
-  .then(user => res.json(user))
-  .catch(err => res.status(400).json('Error: ' + err));
-=======
   Account.find({office_manager: {$eq: req.params.id}})
     .then(accounts => res.json(accounts))
     .catch(err => res.status(400).json('Error: ' + err));
->>>>>>> dev
 });
 
 router.route('/add').post((req, res) => {
