@@ -116,7 +116,7 @@ const AccountSettings = (props) => {
                     <Form.Group as={Row} controlId="formBasicName">
                         <Form.Label column sm={3}>Company Name</Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="name" placeholder={companyInfo.business_name} readOnly/>
+                            <Form.Control type="name" placeholder="Company Name" readOnly/>
                         </Col>
                     </Form.Group>
 
