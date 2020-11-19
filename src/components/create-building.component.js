@@ -109,9 +109,6 @@ const CreateBuilding = (props) => {
       <h3 className="h3">Create Building:</h3>
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} controlId="formAdmin">
-          <Form.Label column sm={3}>
-            Building Admin
-          </Form.Label>
           <Col sm={9}>
             <Form.Control
               as="select"
