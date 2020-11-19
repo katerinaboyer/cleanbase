@@ -31,8 +31,19 @@ const SpaceMgmt = (props) => {
   //const address = "Business Name";
 
     const removeDesk = (info) =>{
+
+        axios.get("http://localhost:5000/reservations/deskId/" + info._id)
+        .then(res => {
+            for(var i = 0; i < res.data.length; i++){
+                axios.delete("http://localhost:5000/reservations/delete/" + res.data[i]._id)
+                .then(res => console.log(res))
+            }
+        })
+
         axios.delete("http://localhost:5000/desks/remove/" + info._id)
         .then(res => console.log(res))
+
+
         setValue(!value);
     }
     
@@ -49,32 +60,15 @@ const SpaceMgmt = (props) => {
         setAVal(!anotherVal);
     }
 
-
-const getFloorNumbers = (floors) => {
-    console.log(floors)
-    var num;
-    axios.get("http://localhost:5000/floors/id/" + floors)
-    .then((response) => {
-        num = response.data.floor_number
-        setFloorNum(num);
-    })
-    .catch((error) => {
-        return "NULL";
-    })
-    return floorNum;
+const roomType = (room) => {
+    if(room === "conference"){
+        return "Conference Room "
+    } else if (room === "office"){
+        return "Office "
+    } else if (room === "desk_space"){
+        return "Desk Space "
+    }
 }
-
-const getDeskFloorNumbers = (room) => {
-    axios.get("http://localhost:5000/desks/id/" + room)
-    .then((response) => {
-        return getFloorNumbers(response.data.floor_id);
-    })
-    .catch((error) => {
-        return "NULL";
-    })
-    setValue(room.length);
-}
-
 
 useEffect(() => {
     async function fetchData() {
@@ -127,20 +121,41 @@ useEffect(() => {
                             {/* <Col sm={3}>
                                 <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
                             </Col> */}
-                            <Col style={{textAlign: "center"}}>
-                                <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Room: {info.room_number}</Card.Text>
+                            <Col style={{paddingLeft: "5%"}}>
+                                <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>{roomType(info.room_type)} {info.room_number}</Card.Text>
                             </Col>
                             <Col sm={3} style={{}}>
                                 <button className="button-edit" style={{marginLeft:"30%", fontSize:"130%"}}onClick={() => removeRoom(info)}>Remove</button>
+                                {info.room_type === "desk_space" && <button className="button-edit" style={{marginLeft: "30%", marginRight: "50px"}} onClick={addDesk}>Add Rooms</button>}
                             </Col>
                         </Row>
                     </Card>
+                    { desks.map(information => 
+                  <div style={{paddingBottom:"0px"}}>
+                      { info.room_number === information.room_number &&
+                      <Card style={{borderRadius:"15px", marginTop: "20px", marginLeft: "50px"}}>
+                            <Row>
+                                {/* <Col sm={3}>
+                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
+                                </Col> */}
+                                <Col style={{paddingLeft:"5%"}}>
+                                    <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk: {information.desk_number}<br/> Room: {information.room_number}</Card.Text>
+                                </Col>
+                                <Col sm={3} style={{}}>
+                                    <button className="button-edit" style={{marginLeft:"50%", fontSize:"130%"}} onClick={() => removeDesk(information)}>Remove</button>
+                                </Col>
+                            </Row>
+                        </Card> }
+                  </div>
+                  )
+              }
                 </div>
+                
                 )
             }
           </div>
         </Col>
-        <Col sm={1}></Col>
+        {/* <Col sm={1}></Col>
         <Col>
           <Row style={{paddingLeft:"3%"}}>
             <Col sm={9}><h3>Desks</h3></Col>
@@ -151,9 +166,6 @@ useEffect(() => {
                   <div style={{paddingBottom:"20px"}}>
                       <Card style={{borderRadius:"15px"}}>
                             <Row>
-                                {/* <Col sm={3}>
-                                    <Card.Title style={{padding:"20px 0px 20px 25px", fontSize:"130%"}}></Card.Title>
-                                </Col> */}
                                 <Col style={{textAlign: "center"}}>
                                     <Card.Text style={{color:"#434343", padding:"25px 0px 40px 0%", fontSize:"130%"}}>Desk: {info.desk_number}<br/> Room: {info.room_number}</Card.Text>
                                 </Col>
@@ -166,7 +178,7 @@ useEffect(() => {
                   )
               }
           </div>
-        </Col>
+        </Col> */}
         </Row>
     </div>
     )
