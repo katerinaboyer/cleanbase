@@ -61,7 +61,7 @@ class FillReservation extends Component {
       business_account_id: currBusiness,
 
       email: currUserEmail,
-      emails: ["thomas.yim.gough@gmail.com", "jon.hillier@me.com"],
+      emails: [],
   
       rooms: [],
       desks: [],
@@ -150,7 +150,26 @@ class FillReservation extends Component {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
     this.setState({
       attendees: value,
+      emails: []
     });
+
+    for(var i = 0; i < value.length; i++){
+      axios
+            .all([
+              //from each attendee, we extract their email and place it into an array
+              axios.get('http://localhost:5000/users/id/' + value[i])
+            ])
+            .then(([attendResponse]) => {
+             
+            if(attendResponse.data.email != null){
+              var test = this.state.emails.concat(attendResponse.data.email);
+              this.setState({
+                emails: test
+              });
+              console.log(this.state.emails);
+            }
+            });
+    }
   }
 
   onSubmit(e) {
@@ -188,23 +207,6 @@ class FillReservation extends Component {
         date: this.state.date,
         checkedIn: false,
       };
-      for(var i = 0; i < this.state.attendees.length; i++){
-        axios
-              .all([
-                //from each attendee, we extract their email and place it into an array
-                axios.get('http://localhost:5000/users/id/' + this.state.attendees[i])
-              ])
-              .then(([attendResponse]) => {
-               
-              if(attendResponse.data.email != null){
-                var test = this.state.emails.concat(attendResponse.data.email);
-                this.setState({
-                  emails: test
-                });
-                console.log(this.state.emails);
-              }
-              });
-      }
       
 
     var data = {
